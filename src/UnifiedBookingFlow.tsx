@@ -33,6 +33,7 @@ interface UnifiedBookingFlowProps {
     passengers?: number;
   };
   onBack: () => void;
+  onComplete: () => void;
 }
 
 interface GuestDetails {
@@ -51,6 +52,7 @@ export function UnifiedBookingFlow({
   item,
   metadata = {},
   onBack,
+  onComplete,
 }: UnifiedBookingFlowProps) {
   const [step, setStep] = useState<"details" | "payment" | "confirmation">(
     "details"
@@ -474,7 +476,7 @@ export function UnifiedBookingFlow({
                     itemSubtitle={getItemSubtitle()}
                     guestDetails={guestDetails}
                     pricing={pricing}
-                    onBack={onBack}
+                    onBack={onComplete}
                   />
                 </motion.div>
               )}

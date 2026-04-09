@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import "../styles-mock.css";
-import { Header } from "./mock/Header";
-import { Footer } from "./mock/Footer";
-import { HomePage } from "./mock/HomePage";
-import { FlightsPage } from "./mock/FlightsPage";
-import { HotelsPage } from "./mock/HotelsPage";
-import { HolidaysPage } from "./mock/HolidaysPage";
-import { VisaPage } from "./mock/VisaPage";
-import { VisaDetailPage } from "./mock/VisaDetailPage";
-import { UnifiedBookingFlow } from "./mock/UnifiedBookingFlow";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import { HomePage } from "./HomePage";
+import { FlightsPage } from "./FlightsPage";
+import { HotelsPage } from "./HotelsPage";
+import { HolidaysPage } from "./HolidaysPage";
+import { VisaPage } from "./VisaPage";
+import { VisaDetailPage } from "./VisaDetailPage";
+import { UnifiedBookingFlow } from "./UnifiedBookingFlow";
 import type {
   FlightOffer,
   Hotel,
   Package,
   VisaRequirement,
-} from "./mock/types";
+} from "./types";
 
 type Page =
   | "home"

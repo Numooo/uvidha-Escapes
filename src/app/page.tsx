@@ -63,6 +63,10 @@ export default function Home() {
               setBookingData(null);
               setCurrentPage("home");
             }}
+            onComplete={() => {
+              setBookingData(null);
+              setCurrentPage("home");
+            }}
           />
         )}
         {currentPage === "home" && (
