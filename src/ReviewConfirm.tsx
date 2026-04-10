@@ -3,6 +3,7 @@ import { Plane, Info, ChevronRight, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import type { FlightOffer, FareBreakdown } from "./types";
 import { formatCurrency } from "./data";
+import { useCurrency } from "@/CurrencyContext";
 
 interface ReviewConfirmProps {
   flight: FlightOffer;
@@ -15,6 +16,7 @@ export function ReviewConfirm({
   fareBreakdown,
   onContinue,
 }: ReviewConfirmProps) {
+  const { symbol } = useCurrency();
   const firstSegment = flight.segments[0];
   const lastSegment = flight.segments[flight.segments.length - 1];
 
@@ -140,20 +142,20 @@ export function ReviewConfirm({
             <div className="flex justify-between border-b border-gray-100 pb-3">
               <span className="text-sm text-gray-700">Base Fare</span>
               <span className="text-sm font-medium text-gray-900">
-                ₹{formatCurrency(fareBreakdown.baseFare)}
+                {symbol}{formatCurrency(fareBreakdown.baseFare)}
               </span>
             </div>
             <div className="flex justify-between border-b border-gray-100 pb-3">
               <span className="text-sm text-gray-700">Taxes & Fees</span>
               <span className="text-sm font-medium text-gray-900">
-                ₹{formatCurrency(fareBreakdown.taxes)}
+                {symbol}{formatCurrency(fareBreakdown.taxes)}
               </span>
             </div>
             {fareBreakdown.seatSelection && (
               <div className="flex justify-between border-b border-gray-100 pb-3">
                 <span className="text-sm text-gray-700">Seat Selection</span>
                 <span className="text-sm font-medium text-gray-900">
-                  ₹{formatCurrency(fareBreakdown.seatSelection)}
+                  {symbol}{formatCurrency(fareBreakdown.seatSelection)}
                 </span>
               </div>
             )}
@@ -161,7 +163,7 @@ export function ReviewConfirm({
               <div className="flex justify-between border-b border-gray-100 pb-3">
                 <span className="text-sm text-gray-700">Extra Baggage</span>
                 <span className="text-sm font-medium text-gray-900">
-                  ₹{formatCurrency(fareBreakdown.baggage)}
+                  {symbol}{formatCurrency(fareBreakdown.baggage)}
                 </span>
               </div>
             )}
@@ -169,7 +171,7 @@ export function ReviewConfirm({
               <div className="flex justify-between border-b border-gray-100 pb-3 text-green-600">
                 <span className="text-sm font-medium">Discount</span>
                 <span className="text-sm font-medium">
-                  -₹{formatCurrency(fareBreakdown.discount)}
+                  -{symbol}{formatCurrency(fareBreakdown.discount)}
                 </span>
               </div>
             )}
@@ -178,7 +180,7 @@ export function ReviewConfirm({
                 Total Amount
               </span>
               <span className="text-xl font-bold text-primary-600">
-                ₹{formatCurrency(fareBreakdown.total)}
+                {symbol}{formatCurrency(fareBreakdown.total)}
               </span>
             </div>
           </div>
@@ -255,7 +257,7 @@ export function ReviewConfirm({
             <div className="mb-2 flex justify-between text-sm">
               <span className="text-gray-600">Total Amount</span>
               <span className="font-semibold text-gray-900">
-                ₹{formatCurrency(fareBreakdown.total)}
+                {symbol}{formatCurrency(fareBreakdown.total)}
               </span>
             </div>
           </div>

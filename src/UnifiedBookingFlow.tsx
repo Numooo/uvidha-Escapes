@@ -8,7 +8,6 @@ import {
   Plane,
   Hotel as HotelIcon,
   Palmtree,
-  IndianRupee,
   Shield,
   Clock,
   CheckCircle2,
@@ -16,6 +15,8 @@ import {
   Download,
   Home,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
 import { Button } from "./primitives/button";
 import { Input } from "./primitives/input";
 import type { FlightOffer, Hotel, Package } from "./types";
@@ -54,6 +55,10 @@ export function UnifiedBookingFlow({
   onBack,
   onComplete,
 }: UnifiedBookingFlowProps) {
+  const t = useTranslations("Booking");
+  const commonT = useTranslations("Common");
+  const { symbol } = useCurrency();
+
   const [step, setStep] = useState<"details" | "payment" | "confirmation">(
     "details"
   );
@@ -81,7 +86,7 @@ export function UnifiedBookingFlow({
         basePrice,
         taxes,
         total: basePrice + taxes,
-        label: "Flight Fare",
+        label: t("flightDetails"),
       };
     } else if (type === "hotel") {
       const hotel = item as Hotel;
@@ -104,9 +109,7 @@ export function UnifiedBookingFlow({
         basePrice,
         taxes,
         total: basePrice + taxes,
-        label: `${nights} Night${nights > 1 ? "s" : ""} × ${rooms} Room${
-          rooms > 1 ? "s" : ""
-        }`,
+        label: t("nightsRooms", { nights, rooms }),
       };
     } else {
       const pkg = item as Package;
@@ -118,7 +121,7 @@ export function UnifiedBookingFlow({
         basePrice,
         taxes,
         total: basePrice + taxes,
-        label: `${guests} Traveler${guests > 1 ? "s" : ""}`,
+        label: t("travelersCount", { count: guests }),
       };
     }
   };
@@ -170,7 +173,7 @@ export function UnifiedBookingFlow({
         country?: string;
         destination?: string;
       };
-      return pkg.destination || itemWithCountry.country || "Travel Package";
+      return pkg.destination || itemWithCountry.country || t("packageDetails");
     }
   };
 
@@ -188,19 +191,40 @@ export function UnifiedBookingFlow({
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <button
-              onClick={onBack}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              <span className="font-medium">Back</span>
-            </button>
-            <div className="text-center">
-              <h1 className="text-xl font-bold text-gray-900">
-                Complete Your Booking
-              </h1>
-              <p className="text-sm text-gray-600 mt-0.5">{getItemTitle()}</p>
-            </div>
+            {step === "confirmation" ? (
+              <>
+                <button
+                  onClick={handleDownloadConfirmation}
+                  className="flex-1 flex items-center justify-center gap-2 border-2 border-gray-200 text-gray-700 font-semibold py-4 rounded-xl hover:bg-gray-50 transition-all"
+                >
+                  <Download className="h-5 w-5" />
+                  {t("downloadConfirmation")}
+                </button>
+                <button
+                  onClick={onBack}
+                  className="flex-1 flex items-center justify-center gap-2 bg-brand-primary text-white font-semibold py-4 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all"
+                >
+                  <Home className="h-5 w-5" />
+                  {commonT("back")}
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={onBack}
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <ArrowLeft className="h-5 w-5" />
+                <span className="font-medium">{commonT("back")}</span>
+              </button>
+            )}
+            {step !== "confirmation" && (
+              <div className="text-center">
+                <h1 className="text-xl font-bold text-gray-900">
+                  {t("title")}
+                </h1>
+                <p className="text-sm text-gray-600 mt-0.5">{getItemTitle()}</p>
+              </div>
+            )}
             <div className="w-20" /> {/* Spacer for alignment */}
           </div>
         </div>
@@ -210,13 +234,13 @@ export function UnifiedBookingFlow({
         {/* Step Indicator */}
         {step !== "confirmation" && (
           <div className="flex items-center justify-center mb-8">
-            {["Guest Details", "Payment"].map((stepName, idx) => (
+            {[t("guestDetails"), t("payment")].map((stepName, idx) => (
               <div key={stepName} className="flex items-center">
                 <div
                   className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold ${
                     (step === "details" && idx === 0) ||
                     (step === "payment" && idx === 1)
-                      ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white"
+                      ? "bg-brand-primary text-white"
                       : idx < (step === "details" ? 0 : 1)
                       ? "bg-green-500 text-white"
                       : "bg-gray-200 text-gray-500"
@@ -233,7 +257,7 @@ export function UnifiedBookingFlow({
                     className={`text-sm font-medium ${
                       (step === "details" && idx === 0) ||
                       (step === "payment" && idx === 1)
-                        ? "bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
+                        ? "text-brand-primary"
                         : "text-gray-500"
                     }`}
                   >
@@ -271,15 +295,15 @@ export function UnifiedBookingFlow({
                 >
                   <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-100 to-blue-100">
-                        <User className="h-6 w-6 text-purple-600" />
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary/10">
+                        <User className="h-6 w-6 text-brand-primary" />
                       </div>
                       <div>
                         <h2 className="text-2xl font-bold text-gray-900">
-                          Guest Details
+                          {t("guestDetails")}
                         </h2>
                         <p className="text-sm text-gray-600">
-                          Please provide your information
+                          {t("guestSubtitle")}
                         </p>
                       </div>
                     </div>
@@ -288,7 +312,7 @@ export function UnifiedBookingFlow({
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            First Name *
+                            {t("fields.firstName")} *
                           </label>
                           <Input
                             required
@@ -299,13 +323,13 @@ export function UnifiedBookingFlow({
                                 firstName: e.target.value,
                               })
                             }
-                            placeholder="John"
+                            placeholder={t("fields.firstName")}
                             className="h-12"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Last Name *
+                            {t("fields.lastName")} *
                           </label>
                           <Input
                             required
@@ -316,7 +340,7 @@ export function UnifiedBookingFlow({
                                 lastName: e.target.value,
                               })
                             }
-                            placeholder="Doe"
+                            placeholder={t("fields.lastName")}
                             className="h-12"
                           />
                         </div>
@@ -325,7 +349,7 @@ export function UnifiedBookingFlow({
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Email Address *
+                            {t("fields.email")} *
                           </label>
                           <Input
                             type="email"
@@ -337,13 +361,13 @@ export function UnifiedBookingFlow({
                                 email: e.target.value,
                               })
                             }
-                            placeholder="john.doe@example.com"
+                            placeholder="you@example.com"
                             className="h-12"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Phone Number *
+                            {t("fields.phone")} *
                           </label>
                           <Input
                             type="tel"
@@ -363,7 +387,7 @@ export function UnifiedBookingFlow({
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Address *
+                          {t("fields.address")} *
                         </label>
                         <Input
                           required
@@ -382,7 +406,7 @@ export function UnifiedBookingFlow({
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            City *
+                            {t("fields.city")} *
                           </label>
                           <Input
                             required
@@ -399,7 +423,7 @@ export function UnifiedBookingFlow({
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            ZIP Code *
+                            {t("fields.zipCode")} *
                           </label>
                           <Input
                             required
@@ -418,7 +442,7 @@ export function UnifiedBookingFlow({
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Special Requests (Optional)
+                          {t("fields.specialRequests")}
                         </label>
                         <textarea
                           value={guestDetails.specialRequests}
@@ -428,9 +452,9 @@ export function UnifiedBookingFlow({
                               specialRequests: e.target.value,
                             })
                           }
-                          placeholder="Any special requirements or preferences..."
+                          placeholder={t("fields.specialRequestsPlaceholder")}
                           rows={4}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
                         />
                       </div>
 
@@ -438,9 +462,9 @@ export function UnifiedBookingFlow({
                         <Button
                           type="submit"
                           size="lg"
-                          className="px-8 h-12 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                          className="px-8 h-12 bg-brand-primary hover:bg-brand-secondary"
                         >
-                          Continue to Payment
+                          {t("completePayment")}
                         </Button>
                       </div>
                     </form>
@@ -488,14 +512,14 @@ export function UnifiedBookingFlow({
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm sticky top-24">
                 <h3 className="text-lg font-bold text-gray-900 mb-4">
-                  Booking Summary
+                  {t("summary")}
                 </h3>
 
                 {/* Item Details */}
                 <div className="mb-6 pb-6 border-b border-gray-200">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-100 to-blue-100 flex-shrink-0">
-                      <ItemIcon className="h-6 w-6 text-purple-600" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary/10 flex-shrink-0">
+                      <ItemIcon className="h-6 w-6 text-brand-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-gray-900 truncate">
@@ -567,22 +591,22 @@ export function UnifiedBookingFlow({
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-600">{pricing.label}</span>
                     <span className="font-medium text-gray-900">
-                      ₹{pricing.basePrice.toLocaleString()}
+                      {symbol}{pricing.basePrice.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Taxes & Fees</span>
+                    <span className="text-gray-600">{t("taxes")}</span>
                     <span className="font-medium text-gray-900">
-                      ₹{pricing.taxes.toLocaleString()}
+                      {symbol}{pricing.taxes.toLocaleString()}
                     </span>
                   </div>
                   <div className="pt-3 border-t border-gray-200">
                     <div className="flex items-center justify-between">
                       <span className="text-lg font-bold text-gray-900">
-                        Total Amount
+                        {t("total")}
                       </span>
-                      <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                        ₹{pricing.total.toLocaleString()}
+                      <span className="text-2xl font-bold text-brand-primary">
+                        {symbol}{pricing.total.toLocaleString()}
                       </span>
                     </div>
                   </div>
@@ -592,15 +616,15 @@ export function UnifiedBookingFlow({
                 <div className="mt-6 pt-6 border-t border-gray-200 space-y-3">
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Shield className="h-5 w-5 text-green-600" />
-                    <span>Secure payment</span>
+                    <span>{t("securePayment")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <CheckCircle2 className="h-5 w-5 text-green-600" />
-                    <span>Instant confirmation</span>
+                    <span>{t("instantConfirmation")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Clock className="h-5 w-5 text-green-600" />
-                    <span>24/7 support</span>
+                    <span>{t("support247")}</span>
                   </div>
                 </div>
               </div>
@@ -631,21 +655,21 @@ function PaymentSection({
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-100 to-blue-100">
-          <CreditCard className="h-6 w-6 text-purple-600" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary/10">
+          <CreditCard className="h-6 w-6 text-brand-primary" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Payment</h2>
-          <p className="text-sm text-gray-600">Choose your payment method</p>
+          <h2 className="text-2xl font-bold text-gray-900">{t("payment")}</h2>
+          <p className="text-sm text-gray-600">{t("paymentSubtitle")}</p>
         </div>
       </div>
 
       <div className="space-y-4 mb-8">
         {[
-          { id: "card", label: "Credit / Debit Card", icon: CreditCard },
-          { id: "upi", label: "UPI", icon: IndianRupee },
-          { id: "netbanking", label: "Net Banking", icon: Home },
-          { id: "wallet", label: "Wallet", icon: CreditCard },
+          { id: "card", label: t("paymentMethods.card"), icon: CreditCard },
+          { id: "upi", label: t("paymentMethods.upi"), icon: IndianRupee },
+          { id: "netbanking", label: t("paymentMethods.netbanking"), icon: Home },
+          { id: "wallet", label: t("paymentMethods.wallet"), icon: CreditCard },
         ].map((method) => (
           <button
             key={method.id}
@@ -656,14 +680,14 @@ function PaymentSection({
             }
             className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
               paymentMethod === method.id
-                ? "border-purple-600 bg-purple-50"
+                ? "border-brand-primary bg-brand-primary/5"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-lg ${
                 paymentMethod === method.id
-                  ? "bg-purple-600 text-white"
+                  ? "bg-brand-primary text-white"
                   : "bg-gray-100 text-gray-600"
               }`}
             >
@@ -671,7 +695,7 @@ function PaymentSection({
             </div>
             <span className="font-medium text-gray-900">{method.label}</span>
             {paymentMethod === method.id && (
-              <CheckCircle2 className="h-5 w-5 text-purple-600 ml-auto" />
+              <CheckCircle2 className="h-5 w-5 text-brand-primary ml-auto" />
             )}
           </button>
         ))}
@@ -685,20 +709,20 @@ function PaymentSection({
           className="flex-1 h-12"
           disabled={isProcessing}
         >
-          Back
+          {commonT("back")}
         </Button>
         <Button
           onClick={onPayment}
           disabled={isProcessing}
-          className="flex-1 h-12 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+          className="flex-1 h-12 bg-brand-primary hover:bg-brand-secondary"
         >
           {isProcessing ? (
             <div className="flex items-center gap-2">
               <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Processing...</span>
+              <span>{t("processing")}</span>
             </div>
           ) : (
-            "Complete Payment"
+            t("completePayment")
           )}
         </Button>
       </div>
@@ -746,14 +770,12 @@ function ConfirmationSection({
       text-align: center;
       margin-bottom: 40px;
       padding-bottom: 20px;
-      border-bottom: 3px solid #7c3aed;
+      border-bottom: 3px solid #0a57a1;
     }
     .logo {
       font-size: 32px;
       font-weight: bold;
-      background: linear-gradient(to right, #7c3aed, #2563eb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #0a57a1;
       margin-bottom: 10px;
     }
     .confirmed {
@@ -763,9 +785,7 @@ function ConfirmationSection({
       margin: 20px 0;
     }
     .booking-ref {
-      background: linear-gradient(to right, #7c3aed, #2563eb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #0a57a1;
       font-size: 28px;
       font-weight: bold;
       margin: 10px 0;
@@ -779,7 +799,7 @@ function ConfirmationSection({
     .section-title {
       font-size: 18px;
       font-weight: bold;
-      color: #7c3aed;
+      color: #0a57a1;
       margin-bottom: 15px;
     }
     .detail-row {
@@ -821,15 +841,15 @@ function ConfirmationSection({
     <div>Your Journey, Our Priority</div>
   </div>
 
-  <div class="confirmed">✓ Booking Confirmed!</div>
+  <div class="confirmed">✓ ${t("confirmed")}</div>
   
   <div style="text-align: center; margin: 30px 0;">
-    <div style="color: #6b7280; font-size: 14px; margin-bottom: 10px;">Booking Reference</div>
+    <div style="color: #6b7280; font-size: 14px; margin-bottom: 10px;">${t("summary")}</div>
     <div class="booking-ref">${bookingRef}</div>
   </div>
 
   <div class="section">
-    <div class="section-title">Booking Details</div>
+    <div class="section-title">${t("summary")}</div>
     <div class="detail-row">
       <span class="label">${
         type === "flight" ? "Flight" : type === "hotel" ? "Hotel" : "Package"
@@ -867,23 +887,23 @@ function ConfirmationSection({
   </div>
 
   <div class="section">
-    <div class="section-title">Payment Summary</div>
+    <div class="section-title">${t("total")}</div>
     <div class="detail-row">
       <span class="label">${pricing.label}</span>
-      <span class="value">₹${pricing.basePrice.toLocaleString()}</span>
+      <span class="value">${symbol}${pricing.basePrice.toLocaleString()}</span>
     </div>
     <div class="detail-row">
-      <span class="label">Taxes & Fees</span>
-      <span class="value">₹${pricing.taxes.toLocaleString()}</span>
+      <span class="label">${t("taxes")}</span>
+      <span class="value">${symbol}${pricing.taxes.toLocaleString()}</span>
     </div>
     <div class="detail-row">
-      <span class="label">Total Amount Paid</span>
-      <span class="value total">₹${pricing.total.toLocaleString()}</span>
+      <span class="label">${t("total")}</span>
+      <span class="value total">${symbol}${pricing.total.toLocaleString()}</span>
     </div>
   </div>
 
   <div class="contact">
-    <div class="section-title" style="text-align: center;">Need Assistance?</div>
+    <div class="section-title" style="text-align: center;">${t("support247")}</div>
     <div style="text-align: center; color: #6b7280;">
       <p>📧 Email: support@suvidhaescapes.com</p>
       <p>📞 Phone: +91 98765 43210</p>
@@ -944,10 +964,10 @@ function ConfirmationSection({
         className="text-center mb-8"
       >
         <h1 className="text-4xl font-bold text-gray-900 mb-2">
-          Booking Confirmed!
+          {t("confirmed")}
         </h1>
         <p className="text-lg text-gray-600">
-          Your booking has been successfully confirmed
+          {t("instantConfirmation")}
         </p>
       </motion.div>
 
@@ -958,8 +978,8 @@ function ConfirmationSection({
         className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm mb-6"
       >
         <div className="text-center mb-6 pb-6 border-b border-gray-200">
-          <p className="text-sm text-gray-600 mb-2">Booking Reference</p>
-          <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <p className="text-sm text-gray-600 mb-2">{t("summary")}</p>
+          <p className="text-3xl font-bold text-brand-primary">
             {bookingRef}
           </p>
         </div>
@@ -996,7 +1016,7 @@ function ConfirmationSection({
               <div className="flex justify-center gap-2 text-center pt-3 border-t border-gray-200">
                 <span className="text-gray-700">Total Amount:</span>
                 <span className="text-xl font-bold text-green-600">
-                  ₹{pricing.total.toLocaleString()}
+                  {symbol}{pricing.total.toLocaleString()}
                 </span>
               </div>
             </div>
@@ -1025,14 +1045,14 @@ function ConfirmationSection({
           className="flex-1 h-12 gap-2"
         >
           <Home className="h-5 w-5" />
-          Back to Home
+          {commonT("back")}
         </Button>
         <Button
           onClick={handleDownloadConfirmation}
-          className="flex-1 h-12 gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+          className="flex-1 h-12 gap-2 bg-brand-primary hover:bg-brand-secondary"
         >
           <Download className="h-5 w-5" />
-          Download Confirmation
+          {t("downloadConfirmation")}
         </Button>
       </motion.div>
     </div>

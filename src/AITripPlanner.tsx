@@ -15,12 +15,16 @@ import {
   Loader2,
 } from "lucide-react";
 
+import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
+
 interface Message {
   id: string;
   type: "user" | "bot" | "quick-reply";
   content: string;
   timestamp: Date;
   options?: string[];
+  isTranslated?: boolean;
 }
 
 interface TripPreferences {
@@ -51,39 +55,42 @@ interface AITripPlannerProps {
   onClose: () => void;
 }
 
-const quickQuestions = [
-  "Plan a trip to Bali",
-  "Weekend getaway near me",
-  "Romantic honeymoon",
-  "Adventure trip ideas",
-  "Family vacation",
-  "Budget backpacking",
+const quickQuestionsKeys = [
+  "bali",
+  "weekend",
+  "romantic",
+  "adventure",
+  "family",
+  "budget",
 ];
 
-const interests = [
-  "🏖️ Beach & Relaxation",
-  "🏔️ Adventure & Hiking",
-  "🏛️ Culture & History",
-  "🍜 Food & Cuisine",
-  "📸 Photography",
-  "🛍️ Shopping",
-  "🎨 Art & Museums",
-  "🌃 Nightlife",
+const interestsKeys = [
+  "beach",
+  "adventure",
+  "culture",
+  "food",
+  "photography",
+  "shopping",
+  "art",
+  "nightlife",
 ];
 
 export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
+  const t = useTranslations("AITripPlanner");
+  const commonT = useTranslations("Common");
+  const { symbol } = useCurrency();
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       type: "bot",
-      content:
-        "Hi! I'm your AI Travel Assistant 🌍 I'll help you plan the perfect trip based on your preferences. Let's start with a few questions!",
+      content: t("intro1"),
       timestamp: new Date(),
     },
     {
       id: "2",
       type: "bot",
-      content: "Where would you like to go?",
+      content: t("intro2"),
       timestamp: new Date(),
     },
   ]);
@@ -138,17 +145,16 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     setCurrentStep("generating");
     await simulateTyping(3000);
 
-    // Generate mock itinerary based on preferences
     const days = parseInt(preferences.duration?.split(" ")[0] || "5");
     const mockItinerary: ItineraryDay[] = [];
 
     for (let i = 1; i <= Math.min(days, 7); i++) {
       mockItinerary.push({
         day: i,
-        title: `Day ${i} - ${getDayTitle(
-          i,
-          preferences.destination || "Your Destination"
-        )}`,
+        title: t("dayTitle", { 
+          day: i, 
+          title: getDayTitle(i, preferences.destination || t("itineraryTitle")) 
+        }),
         activities: generateDayActivities(i, preferences),
       });
     }
@@ -158,11 +164,13 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
     addMessage(
       "bot",
-      `✨ Your personalized ${days}-day itinerary for ${
-        preferences.destination
-      } is ready! I've planned activities based on your interests: ${preferences.interests?.join(
-        ", "
-      )}. Budget: ${preferences.budget}. Perfect for ${preferences.travelers}!`
+      t("itinerary", {
+        days,
+        destination: preferences.destination,
+        interests: preferences.interests?.join(", "),
+        budget: preferences.budget,
+        travelers: preferences.travelers
+      })
     );
   };
 
@@ -364,7 +372,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     // Process based on current step
     if (currentStep === "destination") {
       setPreferences((prev) => ({ ...prev, destination: inputValue }));
-      addMessage("bot", "Great choice! 🎉 How long would you like to stay?", [
+      addMessage("bot", t("duration"), [
         "3-4 days",
         "5-7 days",
         "1 week",
@@ -373,16 +381,16 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       setCurrentStep("duration");
     } else if (currentStep === "duration") {
       setPreferences((prev) => ({ ...prev, duration: inputValue }));
-      addMessage("bot", "Perfect! What's your budget range for this trip?", [
-        "Budget (₹20k-40k)",
-        "Mid-range (₹40k-80k)",
-        "Luxury (₹80k+)",
-        "Ultra Luxury (₹150k+)",
+      addMessage("bot", t("budget"), [
+        `Budget (${symbol}20k-40k)`,
+        `Mid-range (${symbol}40k-80k)`,
+        `Luxury (${symbol}80k+)`,
+        `Ultra Luxury (${symbol}150k+)`,
       ]);
       setCurrentStep("budget");
     } else if (currentStep === "budget") {
       setPreferences((prev) => ({ ...prev, budget: inputValue }));
-      addMessage("bot", "Got it! Who will be traveling?", [
+      addMessage("bot", t("travelers"), [
         "Solo",
         "Couple",
         "Family (3-4)",
@@ -394,8 +402,8 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       setPreferences((prev) => ({ ...prev, travelers: inputValue }));
       addMessage(
         "bot",
-        "Awesome! 🌟 What are your main interests? (Select multiple)",
-        interests
+        t("interests"),
+        interestsKeys.map(k => t(`interestsList.${k}`))
       );
       setCurrentStep("interests");
     } else if (currentStep === "interests") {
@@ -413,7 +421,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
         .replace("Plan a trip to ", "")
         .replace("near me", "India");
       setPreferences((prev) => ({ ...prev, destination: dest }));
-      addMessage("bot", "Great choice! 🎉 How long would you like to stay?", [
+      addMessage("bot", t("duration"), [
         "3-4 days",
         "5-7 days",
         "1 week",
@@ -422,16 +430,16 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       setCurrentStep("duration");
     } else if (currentStep === "duration") {
       setPreferences((prev) => ({ ...prev, duration: option }));
-      addMessage("bot", "Perfect! What's your budget range for this trip?", [
-        "Budget (₹20k-40k)",
-        "Mid-range (₹40k-80k)",
-        "Luxury (₹80k+)",
-        "Ultra Luxury (₹150k+)",
+      addMessage("bot", t("budget"), [
+        `Budget (${symbol}20k-40k)`,
+        `Mid-range (${symbol}40k-80k)`,
+        `Luxury (${symbol}80k+)`,
+        `Ultra Luxury (${symbol}150k+)`,
       ]);
       setCurrentStep("budget");
     } else if (currentStep === "budget") {
       setPreferences((prev) => ({ ...prev, budget: option }));
-      addMessage("bot", "Got it! Who will be traveling?", [
+      addMessage("bot", t("travelers"), [
         "Solo",
         "Couple",
         "Family (3-4)",
@@ -443,8 +451,8 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       setPreferences((prev) => ({ ...prev, travelers: option }));
       addMessage(
         "bot",
-        "Awesome! 🌟 What are your main interests? (Select multiple, then click Done)",
-        [...interests, "✅ Done - Generate Itinerary"]
+        t("interests"),
+        [...interestsKeys.map(k => t(`interestsList.${k}`)), t("done")]
       );
       setCurrentStep("interests");
     } else if (currentStep === "interests") {
@@ -453,7 +461,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
         if (selectedInterests.length === 0) {
           addMessage(
             "bot",
-            "Please select at least one interest before continuing."
+            t("selectInterests")
           );
           return;
         }
@@ -461,7 +469,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
         await simulateTyping();
         addMessage(
           "bot",
-          "Perfect! I have all the information I need. Let me create your personalized itinerary... 🎨"
+          t("generating")
         );
         await generateItinerary();
       } else {
@@ -491,7 +499,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 40px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #f8fafc;
     }
     .container {
       max-width: 800px;
@@ -503,16 +511,14 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     }
     .header {
       text-align: center;
-      border-bottom: 4px solid #667eea;
+      border-bottom: 4px solid #0a57a1;
       padding-bottom: 30px;
       margin-bottom: 40px;
     }
     .logo {
       font-size: 32px;
       font-weight: bold;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #0a57a1;
       margin-bottom: 10px;
     }
     .title {
@@ -530,7 +536,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       gap: 20px;
       margin-bottom: 40px;
       padding: 20px;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: #f1f5f9;
       border-radius: 10px;
     }
     .info-item {
@@ -538,7 +544,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     }
     .info-label {
       font-weight: bold;
-      color: #667eea;
+      color: #0a57a1;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -553,7 +559,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       page-break-inside: avoid;
     }
     .day-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #0a57a1;
       color: white;
       padding: 15px 20px;
       border-radius: 10px;
@@ -566,7 +572,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     }
     .day-number {
       background: white;
-      color: #667eea;
+      color: #0a57a1;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -578,12 +584,12 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     .activity {
       margin-bottom: 20px;
       padding: 20px;
-      border-left: 4px solid #667eea;
-      background: #f9fafb;
+      border-left: 4px solid #0a57a1;
+      background: #f8fafc;
       border-radius: 0 10px 10px 0;
     }
     .activity-time {
-      color: #667eea;
+      color: #0a57a1;
       font-weight: bold;
       font-size: 14px;
       margin-bottom: 8px;
@@ -615,9 +621,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     .footer-logo {
       font-size: 24px;
       font-weight: bold;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #0a57a1;
       margin-bottom: 10px;
     }
     @media print {
@@ -686,13 +690,9 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
     <div class="footer">
       <div class="footer-logo">SUVIDHA ESCAPES</div>
-      <p>Thank you for choosing Suvidha Escapes!</p>
+      <p>${t("thankYou") || "Thank you for choosing Suvidha Escapes!"}</p>
       <p style="font-size: 12px; margin-top: 10px;">
-        Generated on ${new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
+        Generated on ${new Date().toLocaleDateString()}
       </p>
       <p style="font-size: 12px; color: #999;">
         📧 support@suvidhaescapes.com | 📞 +91-1800-123-4567 | 🌐 www.suvidhaescapes.com
@@ -744,16 +744,16 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
           className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 p-6 text-white">
+          <div className="bg-brand-primary p-6 text-white">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="bg-white/20 backdrop-blur-lg rounded-full p-3">
                   <Sparkles className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">AI Trip Planner</h2>
+                  <h2 className="text-2xl font-bold">{t("title")}</h2>
                   <p className="text-sm text-white/90">
-                    Powered by AI • Create your perfect itinerary
+                    {t("subtitle")}
                   </p>
                 </div>
               </div>
@@ -782,15 +782,15 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                       className={`max-w-[80%] rounded-2xl p-4 ${
                         message.type === "user" ||
                         message.type === "quick-reply"
-                          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+                          ? "bg-brand-primary text-white"
                           : "bg-white shadow-md border border-gray-200"
                       }`}
                     >
                       {message.type === "bot" && (
                         <div className="flex items-center gap-2 mb-2">
-                          <Sparkles className="h-4 w-4 text-purple-600" />
+                          <Sparkles className="h-4 w-4 text-brand-primary" />
                           <span className="text-xs font-semibold text-gray-600">
-                            AI Assistant
+                            {t("assistant")}
                           </span>
                         </div>
                       )}
@@ -814,10 +814,10 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                                 onClick={() => handleQuickReply(option)}
                                 className={`text-xs font-medium px-3 py-2 rounded-full transition-all hover:scale-105 ${
                                   isDoneButton
-                                    ? "bg-gradient-to-r from-green-50 to-emerald-600 text-white hover:shadow-lg"
+                                    ? "bg-brand-accent text-white hover:shadow-lg"
                                     : isSelected
-                                    ? "bg-purple-600 text-white border-2 border-purple-600"
-                                    : "bg-purple-100 hover:bg-purple-200 text-purple-700 border-2 border-transparent"
+                                    ? "bg-brand-primary text-white border-2 border-brand-primary"
+                                    : "bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary border-2 border-transparent"
                                 }`}
                               >
                                 {isSelected && "✓ "}
@@ -834,9 +834,9 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                 {isTyping && (
                   <div className="flex justify-start">
                     <div className="bg-white shadow-md border border-gray-200 rounded-2xl p-4 flex items-center gap-2">
-                      <Loader2 className="h-4 w-4 animate-spin text-purple-600" />
+                      <Loader2 className="h-4 w-4 animate-spin text-brand-primary" />
                       <span className="text-sm text-gray-600">
-                        AI is thinking...
+                        {t("thinking")}
                       </span>
                     </div>
                   </div>
@@ -844,13 +844,13 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
                 {messages.length <= 2 && (
                   <div className="flex flex-wrap gap-2 pt-2">
-                    {quickQuestions.map((question, idx) => (
+                    {quickQuestionsKeys.map((key, idx) => (
                       <button
                         key={idx}
-                        onClick={() => handleQuickReply(question)}
-                        className="bg-white hover:bg-purple-50 border-2 border-purple-200 hover:border-purple-400 text-purple-700 text-sm font-medium px-4 py-2 rounded-full transition-all hover:scale-105"
+                        onClick={() => handleQuickReply(t(`quickQuestions.${key}`))}
+                        className="bg-white hover:bg-brand-primary/5 border-2 border-brand-primary/20 hover:border-brand-primary/40 text-brand-primary text-sm font-medium px-4 py-2 rounded-full transition-all hover:scale-105"
                       >
-                        {question}
+                        {t(`quickQuestions.${key}`)}
                       </button>
                     ))}
                   </div>
@@ -861,23 +861,23 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
               <div className="p-4 bg-white border-t border-gray-200">
                 <div className="flex gap-3">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Type your message..."
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  />
-                  <button
-                    onClick={handleSendMessage}
-                    disabled={!inputValue.trim()}
-                    className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-semibold"
-                  >
-                    <Send className="h-5 w-5" />
-                    Send
-                  </button>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder={t("placeholder")}
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      disabled={!inputValue.trim()}
+                      className="bg-brand-primary text-white px-6 py-3 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-semibold"
+                    >
+                      <Send className="h-5 w-5" />
+                      {commonT("submit")}
+                    </button>
                 </div>
               </div>
             </div>
@@ -890,12 +890,12 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
               >
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-full p-2">
+                    <div className="bg-brand-primary rounded-full p-2">
                       <CheckCircle2 className="h-6 w-6 text-white" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900">
-                        Your Itinerary
+                        {t("yourItinerary")}
                       </h3>
                       <p className="text-sm text-gray-600">
                         {preferences.destination} • {preferences.duration}
@@ -907,10 +907,10 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                     {itinerary.map((day) => (
                       <div
                         key={day.day}
-                        className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-200"
+                        className="bg-brand-primary/[0.03] rounded-xl p-5 border border-brand-primary/10"
                       >
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center text-sm">
+                          <div className="bg-brand-primary text-white font-bold rounded-full w-10 h-10 flex items-center justify-center text-sm">
                             {day.day}
                           </div>
                           <h4 className="font-bold text-gray-900">
@@ -925,12 +925,12 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                               className="bg-white rounded-lg p-3 border border-gray-200 hover:shadow-md transition-shadow"
                             >
                               <div className="flex items-start gap-3">
-                                <div className="bg-purple-100 text-purple-600 rounded-lg p-2 mt-1">
+                                <div className="bg-brand-primary/10 text-brand-primary rounded-lg p-2 mt-1">
                                   {activity.icon}
                                 </div>
                                 <div className="flex-1">
                                   <div className="flex items-center justify-between mb-1">
-                                    <span className="text-xs font-semibold text-purple-600">
+                                    <span className="text-xs font-semibold text-brand-primary">
                                       {activity.time}
                                     </span>
                                     <span className="text-xs text-gray-500 flex items-center gap-1">
@@ -954,9 +954,9 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                   </div>
 
                   <div className="mt-6 space-y-3">
-                    <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-4 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                    <button className="w-full bg-brand-primary text-white font-semibold py-4 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all flex items-center justify-center gap-2">
                       <CheckCircle2 className="h-5 w-5" />
-                      Book This Trip
+                      {t("bookTrip")}
                     </button>
                     <button
                       onClick={downloadPDF}
@@ -975,7 +975,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                           d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                         />
                       </svg>
-                      Download Itinerary (PDF)
+                      {t("downloadPDF")}
                     </button>
                   </div>
                 </div>

@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import type { BookingData } from "./types";
 import { formatCurrency } from "./data";
+import { useCurrency } from "@/CurrencyContext";
 
 interface BookingConfirmationProps {
   booking: BookingData;
@@ -26,6 +27,7 @@ export function BookingConfirmation({
   onAddToCalendar,
   onViewDetails,
 }: BookingConfirmationProps) {
+  const { symbol } = useCurrency();
   useEffect(() => {
     // Trigger confetti on mount
     confetti({
@@ -92,16 +94,16 @@ export function BookingConfirmation({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mb-4 inline-flex items-center gap-2 rounded-lg bg-blue-50 px-4 py-2"
+          className="mb-4 inline-flex items-center gap-2 rounded-lg bg-brand-primary/5 px-4 py-2"
         >
-          <span className="text-lg font-medium text-blue-600">
+          <span className="text-lg font-medium text-brand-primary">
             Booking ID: {booking.bookingId}
           </span>
           <button
             onClick={copyBookingId}
-            className="rounded p-1 transition-colors hover:bg-blue-100"
+            className="rounded p-1 transition-colors hover:bg-brand-primary/10"
           >
-            <Copy className="h-4 w-4 text-blue-600" />
+            <Copy className="h-4 w-4 text-brand-primary" />
           </button>
         </motion.div>
 
@@ -129,7 +131,7 @@ export function BookingConfirmation({
               <h2 className="text-2xl font-bold text-gray-900">
                 Flight Details
               </h2>
-              <div className="rounded-lg bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-600">
+              <div className="rounded-lg bg-brand-primary/10 px-3 py-1 text-sm font-semibold text-brand-primary">
                 {booking.flight.cabin}
               </div>
             </div>
@@ -203,7 +205,7 @@ export function BookingConfirmation({
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Total Paid</span>
                 <span className="font-semibold text-gray-900">
-                  ₹{formatCurrency(booking.fareBreakdown.total)}
+                  {symbol}{formatCurrency(booking.fareBreakdown.total)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
@@ -234,9 +236,9 @@ export function BookingConfirmation({
         <div className="grid gap-4 sm:grid-cols-3">
           <button
             onClick={onDownloadTicket}
-            className="group flex flex-col items-start gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-left shadow-sm transition-all hover:border-primary-300 hover:shadow-md"
+            className="group flex flex-col items-start gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-left shadow-sm transition-all hover:border-brand-primary/30 hover:shadow-md"
           >
-            <Download className="h-8 w-8 text-primary-600" />
+            <Download className="h-8 w-8 text-brand-primary" />
             <div>
               <div className="mb-1 font-semibold text-gray-900">
                 Download Ticket
@@ -250,9 +252,9 @@ export function BookingConfirmation({
 
           <button
             onClick={onAddToCalendar}
-            className="group flex flex-col items-start gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-left shadow-sm transition-all hover:border-primary-300 hover:shadow-md"
+            className="group flex flex-col items-start gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-left shadow-sm transition-all hover:border-brand-primary/30 hover:shadow-md"
           >
-            <Calendar className="h-8 w-8 text-primary-600" />
+            <Calendar className="h-8 w-8 text-brand-primary" />
             <div>
               <div className="mb-1 font-semibold text-gray-900">
                 Add to Calendar
@@ -266,9 +268,9 @@ export function BookingConfirmation({
 
           <button
             onClick={onViewDetails}
-            className="group flex flex-col items-start gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-left shadow-sm transition-all hover:border-primary-300 hover:shadow-md"
+            className="group flex flex-col items-start gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-left shadow-sm transition-all hover:border-brand-primary/30 hover:shadow-md"
           >
-            <FileText className="h-8 w-8 text-primary-600" />
+            <FileText className="h-8 w-8 text-brand-primary" />
             <div>
               <div className="mb-1 font-semibold text-gray-900">
                 View Details
@@ -297,7 +299,7 @@ export function BookingConfirmation({
           <div className="space-y-8">
             <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">>
                   <Clock className="h-6 w-6" />
                 </div>
                 <div className="h-full w-0.5 bg-gray-300"></div>
@@ -315,7 +317,7 @@ export function BookingConfirmation({
 
             <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">>
                   <FileText className="h-6 w-6" />
                 </div>
                 <div className="h-full w-0.5 bg-gray-300"></div>
@@ -331,7 +333,7 @@ export function BookingConfirmation({
 
             <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">>
                   <Plane className="h-6 w-6" />
                 </div>
               </div>

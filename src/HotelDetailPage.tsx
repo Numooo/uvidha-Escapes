@@ -31,6 +31,8 @@ import {
   Minus,
   Home,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
 import { Badge } from "./primitives/badge";
 import type { Hotel, HotelRoom } from "./types";
 
@@ -52,6 +54,8 @@ export function HotelDetailPage({
   onBack,
   onBook,
 }: HotelDetailPageProps) {
+  const t = useTranslations("HotelDetail");
+  const { symbol, CurrencyIcon } = useCurrency();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const today = new Date().toISOString().split("T")[0];
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
@@ -165,7 +169,7 @@ export function HotelDetailPage({
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ChevronLeft className="h-5 w-5" />
-              <span className="font-medium">Back to Hotels</span>
+              <span className="font-medium">{t("back")}</span>
             </button>
             <button
               onClick={() => setIsFavorite(!isFavorite)}
@@ -227,7 +231,7 @@ export function HotelDetailPage({
                   </>
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <p className="text-gray-500">No images available</p>
+                    <p className="text-gray-500">{t("noImages")}</p>
                   </div>
                 )}
               </div>
@@ -249,7 +253,7 @@ export function HotelDetailPage({
                       </div>
                     )}
                     <span className="text-sm font-medium text-yellow-600">
-                      {hotelData.stars}-Star Hotel
+                      {t("starHotel", { count: hotelData.stars || 0 })}
                     </span>
                   </div>
                   <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -291,13 +295,13 @@ export function HotelDetailPage({
                   {hotelData.checkIn && (
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
-                      <span>Check-in: {hotelData.checkIn}</span>
+                      <span>{t("checkIn", { time: hotelData.checkIn })}</span>
                     </div>
                   )}
                   {hotelData.checkOut && (
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
-                      <span>Check-out: {hotelData.checkOut}</span>
+                      <span>{t("checkOut", { time: hotelData.checkOut })}</span>
                     </div>
                   )}
                 </div>
@@ -308,7 +312,7 @@ export function HotelDetailPage({
             {hotelData.amenities && hotelData.amenities.length > 0 && (
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Hotel Amenities
+                  {t("amenitiesTitle")}
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {hotelData.amenities.map((amenity) => {
@@ -336,7 +340,7 @@ export function HotelDetailPage({
             {/* Available Rooms */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Available Rooms
+                {t("roomsTitle")}
               </h2>
               <div className="space-y-4">
                 {hotelRooms.map((room) => (
@@ -367,7 +371,7 @@ export function HotelDetailPage({
                           </div>
                           <div className="flex items-center gap-1">
                             <Users className="h-4 w-4" />
-                            <span>Up to {room.maxOccupancy} guests</span>
+                            <span>{t("guestsUpTo", { count: room.maxOccupancy })}</span>
                           </div>
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -378,21 +382,21 @@ export function HotelDetailPage({
                           ))}
                           {room.amenities.length > 5 && (
                             <Badge variant="default">
-                              +{room.amenities.length - 5} more
+                              {t("moreAmenities", { count: room.amenities.length - 5 })}
                             </Badge>
                           )}
                         </div>
                       </div>
                       <div className="text-right ml-4">
                         <div className="text-2xl font-bold text-gray-900 mb-1">
-                          ₹{room.price.toLocaleString("en-IN")}
+                          {symbol}{room.price.toLocaleString()}
                         </div>
                         <div className="text-sm text-gray-500 mb-2">
-                          per night
+                          {t("perNight")}
                         </div>
                         {room.available < 5 && (
                           <Badge variant="warning">
-                            Only {room.available} left
+                            {t("left", { count: room.available })}
                           </Badge>
                         )}
                       </div>
@@ -401,7 +405,7 @@ export function HotelDetailPage({
                       <div className="pt-4 border-t border-gray-200">
                         <div className="flex items-center gap-2 text-sm text-blue-600 font-medium">
                           <Check className="h-5 w-5" />
-                          <span>Selected for booking</span>
+                          <span>{t("selected")}</span>
                         </div>
                       </div>
                     )}
@@ -416,14 +420,12 @@ export function HotelDetailPage({
                 <Info className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div className="space-y-2">
                   <h3 className="font-semibold text-gray-900">
-                    Important Information
+                    {t("importantInfo")}
                   </h3>
                   <ul className="space-y-1 text-sm text-gray-700">
-                    <li>• Valid ID proof required at check-in</li>
-                    <li>• Early check-in subject to availability</li>
-                    <li>• Pets not allowed</li>
-                    <li>• Smoking only in designated areas</li>
-                    <li>• Cancellation charges as per policy</li>
+                    {t.raw("infoItems").map((item: string, idx: number) => (
+                      <li key={idx}>• {item}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -432,7 +434,7 @@ export function HotelDetailPage({
             {/* Contact */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Need Help?
+                {t("helpTitle")}
               </h3>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
@@ -443,7 +445,7 @@ export function HotelDetailPage({
                     <Phone className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Call us</p>
+                    <p className="text-sm text-gray-600">{t("callUs")}</p>
                     <p className="font-semibold text-gray-900">
                       +91 800 202 5000
                     </p>
@@ -457,7 +459,7 @@ export function HotelDetailPage({
                     <Mail className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Email us</p>
+                    <p className="text-sm text-gray-600">{t("emailUs")}</p>
                     <p className="font-semibold text-gray-900">
                       hotels@suvidhaescapes.com
                     </p>
@@ -477,28 +479,28 @@ export function HotelDetailPage({
                     {hotelData.originalPrice && hotelData.discount ? (
                       <>
                         <span className="text-3xl font-bold text-gray-900">
-                          ₹{hotelPrice.toLocaleString("en-IN")}
+                          {symbol}{hotelPrice.toLocaleString()}
                         </span>
                         <span className="text-lg text-gray-500 line-through">
-                          ₹{hotelData.originalPrice.toLocaleString("en-IN")}
+                          {symbol}{hotelData.originalPrice.toLocaleString()}
                         </span>
                         <Badge variant="success">
-                          {hotelData.discount}% OFF
+                          {hotelData.discount}% {t("off")}
                         </Badge>
                       </>
                     ) : (
                       <span className="text-3xl font-bold text-gray-900">
-                        ₹{hotelPrice.toLocaleString("en-IN")}
+                        {symbol}{hotelPrice.toLocaleString()}
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500">per night + taxes</p>
+                  <p className="text-sm text-gray-500">{t("perNight")} + {t("taxes")}</p>
                 </div>
 
                 {/* Check-in Date */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Check-in Date
+                    {t("checkInLabel")}
                   </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -527,7 +529,7 @@ export function HotelDetailPage({
                 {/* Check-out Date */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Check-out Date
+                    {t("checkOutLabel")}
                   </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -557,13 +559,13 @@ export function HotelDetailPage({
                   {/* Rooms Stepper */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Rooms
+                      {t("roomsLabel")}
                     </label>
                     <div className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white flex items-center justify-between">
                       <span className="flex items-center gap-2 text-gray-900">
                         <Home className="h-4 w-4 text-orange-500 flex-shrink-0" />
                         <span className="text-sm font-medium">
-                          {rooms} {rooms === 1 ? "Room" : "Rooms"}
+                          {rooms} {rooms === 1 ? t("room") : t("rooms")}
                         </span>
                       </span>
                       <div className="flex items-center gap-1.5">
@@ -590,13 +592,13 @@ export function HotelDetailPage({
                   {/* Guests Stepper */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Guests
+                      {t("guestsLabel")}
                     </label>
                     <div className="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white flex items-center justify-between">
                       <span className="flex items-center gap-2 text-gray-900">
                         <Users className="h-4 w-4 text-blue-500 flex-shrink-0" />
                         <span className="text-sm font-medium">
-                          {guests} {guests === 1 ? "Guest" : "Guests"}
+                          {guests} {guests === 1 ? t("guest") : t("guests")}
                         </span>
                       </span>
                       <div className="flex items-center gap-1.5">
@@ -625,20 +627,20 @@ export function HotelDetailPage({
                 {checkInDate && checkOutDate && (
                   <div className="space-y-2 pt-4 border-t border-gray-200">
                     <div className="flex justify-between text-gray-700">
-                      <span>
-                        ₹{hotelPrice.toLocaleString("en-IN")} × {nights}{" "}
-                        {nights === 1 ? "night" : "nights"} × {rooms}{" "}
-                        {rooms === 1 ? "room" : "rooms"}
+                      <span className="text-xs">
+                        {symbol}{hotelPrice.toLocaleString()} × {nights}{" "}
+                        {nights === 1 ? t("night") : t("nights")} × {rooms}{" "}
+                        {rooms === 1 ? t("room").toLowerCase() : t("rooms").toLowerCase()}
                       </span>
-                      <span>₹{totalPrice.toLocaleString("en-IN")}</span>
+                      <span>{symbol}{totalPrice.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-gray-700">
-                      <span>Taxes & Fees (12%)</span>
-                      <span>₹{taxesAndFees.toLocaleString("en-IN")}</span>
+                      <span>{t("taxesLabel")}</span>
+                      <span>{symbol}{taxesAndFees.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t border-gray-200">
-                      <span>Total</span>
-                      <span>₹{grandTotal.toLocaleString("en-IN")}</span>
+                      <span>{t("total")}</span>
+                      <span>{symbol}{grandTotal.toLocaleString()}</span>
                     </div>
                   </div>
                 )}
@@ -658,24 +660,24 @@ export function HotelDetailPage({
                     }
                   }}
                   disabled={!areDatesValid}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:from-blue-700 hover:to-purple-700"
+                  className="w-full bg-brand-primary text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-brand-secondary hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Book Now
+                  {t("bookNow")}
                 </button>
 
                 {/* Trust Badges */}
                 <div className="space-y-3 pt-4 border-t border-gray-200">
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Shield className="h-5 w-5 text-green-600" />
-                    <span>100% Secure Payments</span>
+                    <span>{t("securePayments")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Clock className="h-5 w-5 text-blue-600" />
-                    <span>Instant Confirmation</span>
+                    <span>{t("instantConfirmation")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Phone className="h-5 w-5 text-purple-600" />
-                    <span>24/7 Support</span>
+                    <span>{t("support247")}</span>
                   </div>
                 </div>
               </div>

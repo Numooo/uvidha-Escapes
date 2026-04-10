@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import type { FilterState } from "./types";
 import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
 
 export interface FlightFiltersProps {
   filters: FilterState;
@@ -27,6 +28,7 @@ export function FlightFilters({
 }: FlightFiltersProps) {
   const t = useTranslations("Flights.filtersSidebar");
   const tSearch = useTranslations("Search.flights");
+  const { symbol } = useCurrency();
   const [localFilters, setLocalFilters] = useState(filters);
 
   const TIME_SLOTS = [
@@ -118,9 +120,9 @@ export function FlightFilters({
               className="w-full"
             />
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600">₹0</span>
+              <span className="text-gray-600">{symbol}0</span>
               <span className="font-semibold text-gray-900">
-                ₹{localFilters.priceRange[1].toLocaleString()}
+                {symbol}{localFilters.priceRange[1].toLocaleString()}
               </span>
             </div>
           </div>
@@ -242,7 +244,7 @@ export function FlightFilters({
               className="w-full"
             />
             <div className="text-center text-sm font-semibold text-gray-900">
-              {localFilters.duration[1]} hours
+              {localFilters.duration[1]} {t("hours")}
             </div>
           </div>
         </div>

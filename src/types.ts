@@ -86,7 +86,7 @@ export interface Package {
   id: string;
   title: string;
   destination?: string;
-  duration: { days: number; nights: number };
+  duration: string | { days: number; nights: number };
   pricePerPerson?: number;
   price?: number; // per person (alternative)
   image?: string;

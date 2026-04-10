@@ -19,6 +19,8 @@ import {
   ChevronUp,
   Globe,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
 import { Button } from "./primitives/button";
 import { Input } from "./primitives/input";
 import type { VisaRequirement } from "./types";
@@ -34,6 +36,8 @@ export function VisaDetailPage({
   onBack,
   onStartApplication,
 }: VisaDetailPageProps) {
+  const t = useTranslations("VisaDetail");
+  const { symbol, CurrencyIcon } = useCurrency();
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>(
     "requirements"
@@ -54,7 +58,7 @@ export function VisaDetailPage({
     e.preventDefault();
     // Handle enquiry submission
     console.log("Enquiry submitted:", enquiryData);
-    alert("Thank you! Our visa consultant will contact you within 24 hours.");
+    alert(t("thankYou"));
     setShowEnquiryForm(false);
     setEnquiryData({
       name: "",
@@ -86,7 +90,7 @@ export function VisaDetailPage({
           className="absolute top-8 left-8 flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md text-white rounded-lg hover:bg-white/20 transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
-          <span>Back to Visa Services</span>
+          <span>{t("back")}</span>
         </button>
 
         {/* Hero Content */}
@@ -130,11 +134,11 @@ export function VisaDetailPage({
           <div className="lg:col-span-2 space-y-6">
             {/* Document Requirements */}
             <CollapsibleSection
-              title="Document Requirements"
+              title={t("documentRequirements")}
               icon={FileText}
               expanded={expandedSection === "requirements"}
               onToggle={() => toggleSection("requirements")}
-              badge={`${visa.requirements.length} items`}
+              badge={t("itemsCount", { count: visa.requirements.length })}
             >
               <div className="space-y-3">
                 {visa.requirements.map((req, idx) => (
@@ -153,7 +157,7 @@ export function VisaDetailPage({
 
             {/* Processing Timeline */}
             <CollapsibleSection
-              title="Processing Timeline"
+              title={t("processingTimeline")}
               icon={Clock}
               expanded={expandedSection === "timeline"}
               onToggle={() => toggleSection("timeline")}
@@ -203,13 +207,15 @@ export function VisaDetailPage({
                     <div className="flex-1 pb-8">
                       <div className="flex items-center justify-between mb-1">
                         <h4 className="font-semibold text-gray-900">
-                          {item.title}
+                          {t(`timeline.step${item.step}.title` as any)}
                         </h4>
                         <span className="text-sm text-blue-600 font-medium">
                           {item.duration}
                         </span>
                       </div>
-                      <p className="text-gray-600 text-sm">{item.desc}</p>
+                      <p className="text-gray-600 text-sm">
+                        {t(`timeline.step${item.step}.desc` as any)}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -218,33 +224,33 @@ export function VisaDetailPage({
 
             {/* Fees Breakdown */}
             <CollapsibleSection
-              title="Fees Breakdown"
+              title={t("feesBreakdown")}
               icon={CreditCard}
               expanded={expandedSection === "fees"}
               onToggle={() => toggleSection("fees")}
             >
               <div className="space-y-3">
                 {[
-                  { label: "Embassy Fee", amount: visa.price * 0.7 },
-                  { label: "Service Charge", amount: visa.price * 0.2 },
-                  { label: "Processing Fee", amount: visa.price * 0.1 },
+                  { label: t("fees.embassy"), amount: visa.price * 0.7 },
+                  { label: t("fees.service"), amount: visa.price * 0.2 },
+                  { label: t("fees.processing"), amount: visa.price * 0.1 },
                 ].map((item, idx) => (
-                  <div
+                   <div
                     key={idx}
                     className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
                   >
                     <span className="text-gray-700">{item.label}</span>
                     <span className="font-semibold text-gray-900">
-                      ₹{Math.round(item.amount).toLocaleString()}
+                      {symbol}{Math.round(item.amount).toLocaleString()}
                     </span>
                   </div>
                 ))}
                 <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
                   <span className="font-semibold text-blue-900">
-                    Total Amount
+                    {t("fees.total")}
                   </span>
                   <span className="text-2xl font-bold text-blue-600">
-                    ₹{visa.price.toLocaleString()}
+                    {symbol}{visa.price.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -252,7 +258,7 @@ export function VisaDetailPage({
 
             {/* Important Information */}
             <CollapsibleSection
-              title="Important Information"
+              title={t("importantInformation")}
               icon={AlertCircle}
               expanded={expandedSection === "info"}
               onToggle={() => toggleSection("info")}
@@ -283,7 +289,7 @@ export function VisaDetailPage({
 
             {/* FAQs */}
             <CollapsibleSection
-              title="Frequently Asked Questions"
+              title={t("faqs")}
               icon={Info}
               expanded={expandedSection === "faq"}
               onToggle={() => toggleSection("faq")}
@@ -309,7 +315,7 @@ export function VisaDetailPage({
                 ].map((faq, idx) => (
                   <div key={idx} className="p-4 bg-gray-50 rounded-lg">
                     <h4 className="font-semibold text-gray-900 mb-2">
-                      {faq.q}
+                       {faq.q}
                     </h4>
                     <p className="text-gray-600 text-sm">{faq.a}</p>
                   </div>
@@ -324,9 +330,9 @@ export function VisaDetailPage({
               {/* Price Card */}
               <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
                 <div className="text-center mb-6">
-                  <p className="text-sm text-gray-600 mb-2">Processing Fee</p>
+                  <p className="text-sm text-gray-600 mb-2">{t("fees.processing")}</p>
                   <p className="text-4xl font-bold text-blue-600">
-                    ₹{visa.price.toLocaleString()}
+                    {symbol}{visa.price.toLocaleString()}
                   </p>
                   <p className="text-sm text-gray-500 mt-1">per applicant</p>
                 </div>
@@ -337,7 +343,7 @@ export function VisaDetailPage({
                     className="w-full h-12 text-lg"
                     size="lg"
                   >
-                    Book Now
+                    {t("bookNow")}
                   </Button>
                   <Button
                     onClick={() => setShowEnquiryForm(true)}
@@ -345,7 +351,7 @@ export function VisaDetailPage({
                     className="w-full h-12 text-lg"
                     size="lg"
                   >
-                    Send Enquiry
+                    {t("enquiryTitle")}
                   </Button>
                 </div>
 
@@ -371,7 +377,7 @@ export function VisaDetailPage({
 
               {/* Contact Card */}
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border border-blue-200 p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Need Help?</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">{t("helpTitle")}</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-3 text-gray-700">
                     <Phone className="h-4 w-4 text-blue-600" />
@@ -425,7 +431,7 @@ export function VisaDetailPage({
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900">
-                      Send Enquiry
+                      {t("enquiryTitle")}
                     </h2>
                     <p className="text-gray-600 mt-1">
                       {visa.country} - {visa.visaType}
@@ -442,7 +448,7 @@ export function VisaDetailPage({
                 <form onSubmit={handleEnquirySubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
+                      {t("form.name")} *
                     </label>
                     <Input
                       required
@@ -450,14 +456,14 @@ export function VisaDetailPage({
                       onChange={(e) =>
                         setEnquiryData({ ...enquiryData, name: e.target.value })
                       }
-                      placeholder="Enter your full name"
+                      placeholder="John Doe"
                       className="h-12"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
+                      {t("form.email")} *
                     </label>
                     <Input
                       type="email"
@@ -469,14 +475,14 @@ export function VisaDetailPage({
                           email: e.target.value,
                         })
                       }
-                      placeholder="your.email@example.com"
+                      placeholder="john@example.com"
                       className="h-12"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number *
+                      {t("form.phone")} *
                     </label>
                     <Input
                       type="tel"
@@ -495,7 +501,7 @@ export function VisaDetailPage({
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Intended Travel Date
+                      {t("form.travelDate")}
                     </label>
                     <Input
                       type="date"
@@ -512,7 +518,7 @@ export function VisaDetailPage({
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Message (Optional)
+                      {t("form.message")}
                     </label>
                     <textarea
                       value={enquiryData.message}
@@ -522,7 +528,7 @@ export function VisaDetailPage({
                           message: e.target.value,
                         })
                       }
-                      placeholder="Any specific questions or requirements..."
+                      placeholder="..."
                       rows={4}
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -535,10 +541,10 @@ export function VisaDetailPage({
                       onClick={() => setShowEnquiryForm(false)}
                       className="flex-1 h-12"
                     >
-                      Cancel
+                      {t("form.cancel")}
                     </Button>
                     <Button type="submit" className="flex-1 h-12">
-                      Submit Enquiry
+                      {t("form.submit")}
                     </Button>
                   </div>
                 </form>

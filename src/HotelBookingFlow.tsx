@@ -17,6 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import type { Hotel } from "./types";
+import { useCurrency } from "@/CurrencyContext";
 
 interface HotelBookingFlowProps {
   hotel: Hotel;
@@ -48,6 +49,7 @@ export function HotelBookingFlow({
   guests,
   onBack,
 }: HotelBookingFlowProps) {
+  const { symbol } = useCurrency();
   const [step, setStep] = useState<"details" | "payment" | "confirmation">(
     "details"
   );
@@ -103,7 +105,7 @@ export function HotelBookingFlow({
               (step === "details" && idx === 0) ||
               (step === "payment" && idx === 1) ||
               (step === "confirmation" && idx === 2)
-                ? "bg-purple-600 text-white"
+                ? "bg-brand-primary text-white"
                 : idx < (step === "details" ? 0 : step === "payment" ? 1 : 2)
                 ? "bg-green-500 text-white"
                 : "bg-gray-200 text-gray-500"
@@ -121,7 +123,7 @@ export function HotelBookingFlow({
                 (step === "details" && idx === 0) ||
                 (step === "payment" && idx === 1) ||
                 (step === "confirmation" && idx === 2)
-                  ? "text-purple-600"
+                  ? "text-brand-primary"
                   : "text-gray-500"
               }`}
             >
@@ -200,7 +202,7 @@ export function HotelBookingFlow({
                                 firstName: e.target.value,
                               })
                             }
-                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                             placeholder="John"
                           />
                         </div>
@@ -221,7 +223,7 @@ export function HotelBookingFlow({
                                 lastName: e.target.value,
                               })
                             }
-                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                             placeholder="Doe"
                           />
                         </div>
@@ -244,7 +246,7 @@ export function HotelBookingFlow({
                               email: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                           placeholder="john.doe@example.com"
                         />
                       </div>
@@ -266,7 +268,7 @@ export function HotelBookingFlow({
                               phone: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                           placeholder="+91 98765 43210"
                         />
                       </div>
@@ -288,7 +290,7 @@ export function HotelBookingFlow({
                               address: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                           placeholder="123 Main Street"
                         />
                       </div>
@@ -309,7 +311,7 @@ export function HotelBookingFlow({
                               city: e.target.value,
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                           placeholder="Mumbai"
                         />
                       </div>
@@ -327,7 +329,7 @@ export function HotelBookingFlow({
                               zipCode: e.target.value,
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                           placeholder="400001"
                         />
                       </div>
@@ -346,14 +348,14 @@ export function HotelBookingFlow({
                           })
                         }
                         rows={3}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                         placeholder="Any special requirements or preferences..."
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-4 rounded-xl hover:shadow-lg transition-all"
+                      className="w-full bg-brand-primary text-white font-semibold py-4 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all"
                     >
                       Continue to Payment
                     </button>
@@ -373,7 +375,7 @@ export function HotelBookingFlow({
                     Payment Details
                   </h2>
 
-                  <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-300 rounded-xl p-6 mb-6">
+                  <div className="bg-brand-accent/5 border-2 border-brand-accent/30 rounded-xl p-6 mb-6">
                     <div className="flex items-start gap-3">
                       <Shield className="h-6 w-6 text-yellow-600 mt-1" />
                       <div>
@@ -399,7 +401,7 @@ export function HotelBookingFlow({
                         <input
                           type="text"
                           placeholder="4111 1111 1111 1111"
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
                         />
                       </div>
                     </div>
@@ -438,7 +440,7 @@ export function HotelBookingFlow({
                     <button
                       onClick={handlePayment}
                       disabled={isProcessing}
-                      className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-4 rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                      className="flex-1 bg-brand-primary text-white font-semibold py-4 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                     >
                       {isProcessing ? (
                         <>
@@ -475,14 +477,14 @@ export function HotelBookingFlow({
                     </p>
                   </div>
 
-                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 mb-6">
+                  <div className="bg-brand-primary/5 rounded-xl p-6 mb-6">
                     <div className="flex items-center justify-center gap-2 mb-4">
-                      <Sparkles className="h-5 w-5 text-purple-600" />
+                      <Sparkles className="h-5 w-5 text-brand-primary" />
                       <span className="text-sm font-semibold text-gray-600">
                         Booking Reference
                       </span>
                     </div>
-                    <div className="text-3xl font-bold text-purple-600 tracking-wider">
+                    <div className="text-3xl font-bold text-brand-primary tracking-wider">
                       {bookingRef}
                     </div>
                   </div>
@@ -522,8 +524,8 @@ export function HotelBookingFlow({
                     <div className="border-t border-gray-200 pt-3 mt-3">
                       <div className="flex justify-between text-sm font-semibold">
                         <span className="text-gray-900">Total Paid:</span>
-                        <span className="text-purple-600 text-lg">
-                          ₹{grandTotal.toLocaleString()}
+                        <span className="text-brand-primary text-lg">
+                          {symbol}{grandTotal.toLocaleString()}
                         </span>
                       </div>
                     </div>
@@ -538,7 +540,7 @@ export function HotelBookingFlow({
 
                   <button
                     onClick={onBack}
-                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-4 rounded-xl hover:shadow-lg transition-all"
+                    className="w-full bg-brand-primary text-white font-semibold py-4 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all"
                   >
                     Back to Hotels
                   </button>
@@ -614,17 +616,17 @@ export function HotelBookingFlow({
               <div className="space-y-2 py-4 border-t border-gray-200">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">
-                    ₹{hotelPrice.toLocaleString()} × {nights} nights × {rooms}{" "}
+                    {symbol}{hotelPrice.toLocaleString()} × {nights} nights × {rooms}{" "}
                     room{rooms > 1 ? "s" : ""}
                   </span>
                   <span className="font-medium text-gray-900">
-                    ₹{totalPrice.toLocaleString()}
+                    {symbol}{totalPrice.toLocaleString()}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Taxes & Fees (12%)</span>
                   <span className="font-medium text-gray-900">
-                    ₹{taxesAndFees.toLocaleString()}
+                    {symbol}{taxesAndFees.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -634,8 +636,8 @@ export function HotelBookingFlow({
                   <span className="text-lg font-semibold text-gray-900">
                     Total
                   </span>
-                  <span className="text-2xl font-bold text-purple-600">
-                    ₹{grandTotal.toLocaleString()}
+                  <span className="text-2xl font-bold text-brand-primary">
+                    {symbol}{grandTotal.toLocaleString()}
                   </span>
                 </div>
               </div>

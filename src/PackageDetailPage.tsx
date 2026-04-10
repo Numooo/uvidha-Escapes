@@ -22,6 +22,8 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
 import { Badge } from "./primitives/badge";
 import type { Package } from "./types";
 
@@ -36,6 +38,9 @@ export function PackageDetailPage({
   onBack,
   onBook,
 }: PackageDetailPageProps) {
+  const t = useTranslations("PackageDetail");
+  const th = useTranslations("HotelDetail"); // Reusing common keys like 'bookNow'
+  const { symbol, CurrencyIcon } = useCurrency();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
   const [travelers, setTravelers] = useState(2);
@@ -70,7 +75,7 @@ export function PackageDetailPage({
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ChevronLeft className="h-5 w-5" />
-              <span className="font-medium">Back to Packages</span>
+              <span className="font-medium">{t("back")}</span>
             </button>
             <button
               onClick={() => setIsFavorite(!isFavorite)}
@@ -145,8 +150,12 @@ export function PackageDetailPage({
                     <div className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
                       <span>
-                        {packageData.duration.days} Days /{" "}
-                        {packageData.duration.nights} Nights
+                        {typeof packageData.duration === "string"
+                          ? packageData.duration
+                          : t("daysNights", {
+                              days: packageData.duration.days,
+                              nights: packageData.duration.nights,
+                            })}
                       </span>
                     </div>
                   </div>
@@ -160,16 +169,6 @@ export function PackageDetailPage({
                     ({packageData.reviewCount})
                   </span>
                 </div>
-              </div>
-
-              {/* Themes */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                {packageData.theme &&
-                  packageData.theme.map((theme) => (
-                    <Badge key={theme} variant="secondary">
-                      {theme}
-                    </Badge>
-                  ))}
               </div>
 
               {/* Quick Highlights */}
@@ -201,10 +200,10 @@ export function PackageDetailPage({
                 {packageData.inclusions.includes("Meals") ||
                 packageData.inclusions.includes("Breakfast") ? (
                   <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="p-2 rounded-lg bg-purple-50">
-                      <UtensilsCrossed className="h-5 w-5 text-purple-600" />
+                    <div className="p-2 rounded-lg bg-brand-primary/5">
+                      <UtensilsCrossed className="h-5 w-5 text-brand-primary" />
                     </div>
-                    <span>Meals</span>
+                    <span>{t("meals") || "Meals"}</span>
                   </div>
                 ) : null}
               </div>
@@ -213,7 +212,7 @@ export function PackageDetailPage({
             {/* Day-by-Day Itinerary */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Detailed Itinerary
+                {t("itineraryTitle")}
               </h2>
               <div className="space-y-6">
                 {packageData.itinerary && packageData.itinerary.length > 0 ? (
@@ -232,7 +231,7 @@ export function PackageDetailPage({
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                            Day {day.day}: {day.title}
+                            {t("dayTitle", { day: day.day, title: day.title })}
                           </h3>
                           <p className="text-gray-600 mb-2">{day.desc}</p>
                           {isPackageDay && day.description && (
@@ -245,7 +244,7 @@ export function PackageDetailPage({
                             day.activities.length > 0 && (
                               <div className="mt-3 space-y-1">
                                 <p className="text-sm font-medium text-gray-700">
-                                  Activities:
+                                  {t("activities")}
                                 </p>
                                 <ul className="list-disc list-inside space-y-1">
                                   {day.activities.map(
@@ -286,7 +285,7 @@ export function PackageDetailPage({
                 ) : (
                   <div className="text-center py-8 text-gray-500">
                     <Info className="h-12 w-12 mx-auto mb-3 text-gray-400" />
-                    <p>Detailed itinerary will be shared upon booking</p>
+                    <p>{t("itineraryPlaceholder")}</p>
                   </div>
                 )}
               </div>
@@ -301,7 +300,7 @@ export function PackageDetailPage({
                     <CheckCircle className="h-5 w-5 text-green-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    What&apos;s Included
+                    {t("includedTitle")}
                   </h3>
                 </div>
                 <ul className="space-y-2">
@@ -328,18 +327,11 @@ export function PackageDetailPage({
                     <XCircle className="h-5 w-5 text-red-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">
-                    What&apos;s Not Included
+                    {t("notIncludedTitle")}
                   </h3>
                 </div>
                 <ul className="space-y-2">
-                  {[
-                    "Travel insurance",
-                    "Personal expenses",
-                    "Additional meals not mentioned",
-                    "Monument entrance fees",
-                    "Tips and gratuities",
-                    "Anything not mentioned in inclusions",
-                  ].map((item) => (
+                  {t.raw("included").map((item: string) => (
                     <li key={item} className="flex items-start gap-2">
                       <X className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
                       <span className="text-gray-700">{item}</span>
@@ -355,18 +347,12 @@ export function PackageDetailPage({
                 <Info className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div className="space-y-2">
                   <h3 className="font-semibold text-gray-900">
-                    Important Information
+                    {t("importantInfo")}
                   </h3>
                   <ul className="space-y-1 text-sm text-gray-700">
-                    <li>• Minimum 2 travelers required for this package</li>
-                    <li>
-                      • Booking must be made at least 7 days before departure
-                    </li>
-                    <li>
-                      • Cancellation charges apply as per terms & conditions
-                    </li>
-                    <li>• Valid government ID required for all travelers</li>
-                    <li>• Package prices may vary during peak season</li>
+                    {t.raw("infoItems").map((item: string, idx: number) => (
+                      <li key={idx}>• {item}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -375,7 +361,7 @@ export function PackageDetailPage({
             {/* Need Help */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Need Help Planning?
+                {t("helpTitle")}
               </h3>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
@@ -386,7 +372,7 @@ export function PackageDetailPage({
                     <Phone className="h-5 w-5 text-primary-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Call us</p>
+                    <p className="text-sm text-gray-600">{t("callUs")}</p>
                     <p className="font-semibold text-gray-900">
                       +91 800 202 5000
                     </p>
@@ -400,7 +386,7 @@ export function PackageDetailPage({
                     <Mail className="h-5 w-5 text-primary-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Email us</p>
+                    <p className="text-sm text-gray-600">{t("emailUs")}</p>
                     <p className="font-semibold text-gray-900">
                       packages@suvidhaescapes.com
                     </p>
@@ -418,17 +404,17 @@ export function PackageDetailPage({
                 <div>
                   <div className="flex items-baseline gap-2 mb-2">
                     <span className="text-3xl font-bold text-gray-900">
-                      ₹{packagePrice.toLocaleString("en-IN")}
+                      {symbol}{packagePrice.toLocaleString()}
                     </span>
-                    <span className="text-gray-600">per person</span>
+                    <span className="text-gray-600">{t("perPerson")}</span>
                   </div>
-                  <p className="text-sm text-gray-500">Taxes included</p>
+                  <p className="text-sm text-gray-500">{t("taxesIncluded")}</p>
                 </div>
 
                 {/* Travel Date */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Select Travel Date
+                    {t("selectTravelDate")}
                   </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -449,7 +435,7 @@ export function PackageDetailPage({
                 {/* Number of Travelers */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Travelers
+                    {t("numberOfTravelers")}
                   </label>
                   <div className="relative">
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -460,7 +446,7 @@ export function PackageDetailPage({
                     >
                       {[2, 3, 4, 5, 6, 7, 8].map((num) => (
                         <option key={num} value={num}>
-                          {num} Travelers
+                        {num} {t("travelersCount", { count: num })}
                         </option>
                       ))}
                     </select>
@@ -471,18 +457,18 @@ export function PackageDetailPage({
                 <div className="space-y-2 pt-4 border-t border-gray-200">
                   <div className="flex justify-between text-gray-700">
                     <span>
-                      ₹{packagePrice.toLocaleString("en-IN")} × {travelers}{" "}
-                      travelers
+                      {symbol}{packagePrice.toLocaleString()} × {travelers}{" "}
+                      {t("travelersCount", { count: travelers })}
                     </span>
-                    <span>₹{totalPrice.toLocaleString("en-IN")}</span>
+                    <span>{symbol}{totalPrice.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-gray-700">
-                    <span>Taxes & Fees</span>
-                    <span>₹{taxesAndFees.toLocaleString("en-IN")}</span>
+                    <span>{t("taxesFees")}</span>
+                    <span>{symbol}{taxesAndFees.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t border-gray-200">
-                    <span>Total</span>
-                    <span>₹{grandTotal.toLocaleString("en-IN")}</span>
+                    <span>{t("total")}</span>
+                    <span>{symbol}{grandTotal.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -490,24 +476,24 @@ export function PackageDetailPage({
                 <button
                   onClick={() => onBook(packageData.id)}
                   disabled={!selectedDate}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:from-blue-700 hover:to-purple-700"
+                  className="w-full bg-brand-primary text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-brand-secondary hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Book Now
+                  {th("bookNow")}
                 </button>
 
                 {/* Trust Badges */}
                 <div className="space-y-3 pt-4 border-t border-gray-200">
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Shield className="h-5 w-5 text-green-600" />
-                    <span>100% Secure Payments</span>
+                    <span>{th("securePayments")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Clock className="h-5 w-5 text-blue-600" />
-                    <span>Instant Confirmation</span>
+                    <span>{th("instantConfirmation")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <Phone className="h-5 w-5 text-purple-600" />
-                    <span>24/7 Support</span>
+                    <span>{th("support247")}</span>
                   </div>
                 </div>
               </div>

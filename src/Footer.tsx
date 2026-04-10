@@ -9,6 +9,8 @@ import {
   MapPin,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import logo from "./app/logo.png";
+import Image from "next/image";
 
 const socialLinks = [
   { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
@@ -56,12 +58,9 @@ export function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-secondary-600">
-                <span className="text-xl font-bold text-white">SE</span>
+              <div className="flex h-12 w-auto items-center justify-center">
+                <Image src={logo} alt="Suvidha Escapes Logo" className="h-10 w-auto object-contain brightness-0 invert" />
               </div>
-              <span className="text-xl font-bold text-white">
-                Suvidha Escapes
-              </span>
             </div>
             <p className="mb-4 text-sm leading-relaxed">
               {t("description")}
@@ -70,18 +69,16 @@ export function Footer() {
             {/* Contact Info */}
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-primary-400" />
-                <span>+91 1800-123-4567</span>
+                <Phone className="h-4 w-4 text-brand-secondary" />
+                <span>{t("contact.phone")}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-primary-400" />
-                <span>support@suvidhaescapes.com</span>
+                <Mail className="h-4 w-4 text-brand-secondary" />
+                <span>{t("contact.email")}</span>
               </div>
               <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-primary-400 mt-0.5" />
-                <span>
-                  123 Travel Street, Mumbai, Maharashtra 400001, India
-                </span>
+                <MapPin className="h-4 w-4 text-brand-secondary mt-0.5" />
+                <span>{t("contact.address")}</span>
               </div>
             </div>
           </div>
@@ -115,7 +112,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm transition-colors hover:text-primary-400"
+                    className="text-sm transition-colors hover:text-brand-secondary"
                   >
                     {link.label}
                   </a>
@@ -134,7 +131,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm transition-colors hover:text-primary-400"
+                    className="text-sm transition-colors hover:text-brand-secondary"
                   >
                     {link.label}
                   </a>
@@ -160,7 +157,7 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.label}
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition-colors hover:bg-primary-600 hover:text-white"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition-colors hover:bg-brand-primary hover:text-white"
                     >
                       <Icon className="h-4 w-4" />
                     </a>
@@ -174,9 +171,9 @@ export function Footer() {
               <input
                 type="email"
                 placeholder={t("emailPlaceholder")}
-                className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white placeholder-gray-500 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
               />
-              <button className="rounded-lg bg-primary-600 px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-700">
+              <button className="rounded-lg bg-brand-primary px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-secondary">
                 {t("subscribe")}
               </button>
             </div>
@@ -196,7 +193,7 @@ export function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-gray-400 transition-colors hover:text-primary-400"
+                  className="text-gray-400 transition-colors hover:text-brand-secondary"
                 >
                   {link.label}
                 </a>

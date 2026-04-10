@@ -20,11 +20,11 @@ export function Button({
 
   const variantClasses = {
     primary:
-      "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 focus:ring-blue-500",
+      "bg-brand-primary text-white hover:bg-brand-secondary focus:ring-brand-primary",
     secondary:
-      "bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500",
+      "bg-brand-accent text-white hover:opacity-90 focus:ring-brand-accent",
     outline:
-      "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 focus:ring-blue-500",
+      "border-2 border-brand-primary text-brand-primary hover:bg-brand-primary/5 focus:ring-brand-primary",
     ghost:
       "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 focus:ring-gray-500",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",

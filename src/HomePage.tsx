@@ -24,6 +24,8 @@ import { format } from "date-fns";
 import { AIRPORTS } from "./data";
 import { Badge } from "./primitives/badge";
 import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
+import type { Package } from "./types";
 
 type TabType = "flights" | "hotels" | "holidays" | "visa";
 type TripType = "oneway" | "roundtrip";
@@ -37,8 +39,9 @@ interface HomePageProps {
 export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
   const t = useTranslations();
   const [activeTab, setActiveTab] = useState<TabType>("flights");
-  const [tripType, setTripType] = useState<TripType>("roundtrip");
+  const [tripType, setTripType] = useState<TabType | any>("roundtrip"); // Using any for tripType consistency
   const [cabinClass, setCabinClass] = useState<CabinClass>("economy");
+  const { symbol, CurrencyIcon } = useCurrency();
 
   // Passenger counters
   const [adults, setAdults] = useState(1);
@@ -115,8 +118,8 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
               "url(https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80)",
           }}
         >
-          {/* Dark gradient overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/85 via-indigo-900/80 to-purple-900/85" />
+          {/* Dark solid overlay for readability */}
+          <div className="absolute inset-0 bg-brand-primary/80" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -134,7 +137,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-blue-100 sm:text-xl"
+              className="text-lg text-white/90 sm:text-xl"
             >
               {t("Hero.subtitle")}
             </motion.p>
@@ -166,7 +169,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                     onClick={() => setActiveTab(tab.id)}
                     className={`relative flex items-center gap-2 px-6 py-4 text-sm font-semibold transition-all rounded-t-lg ${
                       activeTab === tab.id
-                        ? "text-blue-600 bg-blue-50"
+                        ? "text-brand-primary bg-brand-primary/5"
                         : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                   >
@@ -175,7 +178,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                     {activeTab === tab.id && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t"
+                        className="absolute bottom-0 left-0 right-0 h-1 bg-brand-primary rounded-t"
                         transition={{
                           type: "spring",
                           stiffness: 500,
@@ -474,7 +477,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 {/* Search Button */}
                 <button
                   onClick={handleSearch}
-                  className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                  className="w-full rounded-xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
                 >
                   <Plane className="h-5 w-5" />
                   {t("Search.flights.search")}
@@ -576,7 +579,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                       <select
                         value={hotelRooms}
                         onChange={(e) => setHotelRooms(Number(e.target.value))}
-                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
                       >
                         {[1, 2, 3, 4, 5].map((num) => (
                           <option key={num} value={num}>
@@ -598,7 +601,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                       <select
                         value={hotelGuests}
                         onChange={(e) => setHotelGuests(Number(e.target.value))}
-                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
                       >
                         {[1, 2, 3, 4, 5, 6].map((num) => (
                           <option key={num} value={num}>
@@ -615,7 +618,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 <button
                   onClick={handleSearch}
                   disabled={!hotelDestination}
-                  className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full rounded-xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Hotel className="h-5 w-5" />
                   {t("Search.hotels.search")}
@@ -656,9 +659,9 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                         onChange={(e) => setHolidayBudget(e.target.value)}
                         className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-4 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                       >
-                        <option value="budget">{t("Search.holidays.budgetRange.budget")}</option>
-                        <option value="medium">{t("Search.holidays.budgetRange.medium")}</option>
-                        <option value="luxury">{t("Search.holidays.budgetRange.luxury")}</option>
+                        <option value="budget">{t("Search.holidays.budgetRange.budget", { symbol })}</option>
+                        <option value="medium">{t("Search.holidays.budgetRange.medium", { symbol })}</option>
+                        <option value="luxury">{t("Search.holidays.budgetRange.luxury", { symbol })}</option>
                       </select>
                       <ChevronDown className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
                     </div>
@@ -713,7 +716,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                         onChange={(e) =>
                           setHolidayTravelers(Number(e.target.value))
                         }
-                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
                       >
                         {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                           <option key={num} value={num}>
@@ -729,7 +732,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 {/* Search Button */}
                 <button
                   onClick={handleSearch}
-                  className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                  className="w-full rounded-xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
                 >
                   <Palmtree className="h-5 w-5" />
                   {t("Search.holidays.search")}
@@ -752,17 +755,14 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                       <select
                         value={visaCountry}
                         onChange={(e) => setVisaCountry(e.target.value)}
-                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
                       >
                         <option value="">{t("Search.visa.selectCountry")}</option>
-                        <option value="usa">United States</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="schengen">Schengen (Europe)</option>
-                        <option value="australia">Australia</option>
-                        <option value="canada">Canada</option>
-                        <option value="dubai">Dubai (UAE)</option>
-                        <option value="singapore">Singapore</option>
-                        <option value="thailand">Thailand</option>
+                        {Object.entries(t.raw("Search.visa.countries")).map(([code, name]) => (
+                          <option key={code} value={code}>
+                            {name as string}
+                          </option>
+                        ))}
                       </select>
                       <ChevronDown className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
                     </div>
@@ -778,7 +778,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                       <select
                         value={visaType}
                         onChange={(e) => setVisaType(e.target.value)}
-                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
                       >
                         <option value="tourist">{t("Search.visa.types.tourist")}</option>
                         <option value="business">{t("Search.visa.types.business")}</option>
@@ -808,7 +808,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                           new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
                           "yyyy-MM-dd"
                         )}
-                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
                       />
                     </div>
                   </div>
@@ -825,7 +825,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                         onChange={(e) =>
                           setVisaApplicants(Number(e.target.value))
                         }
-                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
                       >
                         {[1, 2, 3, 4, 5, 6].map((num) => (
                           <option key={num} value={num}>
@@ -842,7 +842,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 <button
                   onClick={handleSearch}
                   disabled={!visaCountry}
-                  className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full rounded-xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FileText className="h-5 w-5" />
                   {t("Search.visa.check")}
@@ -857,7 +857,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
       <FeaturedPackagesSection onNavigate={onNavigate} />
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+      <section className="py-20 bg-brand-primary/[0.03]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -865,7 +865,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-4">
+            <span className="inline-block px-4 py-2 bg-brand-accent/10 text-brand-accent rounded-full text-sm font-semibold mb-4">
               ⭐ {t("Testimonials.badge")}
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -877,219 +877,37 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                &ldquo;Our Bali trip organized by Suvidha Escapes was absolutely
-                magical! Every detail was perfectly planned, from the stunning
-                hotels to the incredible experiences. The AI trip planner made
-                it so easy to customize our itinerary.&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100"
-                  alt="Priya Sharma"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Priya Sharma</h4>
-                  <p className="text-sm text-gray-600">Bali Trip, Dec 2024</p>
+            {t.raw("Testimonials.list").map((testimonial: { content: string; author: string; trip: string }, index: number) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
+              >
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="h-5 w-5 fill-yellow-400 text-yellow-400"
+                    />
+                  ))}
                 </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                &ldquo;Best travel booking experience ever! The hotel
-                recommendations were spot-on, and the customer support was
-                available 24/7. We saved so much time and money. Highly
-                recommend for family vacations!&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100"
-                  alt="Rajesh Kumar"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Rajesh Kumar</h4>
-                  <p className="text-sm text-gray-600">Dubai Trip, Jan 2025</p>
+                <p className="text-gray-700 mb-6 leading-relaxed italic">
+                  &ldquo;{testimonial.content}&rdquo;
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold">
+                    {testimonial.author[0]}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">{testimonial.author}</h4>
+                    <p className="text-sm text-gray-600">{testimonial.trip}</p>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                &ldquo;The Maldives package was a dream come true! Crystal clear
-                waters, luxury resort, and amazing activities. Suvidha Escapes
-                made our honeymoon unforgettable. Thank you for the seamless
-                experience!&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100"
-                  alt="Ananya Patel"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Ananya Patel</h4>
-                  <p className="text-sm text-gray-600">
-                    Maldives Trip, Nov 2024
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 4 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                &ldquo;Incredible service from start to finish! The flight
-                bookings were hassle-free, hotels were top-notch, and the visa
-                assistance was super helpful. Will definitely book again for our
-                next international trip.&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100"
-                  alt="Amit Verma"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Amit Verma</h4>
-                  <p className="text-sm text-gray-600">Europe Tour, Oct 2024</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 5 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                &ldquo;As a solo traveler, I was nervous about planning
-                everything myself. Suvidha Escapes made it effortless! Great
-                hotels, safe locations, and the AI planner understood exactly
-                what I wanted. Five stars!&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"
-                  alt="Sneha Reddy"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Sneha Reddy</h4>
-                  <p className="text-sm text-gray-600">
-                    Thailand Trip, Sep 2024
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 6 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                &ldquo;Outstanding experience! The Kerala backwaters trip was
-                peaceful and rejuvenating. Everything from houseboat to Ayurveda
-                spa was perfectly arranged. Suvidha Escapes exceeded all our
-                expectations!&rdquo;
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100"
-                  alt="Vikram Singh"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900">Vikram Singh</h4>
-                  <p className="text-sm text-gray-600">Kerala Trip, Aug 2024</p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
 
           {/* Stats Section */}
@@ -1100,35 +918,35 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
             className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                50K+
+              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">
+                {t("Stats.data.travelers")}
               </div>
-              <p className="text-gray-600 font-medium">Happy Travelers</p>
+              <p className="text-gray-600 font-medium">{t("Stats.happyTravelers")}</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                4.9
+              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">
+                {t("Stats.data.rating")}
               </div>
-              <p className="text-gray-600 font-medium">Average Rating</p>
+              <p className="text-gray-600 font-medium">{t("Stats.averageRating")}</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                150+
+              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">
+                {t("Stats.data.destinations")}
               </div>
-              <p className="text-gray-600 font-medium">Destinations</p>
+              <p className="text-gray-600 font-medium">{t("Stats.destinations")}</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                24/7
+              <div className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">
+                {t("Stats.data.support")}
               </div>
-              <p className="text-gray-600 font-medium">Support Available</p>
+              <p className="text-gray-600 font-medium">{t("Stats.support")}</p>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Why Choose Us Section - Compact */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <section className="py-16 bg-brand-primary/[0.02]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <motion.h2
@@ -1137,7 +955,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
               viewport={{ once: true }}
               className="text-3xl font-bold text-gray-900 sm:text-4xl mb-4"
             >
-              Why Choose Suvidha Escapes?
+              {t("WhyChooseUs.title")}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -1146,32 +964,29 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
               transition={{ delay: 0.1 }}
               className="text-lg text-gray-600"
             >
-              Your trusted travel partner for seamless journeys
+              {t("WhyChooseUs.subtitle")}
             </motion.p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               {
-                title: "Best Prices Guaranteed",
-                description:
-                  "Get the lowest fares with our price match guarantee and exclusive deals.",
+                title: t("WhyChooseUs.features.prices.title"),
+                description: t("WhyChooseUs.features.prices.description"),
                 icon: TrendingUp,
-                color: "from-green-500 to-emerald-500",
+                color: "bg-brand-accent",
               },
               {
-                title: "24/7 Customer Support",
-                description:
-                  "Our travel experts are available round the clock to assist you.",
+                title: t("WhyChooseUs.features.support.title"),
+                description: t("WhyChooseUs.features.support.description"),
                 icon: Headphones,
-                color: "from-blue-500 to-cyan-500",
+                color: "bg-brand-secondary",
               },
               {
-                title: "Secure Booking",
-                description:
-                  "Your data is protected with industry-standard encryption and security.",
+                title: t("WhyChooseUs.features.secure.title"),
+                description: t("WhyChooseUs.features.secure.description"),
                 icon: Shield,
-                color: "from-purple-500 to-pink-500",
+                color: "bg-brand-primary",
               },
             ].map((feature, index) => (
               <motion.div
@@ -1183,14 +998,14 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 className="group relative rounded-2xl bg-white p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
               >
                 <div
-                  className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${feature.color} rounded-l-2xl`}
+                  className={`absolute top-0 left-0 w-1 h-full ${feature.color} rounded-l-2xl`}
                 />
                 <div
-                  className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} mb-4`}
+                  className={`inline-flex p-4 rounded-xl ${feature.color} mb-4`}
                 >
                   <feature.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-primary transition-colors">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -1212,90 +1027,12 @@ interface FeaturedPackagesSectionProps {
 
 function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
   const t = useTranslations();
+  const { symbol } = useCurrency();
   const [isPaused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Featured packages data
-  const featuredPackages = [
-    {
-      id: "1",
-      title: "Goa Beach Escape",
-      destination: "Goa, India",
-      image:
-        "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&h=400&fit=crop",
-      duration: "5D / 4N",
-      price: 35000,
-      rating: 4.9,
-      reviews: 234,
-      badge: "Bestseller",
-      highlights: ["Beach Resort", "Water Sports", "Sunset Cruise"],
-    },
-    {
-      id: "2",
-      title: "Himalayan Adventure",
-      destination: "Manali, HP",
-      image:
-        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&h=400&fit=crop",
-      duration: "6D / 5N",
-      price: 28000,
-      rating: 4.8,
-      reviews: 189,
-      badge: "Adventure",
-      highlights: ["Rohtang Pass", "Paragliding", "Trekking"],
-    },
-    {
-      id: "3",
-      title: "Kerala Backwaters",
-      destination: "Kerala, India",
-      image:
-        "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&h=400&fit=crop",
-      duration: "4D / 3N",
-      price: 22000,
-      rating: 4.7,
-      reviews: 156,
-      badge: "Wellness",
-      highlights: ["Houseboat Cruise", "Ayurveda Spa", "Backwaters"],
-    },
-    {
-      id: "4",
-      title: "Rajasthan Heritage",
-      destination: "Jaipur, Udaipur",
-      image:
-        "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&h=400&fit=crop",
-      duration: "7D / 6N",
-      price: 45000,
-      rating: 4.9,
-      reviews: 312,
-      badge: "Heritage",
-      highlights: ["Amber Fort", "City Palace", "Lake Pichola"],
-    },
-    {
-      id: "5",
-      title: "Andaman Paradise",
-      destination: "Port Blair, Havelock",
-      image:
-        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop",
-      duration: "5D / 4N",
-      price: 42000,
-      rating: 4.8,
-      reviews: 198,
-      badge: "Beach",
-      highlights: ["Radhanagar Beach", "Scuba Diving", "Island Hopping"],
-    },
-    {
-      id: "6",
-      title: "Leh Ladakh Expedition",
-      destination: "Leh, Ladakh",
-      image:
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
-      duration: "8D / 7N",
-      price: 52000,
-      rating: 5.0,
-      reviews: 445,
-      badge: "Popular",
-      highlights: ["Pangong Lake", "Nubra Valley", "Khardung La"],
-    },
-  ];
+  const featuredPackages = t.raw("Featured.packages") as Package[];
 
   useEffect(() => {
     if (!scrollRef.current || isPaused) return;
@@ -1348,7 +1085,7 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             onClick={() => onNavigate?.("holidays")}
-            className="hidden md:flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors group"
+            className="hidden md:flex items-center gap-2 text-brand-primary font-semibold hover:text-brand-secondary transition-colors group"
           >
             {t("Featured.viewAll")}
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -1377,15 +1114,6 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-                  {/* Badge */}
-                  <div className="absolute top-4 left-4">
-                    <Badge
-                      variant="default"
-                      className="backdrop-blur-sm bg-blue-600/90"
-                    >
-                      {pkg.badge}
-                    </Badge>
-                  </div>
 
                   {/* Favorite Button */}
                   <button className="absolute top-4 right-4 p-2 bg-white/90 hover:bg-white rounded-full transition-colors">
@@ -1398,7 +1126,7 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
                       <MapPin className="h-4 w-4" />
                       <span>{pkg.destination}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-blue-200 transition-colors">
+                    <h3 className="text-xl font-bold text-white group-hover:text-brand-secondary transition-colors">
                       {pkg.title}
                     </h3>
                   </div>
@@ -1416,19 +1144,23 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
                         </span>
                       </div>
                       <span className="text-sm text-gray-600">
-                        ({pkg.reviews})
+                        ({pkg.reviewCount})
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5 text-sm text-gray-600">
                       <Calendar className="h-4 w-4" />
-                      <span className="font-medium">{pkg.duration}</span>
+                      <span className="font-medium">
+                        {typeof pkg.duration === "string"
+                          ? pkg.duration
+                          : `${t("Holidays.daysCount", { count: pkg.duration.days })} / ${t("Holidays.nightsCount", { count: pkg.duration.nights })}`}
+                      </span>
                     </div>
                   </div>
 
                   {/* Highlights */}
                   <div className="mb-4">
                     <div className="flex flex-wrap gap-1.5">
-                      {pkg.highlights.slice(0, 3).map((highlight, idx) => (
+                      {pkg.highlights?.slice(0, 3).map((highlight: string, idx: number) => (
                         <span
                           key={idx}
                           className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-md"
@@ -1443,15 +1175,15 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
                   <div className="flex items-end justify-between pt-4 border-t border-gray-200">
                     <div>
                       <p className="text-xs text-gray-600 mb-0.5">
-                        Starting from
+                        {t("Featured.startingFrom")}
                       </p>
-                      <p className="text-2xl font-bold text-blue-600">
-                        ₹{pkg.price.toLocaleString()}
+                      <p className="text-2xl font-bold text-brand-primary">
+                        {symbol}{(pkg.price || 0).toLocaleString()}
                       </p>
-                      <p className="text-xs text-gray-500">per person</p>
+                      <p className="text-xs text-gray-500">{t("Featured.perPerson")}</p>
                     </div>
-                    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
-                      View Details
+                    <button className="px-4 py-2 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-secondary transition-colors flex items-center gap-2">
+                      {t("Featured.viewDetails")}
                       <ArrowRight className="h-4 w-4" />
                     </button>
                   </div>
@@ -1465,9 +1197,9 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
         <div className="mt-8 text-center md:hidden">
           <button
             onClick={() => onNavigate?.("holidays")}
-            className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+            className="w-full px-6 py-3 bg-brand-primary text-white rounded-lg font-semibold hover:bg-brand-secondary transition-colors flex items-center justify-center gap-2"
           >
-            View All Packages
+            {t("Featured.viewAll")}
             <ArrowRight className="h-5 w-5" />
           </button>
         </div>

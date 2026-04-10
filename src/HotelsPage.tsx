@@ -24,162 +24,9 @@ import { Carousel } from "./primitives/carousel";
 import { HotelDetailPage } from "./HotelDetailPage";
 import type { Hotel } from "./types";
 import { useTranslations } from "next-intl";
+import { useCurrency } from "@/CurrencyContext";
 
-// Mock hotel data with real Unsplash images
-const MOCK_HOTELS: Hotel[] = [
-  {
-    id: "1",
-    name: "The Taj Mahal Palace",
-    location: "Colaba, Mumbai",
-    distance: "2.5 km from center",
-    images: [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800",
-    ],
-    rating: 4.8,
-    reviewCount: 1234,
-    reviewScore: "Excellent",
-    stars: 5,
-    amenities: [
-      "WiFi",
-      "Pool",
-      "Spa",
-      "Restaurant",
-      "Gym",
-      "Parking",
-      "Bar",
-      "Room Service",
-    ],
-    price: 15000,
-    originalPrice: 20000,
-    discount: 25,
-    availableRooms: 5,
-    checkIn: "2:00 PM",
-    checkOut: "11:00 AM",
-    description: "Iconic luxury hotel overlooking the Gateway of India",
-  },
-  {
-    id: "2",
-    name: "The Oberoi",
-    location: "Nariman Point, Mumbai",
-    distance: "1.2 km from center",
-    images: [
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800",
-      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800",
-      "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800",
-    ],
-    rating: 4.9,
-    reviewCount: 892,
-    reviewScore: "Outstanding",
-    stars: 5,
-    amenities: ["WiFi", "Pool", "Spa", "Restaurant", "Gym", "Airport Shuttle"],
-    price: 18000,
-    availableRooms: 3,
-    checkIn: "3:00 PM",
-    checkOut: "12:00 PM",
-  },
-  {
-    id: "3",
-    name: "Trident BKC",
-    location: "Bandra Kurla Complex",
-    distance: "8 km from center",
-    images: [
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
-      "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800",
-      "https://images.unsplash.com/photo-1455587734955-081b22074882?w=800",
-    ],
-    rating: 4.6,
-    reviewCount: 567,
-    reviewScore: "Very Good",
-    stars: 5,
-    amenities: ["WiFi", "Pool", "Restaurant", "Gym", "Business Center"],
-    price: 12000,
-    originalPrice: 15000,
-    discount: 20,
-    availableRooms: 8,
-    checkIn: "2:00 PM",
-    checkOut: "11:00 AM",
-  },
-  {
-    id: "4",
-    name: "ITC Maratha",
-    location: "Andheri East, Mumbai",
-    distance: "6 km from airport",
-    images: [
-      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800",
-    ],
-    rating: 4.7,
-    reviewCount: 743,
-    reviewScore: "Excellent",
-    stars: 5,
-    amenities: [
-      "WiFi",
-      "Pool",
-      "Spa",
-      "Restaurant",
-      "Gym",
-      "Airport Shuttle",
-      "Bar",
-    ],
-    price: 10000,
-    availableRooms: 12,
-    checkIn: "2:00 PM",
-    checkOut: "12:00 PM",
-  },
-  {
-    id: "5",
-    name: "JW Marriott Juhu",
-    location: "Juhu Beach, Mumbai",
-    distance: "15 km from center",
-    images: [
-      "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e9?w=800",
-    ],
-    rating: 4.8,
-    reviewCount: 1089,
-    reviewScore: "Excellent",
-    stars: 5,
-    amenities: [
-      "WiFi",
-      "Beach Access",
-      "Pool",
-      "Spa",
-      "Restaurant",
-      "Gym",
-      "Bar",
-    ],
-    price: 14000,
-    originalPrice: 17500,
-    discount: 20,
-    availableRooms: 6,
-    checkIn: "3:00 PM",
-    checkOut: "11:00 AM",
-  },
-  {
-    id: "6",
-    name: "Hotel Sea Green",
-    location: "Marine Drive, Mumbai",
-    distance: "0.8 km from center",
-    images: [
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800",
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
-      "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800",
-    ],
-    rating: 4.3,
-    reviewCount: 445,
-    reviewScore: "Good",
-    stars: 3,
-    amenities: ["WiFi", "Restaurant", "Room Service", "Laundry"],
-    price: 5000,
-    availableRooms: 15,
-    checkIn: "1:00 PM",
-    checkOut: "11:00 AM",
-  },
-];
+// Amenity icons mapping
 
 const amenityIcons: Record<
   string,
@@ -208,8 +55,9 @@ interface HotelsPageProps {
 
 export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
   const t = useTranslations("Hotels");
+  const { symbol } = useCurrency();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
-  const [hotels] = useState(MOCK_HOTELS);
+  const [hotels] = useState<Hotel[]>(t.raw("mockData"));
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -408,9 +256,9 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
                     className="w-full"
                   />
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">₹{priceRange[0]}</span>
+                    <span className="text-gray-600">{symbol}{priceRange[0]}</span>
                     <span className="font-medium text-gray-900">
-                      ₹{priceRange[1]}
+                      {symbol}{priceRange[1]}
                     </span>
                   </div>
                 </div>
@@ -630,12 +478,12 @@ function HotelCard({ hotel, viewMode, index, onSelect }: HotelCardProps) {
           <div>
             {hotel.originalPrice && (
               <span className="text-sm text-gray-500 line-through block">
-                ₹{hotel.originalPrice.toLocaleString()}
+                {symbol}{hotel.originalPrice.toLocaleString()}
               </span>
             )}
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-blue-600">
-                ₹{(hotel.price || hotel.pricePerNight || 0).toLocaleString()}
+                {symbol}{(hotel.price || hotel.pricePerNight || 0).toLocaleString()}
               </span>
               <span className="text-sm text-gray-600">/{t("night")}</span>
             </div>

@@ -12,12 +12,16 @@ import {
   Sparkles,
   LogIn,
   Languages,
+  DollarSign,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AITripPlanner } from "./AITripPlanner";
 import { SignInModal } from "./SignInModal";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname, useRouter, routing } from "@/i18n/routing";
+import { useCurrency, CURRENCIES, CurrencyCode } from "@/CurrencyContext";
+import logo from "./app/logo1.png";
+import Image from "next/image";
 
 interface NavItem {
   label: string;
@@ -25,15 +29,21 @@ interface NavItem {
   icon: React.ComponentType<{ className?: string }>;
 }
 
-const currencies = ["INR", "USD", "EUR", "GBP"];
+const currencies: CurrencyCode[] = ["KGS", "RUB", "USD", "EUR"];
 
 interface HeaderProps {
   onNavigate?: (
     page: "home" | "flights" | "hotels" | "holidays" | "visa"
   ) => void;
+  isSidebarPinned?: boolean;
+  onToggleSidebar?: () => void;
 }
 
-export function Header({ onNavigate }: HeaderProps = {}) {
+export function Header({ 
+  onNavigate, 
+  isSidebarPinned, 
+  onToggleSidebar 
+}: HeaderProps = {}) {
   const t = useTranslations("Header");
   const locale = useLocale();
   const pathname = usePathname();
@@ -43,16 +53,9 @@ export function Header({ onNavigate }: HeaderProps = {}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState("INR");
+  const { currency: selectedCurrency, setCurrency, symbol, CurrencyIcon } = useCurrency();
   const [aiPlannerOpen, setAiPlannerOpen] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
-
-  const navItems: NavItem[] = [
-    { label: t("flights"), href: "/flights", icon: Plane },
-    { label: t("hotels"), href: "/hotels", icon: Hotel },
-    { label: t("holidays"), href: "/holidays", icon: Palmtree },
-    { label: t("visa"), href: "/visa", icon: FileText },
-  ];
 
   const handleNavClick = (href: string, e: React.MouseEvent) => {
     if (onNavigate) {
@@ -76,55 +79,38 @@ export function Header({ onNavigate }: HeaderProps = {}) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-brand-primary/95 backdrop-blur-md">
+        <nav className="px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center">
+            {/* Left Side: Toggle & Logo */}
+            <div className="flex items-center gap-4">
+              {/* Sidebar Toggle Button (Desktop) */}
+              <button
+                onClick={onToggleSidebar}
+                className="hidden lg:flex items-center justify-center p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+                aria-label="Toggle Sidebar"
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+
               <Link
                 href="/"
                 onClick={(e) => handleNavClick("/", e)}
                 className="flex items-center gap-2.5 group"
               >
-                <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-105">
-                  <span className="text-xl font-bold text-white">SE</span>
-                  <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                </div>
-                <div className="hidden sm:block">
-                  <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Suvidha Escapes
-                  </span>
-                  <p className="text-xs text-gray-500 -mt-1">
-                    {t("tagline")}
-                  </p>
+                <div className="relative flex h-12 min-w-[180px] items-center justify-start transition-all group-hover:scale-105">
+                  <Image src={logo} alt="Suvidha Escapes Logo" className="h-10 w-auto object-contain object-left brightness-0 invert" priority />
                 </div>
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex lg:items-center lg:gap-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(item.href, e)}
-                  className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:bg-purple-50 hover:text-purple-700 relative group"
-                >
-                  <span className="text-gray-500 group-hover:text-purple-600 transition-colors">
-                    <item.icon className="h-4 w-4" />
-                  </span>
-                  {item.label}
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 group-hover:w-3/4 transition-all duration-300"></span>
-                </Link>
-              ))}
-
-              {/* AI Trip Planner Button */}
+            {/* AI Trip Planner Button */}
+            <div className="hidden lg:flex lg:items-center">
               <button
                 onClick={() => setAiPlannerOpen(true)}
-                className="ml-2 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-all hover:scale-105 relative overflow-hidden group"
+                className="inline-flex items-center gap-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-white/20 transition-all hover:scale-105 relative overflow-hidden group"
               >
-                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></span>
-                <Sparkles className="h-4 w-4 animate-pulse" />
+                <Sparkles className="h-4 w-4 text-brand-accent animate-pulse" />
                 {t("aiPlanner")}
               </button>
             </div>
@@ -135,13 +121,13 @@ export function Header({ onNavigate }: HeaderProps = {}) {
               <div className="relative">
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-purple-300 hover:bg-purple-50 hover:text-purple-700"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-white/10"
                   disabled={isPending}
                 >
-                  <Languages className="h-4 w-4" />
+                  <Languages className="h-4 w-4 text-white/70" />
                   <span className="uppercase">{locale}</span>
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${
+                    className={`h-4 w-4 transition-transform text-white/50 ${
                       languageDropdownOpen ? "rotate-180" : ""
                     }`}
                   />
@@ -162,13 +148,13 @@ export function Header({ onNavigate }: HeaderProps = {}) {
                           onClick={() => onLanguageChange(l)}
                           className={`w-full px-4 py-2.5 text-left text-sm transition-colors flex items-center justify-between ${
                             l === locale
-                              ? "bg-purple-50 font-semibold text-purple-700"
+                              ? "bg-brand-primary/10 font-semibold text-brand-primary"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}
                         >
                           <span className="uppercase">{l}</span>
                           {l === locale && (
-                            <div className="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-brand-primary"></div>
                           )}
                         </button>
                       ))}
@@ -181,12 +167,13 @@ export function Header({ onNavigate }: HeaderProps = {}) {
               <div className="relative hidden md:block">
                 <button
                   onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all hover:border-purple-300 hover:bg-purple-50 hover:text-purple-700"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-white/10"
                 >
-                  <Globe className="h-4 w-4" />
+                  <CurrencyIcon className="h-4 w-4 text-white/70" />
                   <span>{selectedCurrency}</span>
+                  <span className="ml-1 text-white/50">({symbol})</span>
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${
+                    className={`h-4 w-4 transition-transform text-white/50 ${
                       currencyDropdownOpen ? "rotate-180" : ""
                     }`}
                   />
@@ -201,25 +188,33 @@ export function Header({ onNavigate }: HeaderProps = {}) {
                       transition={{ duration: 0.15 }}
                       className="absolute right-0 mt-2 w-40 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden"
                     >
-                      {currencies.map((currency) => (
-                        <button
-                          key={currency}
-                          onClick={() => {
-                            setSelectedCurrency(currency);
-                            setCurrencyDropdownOpen(false);
-                          }}
-                          className={`w-full px-4 py-2.5 text-left text-sm transition-colors flex items-center justify-between ${
-                            currency === selectedCurrency
-                              ? "bg-purple-50 font-semibold text-purple-700"
-                              : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          {currency}
-                          {currency === selectedCurrency && (
-                            <div className="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
-                          )}
-                        </button>
-                      ))}
+                      {currencies.map((code) => {
+                        const info = CURRENCIES[code];
+                        const Icon = info.icon;
+                        return (
+                          <button
+                            key={code}
+                            onClick={() => {
+                              setCurrency(code);
+                              setCurrencyDropdownOpen(false);
+                            }}
+                            className={`w-full px-4 py-2.5 text-left text-sm transition-colors flex items-center justify-between ${
+                              code === selectedCurrency
+                                ? "bg-brand-primary/10 font-semibold text-brand-primary"
+                                : "text-gray-700 hover:bg-gray-50"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <Icon className={`h-4 w-4 ${code === selectedCurrency ? "text-brand-primary" : "text-gray-400"}`} />
+                              <span>{code}</span>
+                              <span className="text-gray-400 text-xs">({info.symbol})</span>
+                            </div>
+                            {code === selectedCurrency && (
+                              <div className="w-1.5 h-1.5 rounded-full bg-brand-primary"></div>
+                            )}
+                          </button>
+                        );
+                      })}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -228,7 +223,7 @@ export function Header({ onNavigate }: HeaderProps = {}) {
               {/* Sign In Button */}
               <button
                 onClick={() => setSignInOpen(true)}
-                className="hidden md:inline-flex items-center gap-2 rounded-lg border-2 border-purple-600 bg-white px-4 py-2 text-sm font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white shadow-sm hover:shadow-md"
+                className="hidden md:inline-flex items-center gap-2 rounded-lg border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-white hover:text-brand-primary shadow-sm hover:shadow-md"
               >
                 <LogIn className="h-4 w-4" />
                 <span>{t("signIn")}</span>
@@ -237,7 +232,7 @@ export function Header({ onNavigate }: HeaderProps = {}) {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden rounded-lg p-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                className="lg:hidden rounded-lg p-2 text-white hover:bg-white/10 transition-colors"
               >
                 {mobileMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -259,21 +254,19 @@ export function Header({ onNavigate }: HeaderProps = {}) {
                 className="overflow-hidden lg:hidden"
               >
                 <div className="space-y-1 pb-4 pt-2 border-t border-gray-100">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
+                  {/* For mobile, we might still want the links since the sidebar is hidden on small screens */}
+                  {["flights", "hotels", "holidays", "visa"].map((id) => (
+                    <button
+                      key={id}
                       onClick={(e) => {
-                        handleNavClick(item.href, e);
+                        onNavigate?.(id as any);
                         setMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-base font-medium text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
+                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-base font-medium text-white/90 hover:bg-white/10 transition-colors"
                     >
-                      <span className="text-gray-500">
-                        <item.icon className="h-5 w-5" />
-                      </span>
-                      {item.label}
-                    </Link>
+                      <span className="text-white/40 uppercase font-bold text-xs">{id}</span>
+                      {t(id as any)}
+                    </button>
                   ))}
 
                   {/* Mobile AI Trip Planner */}
@@ -282,19 +275,19 @@ export function Header({ onNavigate }: HeaderProps = {}) {
                       setAiPlannerOpen(true);
                       setMobileMenuOpen(false);
                     }}
-                    className="flex w-full items-center gap-3 rounded-lg bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 px-3 py-2.5 text-base font-semibold text-white shadow-md"
+                    className="flex w-full items-center gap-3 rounded-lg bg-white/10 border border-white/20 px-3 py-2.5 text-base font-semibold text-white shadow-md"
                   >
-                    <Sparkles className="h-5 w-5" />
+                    <Sparkles className="h-5 w-5 text-brand-accent" />
                     {t("aiPlanner")}
                   </button>
 
-                  <div className="border-t border-gray-200 pt-3 mt-3">
+                  <div className="border-t border-white/10 pt-3 mt-3">
                     <button
                       onClick={() => {
                         setSignInOpen(true);
                         setMobileMenuOpen(false);
                       }}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-purple-600 bg-white px-4 py-2.5 text-base font-semibold text-purple-700 hover:bg-purple-600 hover:text-white transition-colors"
+                      className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/40 bg-white/5 px-4 py-2.5 text-base font-semibold text-white hover:bg-white hover:text-brand-primary transition-colors"
                     >
                       <LogIn className="h-5 w-5" />
                       <span>{t("signIn")}</span>

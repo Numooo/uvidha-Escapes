@@ -8,13 +8,16 @@ import { HolidaysPage } from "../../HolidaysPage";
 import { VisaPage } from "../../VisaPage";
 import { Header } from "../../Header";
 import { Footer } from "../../Footer";
+import { Sidebar } from "../../Sidebar";
+import { CargoPage } from "../../CargoPage";
 import { UnifiedBookingFlow } from "../../UnifiedBookingFlow";
 import type { FlightOffer, Hotel, Package, VisaRequirement } from "../../types";
 
-type PageType = "home" | "flights" | "hotels" | "holidays" | "visa" | "booking";
+type PageType = "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "booking";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<PageType>("home");
+  const [isSidebarPinned, setIsSidebarPinned] = useState(true);
   const [bookingData, setBookingData] = useState<{
     type: "flight" | "hotel" | "package" | "visa";
     item: FlightOffer | Hotel | Package | VisaRequirement;
@@ -50,66 +53,80 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header onNavigate={handleNavigate} />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+      <Header 
+        onNavigate={handleNavigate} 
+        isSidebarPinned={isSidebarPinned}
+        onToggleSidebar={() => setIsSidebarPinned(!isSidebarPinned)}
+      />
 
-      <main>
-        {currentPage === "booking" && bookingData && (
-          <UnifiedBookingFlow
-            type={bookingData.type as "flight" | "hotel" | "package"}
-            item={bookingData.item as FlightOffer | Hotel | Package}
-            metadata={bookingData.metadata}
-            onBack={() => {
-              setBookingData(null);
-              setCurrentPage("home");
-            }}
-            onComplete={() => {
-              setBookingData(null);
-              setCurrentPage("home");
-            }}
-          />
-        )}
-        {currentPage === "home" && (
-          <HomePage
-            onSearchFlights={() => setCurrentPage("flights")}
-            onNavigate={handleNavigate}
-          />
-        )}
-        {currentPage === "flights" && (
-          <FlightsPage
-            onBookFlight={(flight) => {
-              handleStartBooking("flight", flight, { passengers: 1 });
-            }}
-            onBack={() => setCurrentPage("home")}
-          />
-        )}
-        {currentPage === "hotels" && (
-          <HotelsPage
-            onHotelSelect={(hotel, metadata) =>
-              handleStartBooking("hotel", hotel, metadata)
-            }
-          />
-        )}
-        {currentPage === "holidays" && (
-          <HolidaysPage
-            onPackageSelect={(pkg, metadata) =>
-              handleStartBooking("package", pkg, metadata)
-            }
-          />
-        )}
-        {currentPage === "visa" && (
-          <VisaPage
-            onVisaSelect={(visa) => {
-              // For now, treat visa like a package booking
-              handleStartBooking("package", visa as unknown as Package, {
-                guests: 1,
-              });
-            }}
-          />
-        )}
-      </main>
-
-      <Footer />
+      <div className="flex flex-1 relative">
+        <Sidebar 
+          activePage={currentPage} 
+          onNavigate={handleNavigate} 
+          isPinned={isSidebarPinned}
+        />
+        
+        <div className="flex-1 flex flex-col min-w-0">
+          <main className="flex-1">
+            {currentPage === "booking" && bookingData && (
+              <UnifiedBookingFlow
+                type={bookingData.type as "flight" | "hotel" | "package"}
+                item={bookingData.item as FlightOffer | Hotel | Package}
+                metadata={bookingData.metadata}
+                onBack={() => {
+                  setBookingData(null);
+                  setCurrentPage("home");
+                }}
+                onComplete={() => {
+                  setBookingData(null);
+                  setCurrentPage("home");
+                }}
+              />
+            )}
+            {currentPage === "home" && (
+              <HomePage
+                onSearchFlights={() => setCurrentPage("flights")}
+                onNavigate={handleNavigate}
+              />
+            )}
+            {currentPage === "flights" && (
+              <FlightsPage
+                onBookFlight={(flight) => {
+                  handleStartBooking("flight", flight, { passengers: 1 });
+                }}
+                onBack={() => setCurrentPage("home")}
+              />
+            )}
+            {currentPage === "hotels" && (
+              <HotelsPage
+                onHotelSelect={(hotel, metadata) =>
+                  handleStartBooking("hotel", hotel, metadata)
+                }
+              />
+            )}
+            {currentPage === "holidays" && (
+              <HolidaysPage
+                onPackageSelect={(pkg, metadata) =>
+                  handleStartBooking("package", pkg, metadata)
+                }
+              />
+            )}
+            {currentPage === "visa" && (
+              <VisaPage
+                onVisaSelect={(visa) => {
+                  // For now, treat visa like a package booking
+                  handleStartBooking("package", visa as unknown as Package, {
+                    guests: 1,
+                  });
+                }}
+              />
+            )}
+            {currentPage === "cargo" && <CargoPage />}
+          </main>
+          <Footer />
+        </div>
+      </div>
     </div>
   );
 }

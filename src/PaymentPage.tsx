@@ -11,6 +11,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import type { FareBreakdown } from "./types";
 import { formatCurrency } from "./data";
+import { useCurrency } from "@/CurrencyContext";
 
 interface PaymentPageProps {
   fareBreakdown: FareBreakdown;
@@ -23,6 +24,7 @@ export function PaymentPage({
   onPayment,
   onBack,
 }: PaymentPageProps) {
+  const { symbol } = useCurrency();
   const [paymentMethod, setPaymentMethod] = useState<
     "upi" | "card" | "netbanking" | "wallet"
   >("upi");
@@ -289,19 +291,19 @@ export function PaymentPage({
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Base Fare</span>
                     <span className="text-gray-900">
-                      ₹{formatCurrency(fareBreakdown.baseFare)}
+                      {symbol}{formatCurrency(fareBreakdown.baseFare)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Taxes & Fees</span>
                     <span className="text-gray-900">
-                      ₹{formatCurrency(fareBreakdown.taxes)}
+                      {symbol}{formatCurrency(fareBreakdown.taxes)}
                     </span>
                   </div>
                   {fareBreakdown.discount && (
                     <div className="flex justify-between text-sm text-green-600">
                       <span>Discount</span>
-                      <span>-₹{formatCurrency(fareBreakdown.discount)}</span>
+                      <span>-{symbol}{formatCurrency(fareBreakdown.discount)}</span>
                     </div>
                   )}
                 </div>
@@ -311,7 +313,7 @@ export function PaymentPage({
                     Total Amount
                   </span>
                   <span className="text-lg font-semibold text-primary-600">
-                    ₹{formatCurrency(fareBreakdown.total)}
+                    {symbol}{formatCurrency(fareBreakdown.total)}
                   </span>
                 </div>
 
@@ -321,7 +323,7 @@ export function PaymentPage({
                   className="mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-primary-600 text-lg font-bold text-white shadow-lg transition-all hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <Lock className="h-5 w-5" />
-                  Pay ₹{formatCurrency(fareBreakdown.total)}
+                  Pay {symbol}{formatCurrency(fareBreakdown.total)}
                 </button>
 
                 <div className="mt-4 flex items-center justify-center gap-2">
