@@ -22,6 +22,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState<PageType>("home");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [targetDestination, setTargetDestination] = useState<string | null>(null);
+  const [targetOrigin, setTargetOrigin] = useState<string | null>(null);
   const [isSidebarPinned, setIsSidebarPinned] = useState(true);
   const [bookingData, setBookingData] = useState<{
     type: "flight" | "hotel" | "package" | "visa";
@@ -41,6 +42,7 @@ export default function Home() {
     setCurrentPage(page as PageType);
     setBookingData(null); // Clear booking data when navigating
     setTargetDestination(null);
+    setTargetOrigin(null);
   };
 
   const handleStartBooking = (
@@ -104,8 +106,9 @@ export default function Home() {
             )}
             {currentPage === "home" && (
               <HomePage
-                onSearchFlights={(dest) => {
-                  if (dest) setTargetDestination(dest);
+                onSearchFlights={(from, to) => {
+                  if (from) setTargetOrigin(from);
+                  if (to) setTargetDestination(to);
                   setCurrentPage("flights");
                 }}
                 onNavigate={handleNavigate}
@@ -113,6 +116,7 @@ export default function Home() {
             )}
             {currentPage === "flights" && (
               <FlightsPage
+                initialOrigin={targetOrigin}
                 initialDestination={targetDestination}
                 onBookFlight={(flight) => {
                   handleStartBooking("flight", flight, { passengers: 1 });

@@ -804,9 +804,9 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                           </span>
                         </div>
                       )}
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      <div className="text-sm leading-relaxed whitespace-pre-wrap">
                         {message.content}
-                      </p>
+                      </div>
                       {message.options && (
                         <div className="mt-3 flex flex-wrap gap-2">
                           {message.options.map((option, idx) => {

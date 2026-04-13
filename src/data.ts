@@ -195,6 +195,62 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
     baggage: { cabin: "7 kg", checked: "25 kg" },
     amenities: ["WiFi", "Premium meals", "In-flight entertainment", "Lounge access"],
   },
+  {
+    id: "FRU-DXB",
+    airline: "FlyDubai",
+    airlineLogo: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
+    flightNumber: "FZ-1762",
+    segments: [{ from: "FRU", to: "DXB", departure: "2024-01-20T05:30:00", arrival: "2024-01-20T08:45:00", duration: 195, cabin: "Economy", flightNumber: "FZ-1762" }],
+    duration: 195,
+    price: 320,
+    cabin: "Economy",
+    refundable: true,
+    changeable: true,
+    baggage: { cabin: "7 kg", checked: "20 kg" },
+    amenities: ["Comfortable seating", "Buy-on-board meals"],
+  },
+  {
+    id: "FRU-IST",
+    airline: "Pegasus",
+    airlineLogo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&h=200&fit=crop&q=80",
+    flightNumber: "PC-701",
+    segments: [{ from: "FRU", to: "SAW", departure: "2024-01-22T08:15:00", arrival: "2024-01-22T10:45:00", duration: 330, cabin: "Economy", flightNumber: "PC-701" }],
+    duration: 330,
+    price: 180,
+    cabin: "Economy",
+    refundable: false,
+    changeable: true,
+    baggage: { cabin: "8 kg", checked: "20 kg" },
+    amenities: ["Low cost", "Modern fleet"],
+  },
+  {
+    id: "ALA-TAS",
+    airline: "Air Astana",
+    airlineLogo: "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=200&fit=crop&q=80",
+    flightNumber: "KC-127",
+    segments: [{ from: "ALA", to: "TAS", departure: "2024-01-25T14:20:00", arrival: "2024-01-25T15:00:00", duration: 100, cabin: "Business", flightNumber: "KC-127" }],
+    duration: 100,
+    price: 250,
+    cabin: "Business",
+    refundable: true,
+    changeable: true,
+    baggage: { cabin: "10 kg", checked: "30 kg" },
+    amenities: ["Lounge access", "Premium meals", "Extra legroom"],
+  },
+  {
+    id: "LHR-CDG",
+    airline: "Air France",
+    airlineLogo: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
+    flightNumber: "AF-1681",
+    segments: [{ from: "LHR", to: "CDG", departure: "2024-02-01T10:30:00", arrival: "2024-02-01T12:45:00", duration: 75, cabin: "Economy", flightNumber: "AF-1681" }],
+    duration: 75,
+    price: 125,
+    cabin: "Economy",
+    refundable: true,
+    changeable: false,
+    baggage: { cabin: "12 kg", checked: "23 kg" },
+    amenities: ["Snacks included", "Central arrival"],
+  },
 ];
 
 export const MOCK_HOTELS: Hotel[] = [
@@ -264,5 +320,5 @@ export const formatCurrency = (amount: number) =>
 
 export const getAirportLabel = (code: string) => {
   const airport = AIRPORTS.find((a) => a.code === code);
-  return airport ? `${code} — ${airport.city}` : code;
+  return airport ? airport.city : code;
 };

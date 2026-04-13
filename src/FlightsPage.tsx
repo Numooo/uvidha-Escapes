@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, SlidersHorizontal, X } from "lucide-react";
 import type { FlightOffer, FilterState } from "./types";
 import { FlightFilters } from "./FlightFilters";
@@ -21,10 +21,11 @@ interface SearchParams {
 interface FlightsPageProps {
   onBookFlight?: (flight: FlightOffer) => void;
   onBack?: () => void;
+  initialOrigin?: string | null;
   initialDestination?: string | null;
 }
 
-export function FlightsPage({ onBookFlight, onBack, initialDestination }: FlightsPageProps = {}) {
+export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestination }: FlightsPageProps = {}) {
   const t = useTranslations("Flights");
   const tSearch = useTranslations("Search.flights");
   const [filters, setFilters] = useState<FilterState>({
@@ -42,6 +43,19 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
   );
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentDestination, setCurrentDestination] = useState(initialDestination || "DXB");
+  const [currentOrigin, setCurrentOrigin] = useState(initialOrigin || "FRU");
+  const [isEditingSearch, setIsEditingSearch] = useState(false);
+
+  // Sync with initial props if they change
+  useEffect(() => {
+    if (initialDestination) {
+      setCurrentDestination(initialDestination);
+    }
+    if (initialOrigin) {
+      setCurrentOrigin(initialOrigin);
+    }
+  }, [initialDestination, initialOrigin]);
 
   // Simulate loading state only once on mount
   useEffect(() => {
@@ -56,7 +70,7 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
   // Mock search params (in real app, these would come from URL/state)
   const searchParams: SearchParams = {
     from: "MOW",
-    to: initialDestination || "BOM",
+    to: currentDestination,
     depart: "2024-01-15",
     passengers: 1,
     cabin: "Economy",
@@ -66,9 +80,8 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
   // Filter flights based on filter state and destination
   const getFilteredFlights = () => {
     let filtered = [...MOCK_FLIGHTS].filter((f) => {
-      // Basic destination check: the final segment's destination should match
       const lastSegment = f.segments[f.segments.length - 1];
-      return lastSegment.to === searchParams.to;
+      return lastSegment.to === currentDestination;
     });
 
     // Price filter
@@ -174,15 +187,16 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
-                onClick={() => (onBack ? onBack() : window.history.back())}
-                className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100"
+                onClick={onBack}
+                className="rounded-full p-2 text-gray-600 transition-colors hover:bg-gray-100"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
               <div>
-                <div className="text-lg font-semibold text-gray-900">
-                  {getAirportLabel(searchParams.from)} →{" "}
-                  {getAirportLabel(searchParams.to)}
+                <div className="flex items-center gap-2 text-lg font-bold text-gray-900">
+                  <span>{getAirportLabel(currentOrigin)}</span>
+                  <span className="text-gray-400">→</span>
+                  <span>{getAirportLabel(currentDestination)}</span>
                 </div>
                 <div className="text-sm text-gray-600">
                   {searchParams.depart} • {searchParams.passengers}{" "}
@@ -193,7 +207,10 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
                 </div>
               </div>
             </div>
-            <button className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50">
+            <button 
+              onClick={() => setIsEditingSearch(true)}
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 cursor-pointer"
+            >
               {t("editSearch")}
             </button>
           </div>
@@ -344,6 +361,72 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
           </motion.div>
         </div>
       )}
+      {/* Edit Search Modal */}
+      <AnimatePresence>
+        {isEditingSearch && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsEditingSearch(false)}
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white p-8 shadow-2xl"
+            >
+              <div className="mb-6 flex items-center justify-between">
+                <h3 className="text-xl font-bold text-gray-900">{t("editSearch")}</h3>
+                <button 
+                  onClick={() => setIsEditingSearch(false)}
+                  className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                >
+                  <X size={20} className="text-gray-500" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                    {tSearch("to")}
+                  </label>
+                  <div className="grid grid-cols-1 gap-2 max-h-[40vh] overflow-y-auto pr-2 no-scrollbar">
+                    {MOCK_FLIGHTS.map(f => f.segments[f.segments.length-1].to)
+                      .filter((v, i, a) => a.indexOf(v) === i)
+                      .map(code => (
+                        <button
+                          key={code}
+                          onClick={() => {
+                            setCurrentDestination(code);
+                            setIsEditingSearch(false);
+                          }}
+                          className={`flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer ${
+                            currentDestination === code 
+                              ? "border-brand-primary bg-brand-primary/5 text-brand-primary" 
+                              : "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50"
+                          }`}
+                        >
+                          <span className="font-bold">{getAirportLabel(code)}</span>
+                          <span className="text-xs font-black opacity-50">{code}</span>
+                        </button>
+                      ))}
+                  </div>
+                </div>
+                
+                <button
+                  onClick={() => setIsEditingSearch(false)}
+                  className="w-full rounded-2xl bg-brand-primary py-4 text-white font-bold shadow-lg hover:shadow-brand-primary/25 transition-all active:scale-95 cursor-pointer"
+                >
+                  {t("showResults", { count: MOCK_FLIGHTS.filter(f => f.segments[f.segments.length-1].to === currentDestination).length })}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

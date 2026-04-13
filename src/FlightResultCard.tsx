@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { FlightOffer } from "./types";
-import { formatCurrency } from "./data";
+import { formatCurrency, getAirportLabel } from "./data";
 import { useTranslations, useLocale } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 
@@ -59,7 +59,7 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
       {/* Main Flight Info */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         {/* Airline */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 min-w-[200px]">
           <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white">
             {flight.airlineLogo || flight.logo ? (
               <img
@@ -96,7 +96,7 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
             <div className="text-2xl font-bold text-gray-900">
               {formatTime(firstSegment.departure)}
             </div>
-            <div className="text-sm text-gray-600">{firstSegment.from}</div>
+            <div className="text-sm text-gray-600">{getAirportLabel(firstSegment.from)}</div>
             <div className="text-xs text-gray-500">
               {formatDate(firstSegment.departure)}
             </div>
@@ -119,7 +119,7 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
             <div className="text-2xl font-bold text-gray-900">
               {formatTime(lastSegment.arrival)}
             </div>
-            <div className="text-sm text-gray-600">{lastSegment.to}</div>
+            <div className="text-sm text-gray-600">{getAirportLabel(lastSegment.to)}</div>
             <div className="text-xs text-gray-500">
               {formatDate(lastSegment.arrival)}
             </div>
@@ -127,7 +127,7 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
         </div>
 
         {/* Price & Action */}
-        <div className="flex items-center gap-4 lg:flex-col lg:items-end">
+        <div className="flex items-center gap-4 lg:flex-col lg:items-end min-w-[180px]">
           <div className="flex-1 lg:flex-none">
             <div className="text-right text-2xl font-bold text-gray-900 flex items-center justify-end">
               <CurrencySymbol className="h-5 w-5 mr-1" />
@@ -190,7 +190,7 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="font-semibold text-gray-900">
-                              {segment.from} → {segment.to}
+                              {getAirportLabel(segment.from)} → {getAirportLabel(segment.to)}
                             </div>
                             <div className="text-sm text-gray-600">
                               {formatTime(segment.departure)} -{" "}
@@ -205,7 +205,7 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
                         {index < flight.segments.length - 1 && (
                           <div className="flex items-center gap-2 text-sm text-gray-600">
                             <Clock className="h-4 w-4" />
-                            <span>{t("layover", { city: segment.to })}</span>
+                            <span>{t("layover", { city: getAirportLabel(segment.to) })}</span>
                           </div>
                         )}
                       </div>

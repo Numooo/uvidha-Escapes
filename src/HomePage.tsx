@@ -40,7 +40,7 @@ type TripType = "oneway" | "roundtrip";
 type CabinClass = "economy" | "premium-economy" | "business" | "first";
 
 interface HomePageProps {
-  onSearchFlights?: (destination?: string) => void;
+  onSearchFlights?: (from?: string, to?: string) => void;
   onNavigate?: (page: string) => void;
 }
 
@@ -56,6 +56,10 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
   const [children, setChildren] = useState(0);
   const [passengersDropdownOpen, setPassengersDropdownOpen] = useState(false);
   const passengersDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Flight search state
+  const [flightOrigin, setFlightOrigin] = useState("FRU");
+  const [flightDestination, setFlightDestination] = useState("DXB");
 
   // Hotel search state
   const [hotelDestination, setHotelDestination] = useState("");
@@ -228,7 +232,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
     if (activeTab === "status") {
       handleStatusSearch();
     } else if (activeTab === "flights" && onSearchFlights) {
-      onSearchFlights();
+      onSearchFlights(flightOrigin, flightDestination);
     } else if (onNavigate) {
       onNavigate(activeTab);
     }
@@ -363,7 +367,11 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                     </label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                      <select className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                      <select 
+                        value={flightOrigin}
+                        onChange={(e) => setFlightOrigin(e.target.value)}
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                      >
                         {AIRPORTS.map((airport) => (
                           <option key={airport.code} value={airport.code}>
                             {airport.city} ({airport.code})
@@ -381,7 +389,11 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                     </label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                      <select className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                      <select 
+                        value={flightDestination}
+                        onChange={(e) => setFlightDestination(e.target.value)}
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                      >
                         {AIRPORTS.map((airport) => (
                           <option key={airport.code} value={airport.code}>
                             {airport.city} ({airport.code})

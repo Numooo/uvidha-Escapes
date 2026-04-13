@@ -100,12 +100,7 @@ export function Sidebar({ activePage, onNavigate, isPinned = true }: SidebarProp
                   </div>
                 )}
 
-                {isActive && !isExpanded && (
-                  <motion.div
-                    layoutId="active-dot"
-                    className="absolute right-2 w-1.5 h-1.5 bg-white rounded-full"
-                  />
-                )}
+
               </button>
             );
           })}
