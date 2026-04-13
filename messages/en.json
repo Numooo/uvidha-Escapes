@@ -1349,7 +1349,8 @@
       "hotels": "Hotels",
       "tours": "Tours",
       "cargo": "Cargo",
-      "analytics": "Analytics"
+      "analytics": "Analytics",
+      "favorites": "Favorites"
     },
     "cards": {
       "addCard": "Add Card",
