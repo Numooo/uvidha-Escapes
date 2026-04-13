@@ -1,4 +1,4 @@
-# Mock Components - Suvidha Escapes
+# Mock Components - Avia Travel Club
 
 <div align="center">
   <br />
@@ -36,7 +36,7 @@
 
 ## 🚀 Introduction
 
-This is a **Next.js 15** travel booking platform for Suvidha Escapes, containing **25+ fully functional components** built with real UI interactions, animations, and comprehensive mock data to demonstrate complete booking flows for flights, hotels, holiday packages, and visa assistance.
+This is a **Next.js 15** travel booking platform for Avia Travel Club, containing **25+ fully functional components** built with real UI interactions, animations, and comprehensive mock data to demonstrate complete booking flows for flights, hotels, holiday packages, and visa assistance.
 
 These components serve as:
 
@@ -112,7 +112,7 @@ Ensure you have these installed:
 
 ```bash
 # Clone or navigate to the project
-cd suvidha-escapes-portal
+cd avia-travel-club-portal
 
 # Install dependencies
 npm install
@@ -135,7 +135,7 @@ npm run lint     # Run ESLint
 ### Project Structure
 
 ```
-suvidha-escapes-portal/
+avia-travel-club-portal/
 ├── src/
 │   ├── app/
 │   │   ├── page.tsx          # Main app with navigation
@@ -344,7 +344,7 @@ const stream = response.body;
 ```typescript
 // Replace Unsplash with S3/CDN
 - image: "https://images.unsplash.com/photo-..."
-+ image: "https://cdn.suvidhaescapes.com/hotels/taj-mumbai.jpg"
++ image: "https://cdn.aviatravelclub.com/hotels/taj-mumbai.jpg"
 ```
 
 ## Design System

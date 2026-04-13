@@ -468,7 +468,7 @@ export function PackageDetailPage({
                   </div>
                 </a>
                 <a
-                  href="mailto:packages@suvidhaescapes.com"
+                  href="mailto:packages@AviaTravelClub.com"
                   className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 hover:border-primary-500 transition-colors"
                 >
                   <div className="p-2 rounded-lg bg-primary-50">
@@ -477,7 +477,7 @@ export function PackageDetailPage({
                   <div>
                     <p className="text-sm text-gray-600">{t("emailUs")}</p>
                     <p className="font-semibold text-gray-900">
-                      packages@suvidhaescapes.com
+                      packages@AviaTravelClub.com
                     </p>
                   </div>
                 </a>

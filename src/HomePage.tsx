@@ -1400,7 +1400,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
       <FeaturedPackagesSection onNavigate={onNavigate} />
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-brand-primary/[0.03]">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1489,7 +1489,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
       </section>
 
       {/* Why Choose Us Section - Compact */}
-      <section className="py-16 bg-brand-primary/[0.02]">
+      <section className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <motion.h2

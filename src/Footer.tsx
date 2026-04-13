@@ -51,7 +51,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-brand-primary text-white">
       {/* Main Footer Content */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
@@ -59,26 +59,26 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="flex h-12 w-auto items-center justify-center">
-                <Image src={logo} alt="Suvidha Escapes Logo" className="h-10 w-auto object-contain" />
+                <Image src={logo} alt="Avia Travel Club Logo" className="h-10 w-auto object-contain" />
               </div>
             </div>
-            <p className="mb-4 text-sm leading-relaxed">
+            <p className="mb-4 text-sm leading-relaxed text-white/80">
               {t("description")}
             </p>
 
             {/* Contact Info */}
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-brand-secondary" />
-                <span>{t("contact.phone")}</span>
+                <Phone className="h-4 w-4 text-brand-accent" />
+                <span className="text-white/80">{t("contact.phone")}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-brand-secondary" />
-                <span>{t("contact.email")}</span>
+                <Mail className="h-4 w-4 text-brand-accent" />
+                <span className="text-white/80">{t("contact.email")}</span>
               </div>
               <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-brand-secondary mt-0.5" />
-                <span>{t("contact.address")}</span>
+                <MapPin className="h-4 w-4 text-brand-accent mt-0.5" />
+                <span className="text-white/80">{t("contact.address")}</span>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm transition-colors hover:text-primary-400"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -112,7 +112,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm transition-colors hover:text-brand-secondary"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -131,7 +131,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm transition-colors hover:text-brand-secondary"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -142,7 +142,7 @@ export function Footer() {
         </div>
 
         {/* Social Links & Newsletter */}
-        <div className="mt-12 border-t border-gray-800 pt-8">
+        <div className="mt-12 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             {/* Social Links */}
             <div className="flex items-center gap-4">
@@ -171,9 +171,9 @@ export function Footer() {
               <input
                 type="email"
                 placeholder={t("emailPlaceholder")}
-                className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white placeholder-gray-500 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
+                className="flex-1 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder-white/50 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20"
               />
-              <button className="rounded-lg bg-brand-primary px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-secondary">
+              <button className="rounded-lg bg-brand-accent px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-brand-primary">
                 {t("subscribe")}
               </button>
             </div>
@@ -182,18 +182,18 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800 bg-gray-950">
+      <div className="border-t border-white/10 bg-black/10">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 text-sm md:flex-row">
-            <p className="text-gray-400">
-              © {currentYear} Suvidha Escapes. {t("allRightsReserved")}
+            <p className="text-white/60">
+              © {currentYear} Avia Travel Club. {t("allRightsReserved")}
             </p>
             <div className="flex gap-6">
               {footerLinks.legal.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-gray-400 transition-colors hover:text-brand-secondary"
+                  className="text-white/60 transition-colors hover:text-white"
                 >
                   {link.label}
                 </a>

@@ -1,4 +1,4 @@
-// Mock Data for Suvidha Escapes
+// Mock Data for Avia Travel Club
 import type { Airport, FlightOffer, Hotel, Package } from "./types";
 
 export const AIRPORTS: Airport[] = [

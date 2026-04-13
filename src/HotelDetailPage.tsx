@@ -534,7 +534,7 @@ export function HotelDetailPage({
                   </div>
                 </a>
                 <a
-                  href="mailto:hotels@suvidhaescapes.com"
+                  href="mailto:hotels@AviaTravelClub.com"
                   className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-500 transition-colors"
                 >
                   <div className="p-2 rounded-lg bg-blue-50">
@@ -543,7 +543,7 @@ export function HotelDetailPage({
                   <div>
                     <p className="text-sm text-gray-600">{t("emailUs")}</p>
                     <p className="font-semibold text-gray-900">
-                      hotels@suvidhaescapes.com
+                      hotels@AviaTravelClub.com
                     </p>
                   </div>
                 </a>

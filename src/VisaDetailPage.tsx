@@ -388,7 +388,7 @@ export function VisaDetailPage({
                   </div>
                   <div className="flex items-center gap-3 text-gray-700">
                     <Mail className="h-4 w-4 text-blue-600" />
-                    <span>visa@suvidhaescapes.com</span>
+                    <span>visa@AviaTravelClub.com</span>
                   </div>
                   <div className="flex items-start gap-3 text-gray-700">
                     <MapPin className="h-4 w-4 text-blue-600 mt-0.5" />

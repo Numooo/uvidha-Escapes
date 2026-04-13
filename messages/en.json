@@ -831,12 +831,12 @@
         "trip": "Europe Tour, Oct 2024"
       },
       {
-        "content": "As a solo traveler, I was nervous about planning everything myself. Suvidha Escapes made it effortless! Great hotels, safe locations, and the AI planner understood exactly what I wanted. Five stars!",
+        "content": "As a solo traveler, I was nervous about planning everything myself. Avia Travel Club made it effortless! Great hotels, safe locations, and the AI planner understood exactly what I wanted. Five stars!",
         "author": "Sneha Reddy",
         "trip": "Thailand Trip, Sep 2024"
       },
       {
-        "content": "Outstanding experience! The Kerala backwaters trip was peaceful and rejuvenating. Everything from houseboat to Ayurveda spa was perfectly arranged. Suvidha Escapes exceeded all our expectations!",
+        "content": "Outstanding experience! The Kerala backwaters trip was peaceful and rejuvenating. Everything from houseboat to Ayurveda spa was perfectly arranged. Avia Travel Club exceeded all our expectations!",
         "author": "Vikram Singh",
         "trip": "Kerala Trip, Aug 2024"
       }
@@ -855,7 +855,7 @@
     }
   },
   "WhyChooseUs": {
-    "title": "Why Choose Suvidha Escapes?",
+    "title": "Why Choose Avia Travel Club?",
     "subtitle": "Your trusted travel partner for seamless journeys",
     "features": {
       "prices": {
@@ -904,7 +904,7 @@
     },
     "contact": {
       "phone": "+91 1800-123-4567",
-      "email": "support@suvidhaescapes.com",
+      "email": "support@AviaTravelClub.com",
       "address": "123 Travel Street, Mumbai, Maharashtra 400001, India"
     }
   },
@@ -1009,7 +1009,7 @@
     "thinking": "AI is thinking...",
     "yourItinerary": "Your Itinerary",
     "bookTrip": "Book This Trip",
-    "thankYou": "Thank you for choosing Suvidha Escapes!",
+    "thankYou": "Thank you for choosing Avia Travel Club!",
     "quickQuestions": {
       "bali": "Plan a trip to Bali",
       "weekend": "Weekend getaway near me",
@@ -1085,7 +1085,7 @@
     "title": "Welcome Back",
     "subtitle": "Sign in to you account to continue",
     "registerTitle": "Create Account",
-    "registerSubtitle": "Join Suvidha Escapes for exclusive travel deals",
+    "registerSubtitle": "Join Avia Travel Club for exclusive travel deals",
     "journeySubtitle": "Start your journey with us",
     "adventureSubtitle": "Sign in to continue your adventure",
     "personal": "Personal",

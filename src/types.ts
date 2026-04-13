@@ -1,4 +1,4 @@
-// Mock Data Types for Suvidha Escapes
+// Mock Data Types for Avia Travel Club
 
 export type Route =
   | "HOME"

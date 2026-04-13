@@ -494,7 +494,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>${preferences.destination} Itinerary - Suvidha Escapes</title>
+  <title>${preferences.destination} Itinerary - Avia Travel Club</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -634,7 +634,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">✈️ SUVIDHA ESCAPES</div>
+      <div class="logo">✈️ Avia Travel Club</div>
       <div class="title">Your Personalized Travel Itinerary</div>
       <div class="subtitle">${preferences.destination || ""} • ${
       preferences.duration || ""
@@ -690,13 +690,13 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       .join("")}
 
     <div class="footer">
-      <div class="footer-logo">SUVIDHA ESCAPES</div>
-      <p>${t("thankYou") || "Thank you for choosing Suvidha Escapes!"}</p>
+      <div class="footer-logo">Avia Travel Club</div>
+      <p>${t("thankYou") || "Thank you for choosing Avia Travel Club!"}</p>
       <p style="font-size: 12px; margin-top: 10px;">
         Generated on ${new Date().toLocaleDateString()}
       </p>
       <p style="font-size: 12px; color: #999;">
-        📧 support@suvidhaescapes.com | 📞 +91-1800-123-4567 | 🌐 www.suvidhaescapes.com
+        📧 support@AviaTravelClub.com | 📞 +91-1800-123-4567 | 🌐 www.AviaTravelClub.com
       </p>
     </div>
   </div>
@@ -712,7 +712,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     a.download = `${(preferences.destination || "Trip").replace(
       /\s+/g,
       "-"
-    )}-Itinerary-SuvidhaEscapes.html`;
+    )}-Itinerary-AviaTravelClub.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

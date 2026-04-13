@@ -295,7 +295,7 @@ type WidgetView = "menu" | "chat";
 
 export function ChatWidget({
   whatsappNumber = "996555123456",
-  telegramUsername = "suvidhaescapes",
+  telegramUsername = "aviatravelclub",
 }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState<WidgetView>("menu");
@@ -475,7 +475,7 @@ export function ChatWidget({
                 {/* Footer */}
                 <div className="px-4 py-2.5 bg-gray-50/70">
                   <p className="text-[10px] text-gray-400 text-center tracking-wide">
-                    Suvidha Escapes • Онлайн 24/7
+                    Avia Travel Club • Онлайн 24/7
                   </p>
                 </div>
               </>

@@ -162,7 +162,7 @@ export function UnifiedBookingFlow({
       </head>
       <body>
         <div class="header">
-          <div class="logo">Suvidha Escapes</div>
+          <div class="logo">Avia Travel Club</div>
           <div>Booking Confirmation: ${bookingRef}</div>
         </div>
         <div class="section">
