@@ -1351,7 +1351,8 @@
       "hotels": "Hotels",
       "tours": "Tours",
       "cargo": "Cargo",
-      "analytics": "Analytics"
+      "analytics": "Analytics",
+      "favorites": "Favorites"
     },
     "cards": {
       "addCard": "Add Card",
@@ -1375,7 +1376,7 @@
     "analytics": {
       "totalTrips": "Total Trips",
       "totalSpent": "Total Spent",
-      "milesEarned": "Miles Earned",
+      "milesEarned": "Distance Traveled (km)",
       "topDestination": "Top Destination",
       "recentActivity": "Recent Activity",
       "spentByCategory": "Spent by Category",

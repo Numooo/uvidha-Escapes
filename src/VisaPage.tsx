@@ -61,8 +61,15 @@ export function VisaPage({ onVisaSelect }: VisaPageProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-brand-primary text-white">
-        <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="relative bg-brand-primary text-white overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=1920&q=80)" }}
+        />
+        <div className="absolute inset-0 bg-brand-primary/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-primary/20" />
+        
+        <div className="relative max-w-7xl mx-auto px-6 py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

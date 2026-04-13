@@ -56,8 +56,12 @@ export function CargoPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative py-24 bg-brand-primary overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1586528116311-ad8ed7c159f8?w=1920&q=80')] bg-cover bg-center opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-primary to-transparent" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80)" }}
+        />
+        <div className="absolute inset-0 bg-brand-primary/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/95 via-transparent to-transparent" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <motion.div

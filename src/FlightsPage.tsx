@@ -43,7 +43,7 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Simulate loading state
+  // Simulate loading state only once on mount
   useEffect(() => {
     setIsLoading(true);
     const timer = setTimeout(() => {
@@ -51,7 +51,7 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
     }, 1500); // Simulate API call delay
 
     return () => clearTimeout(timer);
-  }, [filters, sortBy]); // Re-trigger loading when filters or sort changes
+  }, []); // Only run once on mount
 
   // Mock search params (in real app, these would come from URL/state)
   const searchParams: SearchParams = {
@@ -169,7 +169,7 @@ export function FlightsPage({ onBookFlight, onBack, initialDestination }: Flight
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Sticky Search Bar */}
-      <div className="sticky top-0 z-20 border-b border-gray-200 bg-white shadow-sm">
+      <div className="sticky top-16 z-20 border-b border-gray-200 bg-white shadow-sm">
         <div className="mx-auto max-w-7xl px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

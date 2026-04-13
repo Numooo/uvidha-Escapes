@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   User, 
@@ -15,7 +16,8 @@ import {
   TrendingUp,
   MapPin,
   Calendar,
-  Sparkles
+  Sparkles,
+  Heart
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
@@ -55,16 +57,24 @@ const MOCK_BOOKINGS: BookingItem[] = [
   { id: "CR-888", type: "cargo", title: "Commercial Cargo", subtitle: "2500kg • Guangzhou → Bishkek", date: "2024-01-10", price: 4200, status: "delivered" },
 ];
 
+const MOCK_FAVORITES = [
+  { id: "fav-1", type: "hotel", title: "Burj Al Arab", location: "Dubai, UAE", price: 1500, rating: 5.0, image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070" },
+  { id: "fav-2", type: "hotel", title: "Four Seasons Bali", location: "Jimbaran, Bali", price: 850, rating: 4.9, image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2076" },
+  { id: "fav-3", type: "tour", title: "Maldives Paradise", subtitle: "7 Days • All Inclusive", price: 2100, rating: 4.8, image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=1965" },
+  { id: "fav-4", type: "tour", title: "Cappadocia Balloon Tour", subtitle: "3 Days • Adventure", price: 450, rating: 4.9, image: "https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2080" },
+];
+
 export function ProfilePage() {
   const t = useTranslations("Profile");
   const { CurrencySymbol } = useCurrency();
-  const [activeTab, setActiveTab ] = useState<"cards" | "flights" | "hotels" | "tours" | "cargo" | "analytics">("analytics");
+  const [activeTab, setActiveTab ] = useState<"cards" | "flights" | "hotels" | "tours" | "cargo" | "analytics" | "favorites">("analytics");
 
   const tabs = [
     { id: "analytics", label: t("tabs.analytics"), icon: BarChart3 },
     { id: "flights", label: t("tabs.flights"), icon: Plane },
     { id: "hotels", label: t("tabs.hotels"), icon: Hotel },
     { id: "tours", label: t("tabs.tours"), icon: Palmtree },
+    { id: "favorites", label: t("tabs.favorites"), icon: Heart },
     { id: "cargo", label: t("tabs.cargo"), icon: Truck },
     { id: "cards", label: t("tabs.cards"), icon: CreditCard },
   ];
@@ -93,7 +103,14 @@ export function ProfilePage() {
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header / Banner */}
       <div className="bg-brand-primary pt-32 pb-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+        <Image 
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=2074" 
+          alt="Profile Background"
+          fill
+          className="object-cover opacity-20 mix-blend-luminosity"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-brand-primary/90" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="relative">
@@ -181,7 +198,7 @@ export function ProfilePage() {
                         {[
                           { label: t("analytics.totalTrips"), value: "12", icon: MapPin, color: "blue" },
                           { label: t("analytics.totalSpent"), value: 3450, icon: CreditCard, color: "green", prefix: true },
-                          { label: t("analytics.milesEarned"), value: "4,200", icon: Plane, color: "purple" },
+                          { label: t("analytics.milesEarned"), value: "6,700", icon: Plane, color: "purple" },
                           { label: t("analytics.topDestination"), value: "Dubai", icon: Palmtree, color: "orange" },
                         ].map((stat, i) => (
                           <div key={i} className="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
@@ -279,7 +296,7 @@ export function ProfilePage() {
                               
                               {/* Left Side: Type Icon + ID */}
                               <div className="flex md:flex-col items-center md:items-start justify-between md:justify-center gap-4 min-w-[120px]">
-                                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:bg-brand-primary group-hover:text-white transition-all transform group-hover:rotate-6">
+                                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:bg-brand-primary group-hover:text-white transition-all">
                                   {booking.type === "flight" ? <Plane size={32} /> : 
                                    booking.type === "hotel" ? <Hotel size={32} /> : 
                                    booking.type === "package" ? <Palmtree size={32} /> : <Truck size={32} />}
@@ -350,11 +367,64 @@ export function ProfilePage() {
                                     {booking.price.toLocaleString()}
                                   </div>
                                 </div>
-                                <button className="mt-4 hidden md:block w-full py-2 px-4 rounded-xl bg-gray-100 text-gray-600 text-[10px] font-black uppercase tracking-widest hover:bg-brand-primary hover:text-white transition-all shadow-sm">
-                                  {t("cards.balance")} Details
-                                </button>
+
                               </div>
 
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === "favorites" && (
+                    <div className="space-y-8">
+                      <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-2xl font-bold text-gray-900">{t("tabs.favorites")}</h2>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {MOCK_FAVORITES.map((fav) => (
+                          <div key={fav.id} className="group overflow-hidden rounded-3xl bg-white border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                            <div className="relative h-48 w-full overflow-hidden">
+                              <Image 
+                                src={fav.image} 
+                                alt={fav.title}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                              />
+                              <div className="absolute top-4 right-4 z-10">
+                                <button className="p-2 bg-white/80 backdrop-blur-md rounded-full text-red-500 shadow-sm hover:bg-white transition-colors">
+                                  <Heart size={20} fill="#ef4444" />
+                                </button>
+                              </div>
+                              <div className="absolute bottom-4 left-4 z-10">
+                                <span className="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-brand-primary shadow-sm">
+                                  {fav.type}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="p-6">
+                              <div className="flex justify-between items-start mb-2">
+                                <h3 className="text-xl font-bold text-gray-900 group-hover:text-brand-primary transition-colors">{fav.title}</h3>
+                                <div className="flex items-center gap-1 text-amber-500 font-bold">
+                                  <span>★</span>
+                                  <span>{fav.rating}</span>
+                                </div>
+                              </div>
+                              <p className="text-sm text-gray-500 mb-4 flex items-center gap-1">
+                                {fav.type === "hotel" ? <MapPin size={14} /> : <Clock size={14} />}
+                                {fav.location || (fav as any).subtitle}
+                              </p>
+                              <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+                                <div className="text-xl font-black text-brand-primary flex items-center gap-1">
+                                  <CurrencySymbol className="h-4 w-4" />
+                                  {fav.price.toLocaleString()}
+                                </div>
+                                <button className="bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-all">
+                                  Book Now
+                                </button>
+                              </div>
                             </div>
                           </div>
                         ))}
