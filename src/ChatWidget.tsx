@@ -295,7 +295,7 @@ type WidgetView = "menu" | "chat";
 
 export function ChatWidget({
   whatsappNumber = "996555123456",
-  telegramUsername = "aviatravelclub",
+  telegramUsername = "aviatrevelclub",
 }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState<WidgetView>("menu");

@@ -8,6 +8,7 @@ interface LocationMapProps {
   lng: number;
   name: string;
   location?: string;
+  title?: string;
   className?: string;
 }
 
@@ -16,6 +17,7 @@ export function LocationMap({
   lng,
   name,
   location,
+  title,
   className = "",
 }: LocationMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -46,6 +48,8 @@ export function LocationMap({
       }).setView([lat, lng], 14);
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 19,
       }).addTo(map);
 
@@ -112,7 +116,9 @@ export function LocationMap({
         <div className="p-2 rounded-lg bg-blue-50">
           <MapPin className="h-5 w-5 text-blue-600" />
         </div>
-        <h3 className="text-lg font-semibold text-gray-900">Расположение</h3>
+        <h3 className="text-lg font-semibold text-gray-900">
+          {title || "Расположение"}
+        </h3>
       </div>
       <div
         ref={mapRef}

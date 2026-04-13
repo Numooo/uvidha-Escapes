@@ -510,6 +510,7 @@ export function HotelDetailPage({
                 lng={hotelData.coordinates.lng}
                 name={hotelData.name}
                 location={hotelData.location}
+                title={t("locationTitle")}
               />
             )}
 
@@ -520,7 +521,7 @@ export function HotelDetailPage({
               </h3>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href="tel:+918002025000"
+                  href="tel:+996555123456"
                   className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-500 transition-colors"
                 >
                   <div className="p-2 rounded-lg bg-blue-50">
@@ -528,13 +529,13 @@ export function HotelDetailPage({
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">{t("callUs")}</p>
-                    <p className="font-semibold text-gray-900">
-                      +91 800 202 5000
+                    <p className="text-sm font-semibold text-gray-900">
+                      +996 (555) 123-456
                     </p>
                   </div>
                 </a>
                 <a
-                  href="mailto:hotels@AviaTravelClub.com"
+                  href="mailto:support@aviatrevel.kg"
                   className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-500 transition-colors"
                 >
                   <div className="p-2 rounded-lg bg-blue-50">
@@ -542,8 +543,8 @@ export function HotelDetailPage({
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">{t("emailUs")}</p>
-                    <p className="font-semibold text-gray-900">
-                      hotels@AviaTravelClub.com
+                    <p className="text-sm font-semibold text-gray-900">
+                      support@aviatrevel.kg
                     </p>
                   </div>
                 </a>

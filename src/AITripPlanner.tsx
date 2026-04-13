@@ -80,7 +80,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
   const commonT = useTranslations("Common");
   const { symbolText, CurrencySymbol } = useCurrency();
   const symbol = symbolText;
-  
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -124,7 +124,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
   const addMessage = (
     type: "user" | "bot" | "quick-reply",
     content: React.ReactNode,
-    options?: string[]
+    options?: string[],
   ) => {
     const newMessage: Message = {
       id: Date.now().toString(),
@@ -152,9 +152,9 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     for (let i = 1; i <= Math.min(days, 7); i++) {
       mockItinerary.push({
         day: i,
-        title: t("dayTitle", { 
-          day: i, 
-          title: getDayTitle(i, preferences.destination || t("itineraryTitle")) 
+        title: t("dayTitle", {
+          day: i,
+          title: getDayTitle(i, preferences.destination || t("itineraryTitle")),
         }),
         activities: generateDayActivities(i, preferences),
       });
@@ -166,19 +166,25 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     addMessage(
       "bot",
       <div className="space-y-2">
-        <p>{t("itineraryReady", { 
-          days, 
-          destination: preferences.destination || "" 
-        })}</p>
+        <p>
+          {t("itineraryReady", {
+            days,
+            destination: preferences.destination || "",
+          })}
+        </p>
         <div className="flex flex-wrap gap-2 text-xs">
-          <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md">{preferences.duration}</span>
+          <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md">
+            {preferences.duration}
+          </span>
           <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md flex items-center gap-1">
             <CurrencySymbol className="h-3 w-3" />
             {preferences.budget}
           </span>
-          <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md">{preferences.travelers}</span>
+          <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md">
+            {preferences.travelers}
+          </span>
         </div>
-      </div>
+      </div>,
     );
   };
 
@@ -197,11 +203,17 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
   const generateDayActivities = (
     day: number,
-    prefs: TripPreferences
+    prefs: TripPreferences,
   ): DayActivity[] => {
-    const hasBeachInterest = prefs.interests?.some((i) => i.includes(t("interestsList.beach")));
-    const hasAdventure = prefs.interests?.some((i) => i.includes(t("interestsList.adventure")));
-    const hasCulture = prefs.interests?.some((i) => i.includes(t("interestsList.culture")));
+    const hasBeachInterest = prefs.interests?.some((i) =>
+      i.includes(t("interestsList.beach")),
+    );
+    const hasAdventure = prefs.interests?.some((i) =>
+      i.includes(t("interestsList.adventure")),
+    );
+    const hasCulture = prefs.interests?.some((i) =>
+      i.includes(t("interestsList.culture")),
+    );
 
     if (day === 1) {
       return [
@@ -380,10 +392,10 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     if (currentStep === "destination") {
       setPreferences((prev) => ({ ...prev, destination: inputValue }));
       addMessage("bot", t("duration"), [
-         t("durationOptions.3-4"),
-         t("durationOptions.5-7"),
-         t("durationOptions.7"),
-         t("durationOptions.10-14")
+        t("durationOptions.3-4"),
+        t("durationOptions.5-7"),
+        t("durationOptions.7"),
+        t("durationOptions.10-14"),
       ]);
       setCurrentStep("duration");
     } else if (currentStep === "duration") {
@@ -410,7 +422,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       addMessage(
         "bot",
         t("interests"),
-        interestsKeys.map(k => t(`interestsList.${k}`))
+        interestsKeys.map((k) => t(`interestsList.${k}`)),
       );
       setCurrentStep("interests");
     } else if (currentStep === "interests") {
@@ -429,13 +441,13 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       if (option === t("quickQuestions.bali")) dest = "Bali";
       else if (option === t("quickQuestions.weekend")) dest = "Bishkek (FRU)";
       else if (option === t("quickQuestions.romantic")) dest = "Maldives";
-      
+
       setPreferences((prev) => ({ ...prev, destination: dest }));
       addMessage("bot", t("duration"), [
         t("durationOptions.3-4"),
         t("durationOptions.5-7"),
         t("durationOptions.7"),
-        t("durationOptions.10-14")
+        t("durationOptions.10-14"),
       ]);
       setCurrentStep("duration");
     } else if (currentStep === "duration") {
@@ -459,20 +471,16 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       setCurrentStep("travelers");
     } else if (currentStep === "travelers") {
       setPreferences((prev) => ({ ...prev, travelers: option }));
-      addMessage(
-        "bot",
-        t("interests"),
-        [...interestsKeys.map(k => t(`interestsList.${k}`)), t("done")]
-      );
+      addMessage("bot", t("interests"), [
+        ...interestsKeys.map((k) => t(`interestsList.${k}`)),
+        t("done"),
+      ]);
       setCurrentStep("interests");
     } else if (currentStep === "interests") {
       if (option === t("done")) {
         const selectedInterests = preferences.interests || [];
         if (selectedInterests.length === 0) {
-          addMessage(
-            "bot",
-            t("selectInterests")
-          );
+          addMessage("bot", t("selectInterests"));
           return;
         }
         await generateItinerary();
@@ -637,11 +645,11 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">✈️ Avia Travel Club</div>
+      <div class="logo">✈️ aviatrevel.kg</div>
       <div class="title">${t("itineraryTitle")}</div>
       <div class="subtitle">${preferences.destination || ""} • ${
-      preferences.duration || ""
-    }</div>
+        preferences.duration || ""
+      }</div>
     </div>
 
     <div class="trip-info">
@@ -684,22 +692,22 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
             <div class="activity-description">${activity.description}</div>
             <div class="activity-duration">${t("labels.duration")}: ${activity.duration}</div>
           </div>
-        `
+        `,
           )
           .join("")}
       </div>
-    `
+    `,
       )
       .join("")}
 
     <div class="footer">
-      <div class="footer-logo">Avia Travel Club</div>
+      <div class="footer-logo">aviatrevel.kg</div>
       <p>${t("thankYou") || "Thank you for choosing Avia Travel Club!"}</p>
       <p style="font-size: 12px; margin-top: 10px;">
         Generated on ${new Date().toLocaleDateString()}
       </p>
       <p style="font-size: 12px; color: #999;">
-        📧 support@AviaTravelClub.com | 📞 +91-1800-123-4567 | 🌐 www.AviaTravelClub.com
+        📧 support@aviatrevel.kg | 📞 +996 (555) 123-456 | 🌐 www.aviatrevel.kg
       </p>
     </div>
   </div>
@@ -714,7 +722,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     a.href = url;
     a.download = `${(preferences.destination || "Trip").replace(
       /\s+/g,
-      "-"
+      "-",
     )}-Itinerary-AviaTravelClub.html`;
     document.body.appendChild(a);
     a.click();
@@ -756,9 +764,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">{t("title")}</h2>
-                  <p className="text-sm text-white/90">
-                    {t("subtitle")}
-                  </p>
+                  <p className="text-sm text-white/90">{t("subtitle")}</p>
                 </div>
               </div>
               <button
@@ -820,13 +826,15 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                                   isDoneButton
                                     ? "bg-brand-accent text-white hover:shadow-lg"
                                     : isSelected
-                                    ? "bg-brand-primary text-white border-2 border-brand-primary"
-                                    : "bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary border-2 border-transparent"
+                                      ? "bg-brand-primary text-white border-2 border-brand-primary"
+                                      : "bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary border-2 border-transparent"
                                 }`}
                               >
                                 <div className="flex items-center gap-1">
                                   {isSelected && "✓ "}
-                                  {option.includes("0k") && <CurrencySymbol className="h-3 w-3 inline-block" />}
+                                  {option.includes("0k") && (
+                                    <CurrencySymbol className="h-3 w-3 inline-block" />
+                                  )}
                                   {option}
                                 </div>
                               </button>
@@ -854,7 +862,9 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                     {quickQuestionsKeys.map((key, idx) => (
                       <button
                         key={idx}
-                        onClick={() => handleQuickReply(t(`quickQuestions.${key}`))}
+                        onClick={() =>
+                          handleQuickReply(t(`quickQuestions.${key}`))
+                        }
                         className="bg-white hover:bg-brand-primary/5 border-2 border-brand-primary/20 hover:border-brand-primary/40 text-brand-primary text-sm font-medium px-4 py-2 rounded-full transition-all hover:scale-105"
                       >
                         {t(`quickQuestions.${key}`)}
@@ -868,23 +878,23 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
               <div className="p-4 bg-white border-t border-gray-200">
                 <div className="flex gap-3">
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      placeholder={t("placeholder")}
-                      className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
-                    />
-                    <button
-                      onClick={handleSendMessage}
-                      disabled={!inputValue.trim()}
-                      className="bg-brand-primary text-white px-6 py-3 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-semibold"
-                    >
-                      <Send className="h-5 w-5" />
-                      {commonT("submit")}
-                    </button>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder={t("placeholder")}
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                  />
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={!inputValue.trim()}
+                    className="bg-brand-primary text-white px-6 py-3 rounded-xl hover:bg-brand-secondary hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-semibold"
+                  >
+                    <Send className="h-5 w-5" />
+                    {commonT("submit")}
+                  </button>
                 </div>
               </div>
             </div>
@@ -905,7 +915,9 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                         {t("yourItinerary")}
                       </h3>
                       <p className="text-sm text-gray-600 flex items-center gap-1">
-                        {preferences.destination} • {preferences.duration} • <CurrencySymbol className="h-3 w-3" /> {preferences.budget}
+                        {preferences.destination} • {preferences.duration} •{" "}
+                        <CurrencySymbol className="h-3 w-3" />{" "}
+                        {preferences.budget}
                       </p>
                     </div>
                   </div>

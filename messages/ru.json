@@ -873,7 +873,7 @@
     }
   },
   "Footer": {
-    "description": "Ваш надежный партнер для незабываемых путешествий. Мы предлагаем лучшие предложения на авиабилеты, отели и турпакеты по всей Индии и миру.",
+    "description": "aviatrevel.kg — ваш надежный партнер для незабываемых путешествий. Мы предлагаем лучшие предложения на авиабилеты, отели и турпакеты из Кыргызстана по всему миру.",
     "followUs": "Подписывайтесь на нас:",
     "subscribe": "Подписаться",
     "emailPlaceholder": "Введите ваш email",
@@ -903,9 +903,9 @@
       "visa": "Визовые услуги"
     },
     "contact": {
-      "phone": "+91 1800-123-4567",
-      "email": "support@AviaTravelClub.com",
-      "address": "123 Travel Street, Мумбаи, Махараштра 400001, Индия"
+      "phone": "+996 (555) 123-456",
+      "email": "support@aviatrevel.kg",
+      "address": "Кыргызстан, г. Бишкек"
     }
   },
   "HotelDetail": {
@@ -914,6 +914,7 @@
     "starHotel": "{count}-звездочный отель",
     "checkIn": "Заезд: {time}",
     "checkOut": "Выезд: {time}",
+    "locationTitle": "Расположение на карте",
     "amenitiesTitle": "Удобства и услуги",
     "roomsTitle": "Доступные номера",
     "guestsUpTo": "До {count} гостей",
@@ -954,6 +955,7 @@
   },
   "PackageDetail": {
     "back": "Назад",
+    "locationTitle": "Местоположение тура",
     "daysNights": "{days} дн. / {nights} нч.",
     "itineraryTitle": "Программа по дням",
     "itineraryPlaceholder": "Подробная программа этого тура скоро будет доступна.",

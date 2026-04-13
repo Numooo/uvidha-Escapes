@@ -427,6 +427,7 @@ export function PackageDetailPage({
                 lng={packageData.coordinates.lng}
                 name={packageData.title}
                 location={packageData.destination}
+                title={th("locationTitle")}
               />
             )}
 
@@ -454,7 +455,7 @@ export function PackageDetailPage({
               </h3>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href="tel:+918002025000"
+                  href="tel:+996555123456"
                   className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 hover:border-primary-500 transition-colors"
                 >
                   <div className="p-2 rounded-lg bg-primary-50">
@@ -462,13 +463,13 @@ export function PackageDetailPage({
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">{t("callUs")}</p>
-                    <p className="font-semibold text-gray-900">
-                      +91 800 202 5000
+                    <p className="text-sm font-semibold text-gray-900">
+                      +996 (555) 123-456
                     </p>
                   </div>
                 </a>
                 <a
-                  href="mailto:packages@AviaTravelClub.com"
+                  href="mailto:support@aviatrevel.kg"
                   className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 hover:border-primary-500 transition-colors"
                 >
                   <div className="p-2 rounded-lg bg-primary-50">
@@ -476,8 +477,8 @@ export function PackageDetailPage({
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">{t("emailUs")}</p>
-                    <p className="font-semibold text-gray-900">
-                      packages@AviaTravelClub.com
+                    <p className="text-sm font-semibold text-gray-900">
+                      support@aviatrevel.kg
                     </p>
                   </div>
                 </a>

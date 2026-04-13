@@ -384,11 +384,11 @@ export function VisaDetailPage({
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-3 text-gray-700">
                     <Phone className="h-4 w-4 text-blue-600" />
-                    <span>+91 98765 43210</span>
+                    <span>+996 (555) 123-456</span>
                   </div>
                   <div className="flex items-center gap-3 text-gray-700">
                     <Mail className="h-4 w-4 text-blue-600" />
-                    <span>visa@AviaTravelClub.com</span>
+                    <span>visa@aviatrevel.kg</span>
                   </div>
                   <div className="flex items-start gap-3 text-gray-700">
                     <MapPin className="h-4 w-4 text-blue-600 mt-0.5" />

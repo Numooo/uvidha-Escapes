@@ -138,7 +138,7 @@ export function UnifiedBookingFlow({
     await new Promise((resolve) => setTimeout(resolve, 2500));
 
     const prefix = type === "flight" ? "FLT" : type === "hotel" ? "HTL" : "PKG";
-    const ref = `SE-${prefix}-${Date.now().toString(36).toUpperCase()}`;
+    const ref = `AT-${prefix}-${Date.now().toString(36).toUpperCase()}`;
     setBookingRef(ref);
     setIsProcessing(false);
     setStep("confirmation");
@@ -162,7 +162,7 @@ export function UnifiedBookingFlow({
       </head>
       <body>
         <div class="header">
-          <div class="logo">Avia Travel Club</div>
+          <div class="logo">aviatrevel.kg</div>
           <div>Booking Confirmation: ${bookingRef}</div>
         </div>
         <div class="section">
@@ -425,7 +425,7 @@ export function UnifiedBookingFlow({
                                 phone: e.target.value,
                               })
                             }
-                            placeholder="+91 98765 43210"
+                            placeholder="+996 (555) 123-456"
                             className="h-12"
                           />
                         </div>
@@ -463,7 +463,7 @@ export function UnifiedBookingFlow({
                                 city: e.target.value,
                               })
                             }
-                            placeholder="Mumbai"
+                            placeholder="Bishkek"
                             className="h-12"
                           />
                         </div>
@@ -480,7 +480,7 @@ export function UnifiedBookingFlow({
                                 zipCode: e.target.value,
                               })
                             }
-                            placeholder="400001"
+                            placeholder="720000"
                             className="h-12"
                           />
                         </div>
