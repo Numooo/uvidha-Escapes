@@ -25,7 +25,8 @@ import {
   Package as PackageIcon,
   Clock,
   PlaneTakeoff,
-  Activity
+  Activity,
+  Flame
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -172,8 +173,11 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
         actualDep,
         scheduledArr: `${arrH}:${depM}`,
         actualArr,
-        terminal: terminals[i % terminals.length],
-        gate: gates[i % gates.length],
+        terminalDep: terminals[i % terminals.length],
+        gateDep: gates[i % gates.length],
+        terminalArr: terminals[(i + 1) % terminals.length],
+        gateArr: gates[(i + 1) % gates.length],
+        baggage: `Belt ${1 + (i % 8)}`,
         status,
         date,
       };
@@ -217,6 +221,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
           terminalDep: "Terminal 2",
           gateDep: "A4",
           terminalArr: "Terminal 1",
+          gateArr: "B2",
           baggage: "Belt 5",
           date: statusDate,
         });
@@ -1161,18 +1166,20 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                     </>
                   )}
 
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-gray-700">{t("Search.status.date")}</label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                      <input
-                        type="date"
-                        value={statusDate}
-                        onChange={(e) => setStatusDate(e.target.value)}
-                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
-                      />
+                  {statusSearchType !== "flightNumber" && (
+                    <div>
+                      <label className="mb-1 block text-sm font-medium text-gray-700">{t("Search.status.date")}</label>
+                      <div className="relative">
+                        <Calendar className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <input
+                          type="date"
+                          value={statusDate}
+                          onChange={(e) => setStatusDate(e.target.value)}
+                          className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Search button */}
@@ -1195,11 +1202,12 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 {/* Results */}
                 {flightStatusResult && !isStatusSearching && (() => {
                   const statusColor = (s: string) => {
-                    if (s === "ontime")    return "bg-green-100 text-green-700";
-                    if (s === "delayed")   return "bg-yellow-100 text-yellow-700";
-                    if (s === "cancelled") return "bg-red-100 text-red-700";
-                    if (s === "enroute")   return "bg-blue-100 text-blue-700";
-                    return "bg-gray-100 text-gray-600";
+                    if (s === "ontime")    return "bg-emerald-50 text-emerald-600 border border-emerald-100";
+                    if (s === "delayed")   return "bg-amber-50 text-amber-600 border border-amber-100";
+                    if (s === "cancelled") return "bg-rose-50 text-rose-600 border border-rose-100";
+                    if (s === "enroute")   return "bg-sky-50 text-sky-600 border border-sky-100";
+                    if (s === "landed")    return "bg-indigo-50 text-indigo-600 border border-indigo-100";
+                    return "bg-gray-50 text-gray-500 border border-gray-100";
                   };
 
                   /* ── LIST VIEW ── */
@@ -1260,14 +1268,17 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                                   <>
                                     <p className="text-xs text-gray-400 line-through">{fl.scheduledDep}</p>
                                     <p className="text-sm font-semibold text-gray-900">{fl.actualDep}
-                                      <span className="ml-1 text-[10px] text-gray-400 no-underline">факт.</span>
+                                      <span className="ml-1 text-[10px] text-gray-400 no-underline">{t("Search.status.fact")}</span>
                                     </p>
+                                    <p className="text-[10px] text-gray-400 font-medium uppercase">{fl.terminalDep} · {fl.gateDep}</p>
                                   </>
                                 ) : (
                                   <>
                                     <p className="text-sm font-medium text-gray-900">{fl.scheduledDep}</p>
-                                    {fl.estimatedDep !== fl.scheduledDep && (
-                                      <p className="text-xs text-yellow-600 font-medium">{fl.estimatedDep} ↑</p>
+                                    {fl.estimatedDep !== fl.scheduledDep ? (
+                                      <p className="text-xs text-amber-600 font-medium">{fl.estimatedDep} ↑</p>
+                                    ) : (
+                                      <p className="text-[10px] text-gray-400 font-medium uppercase">{fl.terminalDep} · {fl.gateDep}</p>
                                     )}
                                   </>
                                 )}
@@ -1277,14 +1288,14 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                                   <>
                                     <p className="text-xs text-gray-400 line-through">{fl.scheduledArr}</p>
                                     <p className="text-sm font-semibold text-gray-900">{fl.actualArr}
-                                      <span className="ml-1 text-[10px] text-gray-400">факт.</span>
+                                      <span className="ml-1 text-[10px] text-gray-400">{t("Search.status.fact")}</span>
                                     </p>
-                                    <p className="text-xs text-gray-400">{fl.terminal} · {fl.gate}</p>
+                                    <p className="text-[10px] text-gray-400 font-medium uppercase">{fl.terminalArr} · {fl.gateArr}</p>
                                   </>
                                 ) : (
                                   <>
                                     <p className="text-sm font-medium text-gray-900">{fl.scheduledArr}</p>
-                                    <p className="text-xs text-gray-400">{fl.terminal} · {fl.gate}</p>
+                                    <p className="text-[10px] text-gray-400 font-medium uppercase">{fl.terminalArr} · {fl.gateArr}</p>
                                   </>
                                 )}
                               </div>
@@ -1347,42 +1358,48 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                       <div className="flex flex-wrap items-center justify-between mb-6">
                         <div>
                           <h3 className="text-2xl font-bold text-gray-900">{flightStatusResult.flightNum}</h3>
-                          <p className="text-sm text-gray-400">{flightStatusResult.airline} · {format(new Date(flightStatusResult.date), "dd MMM yyyy")}</p>
+                          <p className="text-sm text-gray-400 font-medium">{flightStatusResult.airline} · {format(new Date(flightStatusResult.date), "dd MMM yyyy")}</p>
                         </div>
-                        <span className={`px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 ${statusColor(flightStatusResult.status)}`}>
-                          <span className="h-2 w-2 rounded-full bg-current" />
+                        <span className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm border border-gray-100 ${statusColor(flightStatusResult.status)}`}>
+                          <span className="h-1.5 w-1.5 rounded-full bg-current" />
                           {t(`Search.status.statusLabels.${flightStatusResult.status}`)}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between mb-8">
+                      <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-50">
                         <div className="text-center">
-                          <div className="text-3xl font-bold text-gray-900">{flightStatusResult.origin}</div>
-                          <div className="text-sm text-gray-500 mt-0.5">{flightStatusResult.scheduledDep}</div>
+                          <div className="text-3xl font-black text-gray-900 mb-1">{flightStatusResult.origin}</div>
+                          <div className="text-sm font-bold text-brand-primary bg-brand-primary/5 px-2 py-0.5 rounded inline-block">{flightStatusResult.scheduledDep}</div>
+                          <div className="text-[10px] text-gray-400 mt-1 font-bold uppercase">{flightStatusResult.terminalDep} · {flightStatusResult.gateDep}</div>
                         </div>
                         <div className="flex-1 flex items-center px-6 relative">
-                          <div className="w-full border-t-2 border-dashed border-gray-200" />
-                          <Plane className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 text-brand-primary h-6 w-6 bg-white" />
+                          <div className="w-full border-t-2 border-dotted border-gray-100" />
+                          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-2 rounded-full border border-gray-50 shadow-sm">
+                            <Plane className="h-5 w-5 text-brand-primary rotate-90" />
+                          </div>
                         </div>
                         <div className="text-center">
-                          <div className="text-3xl font-bold text-gray-900">{flightStatusResult.destination}</div>
-                          <div className="text-sm text-gray-500 mt-0.5">{flightStatusResult.estimatedArr}</div>
+                          <div className="text-3xl font-black text-gray-900 mb-1">{flightStatusResult.destination}</div>
+                          <div className="text-sm font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded inline-block">{flightStatusResult.estimatedArr}</div>
+                          <div className="text-[10px] text-gray-400 mt-1 font-bold uppercase">{flightStatusResult.terminalArr} · {flightStatusResult.gateArr}</div>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 bg-gray-50 rounded-xl p-4">
-                        <div>
-                          <p className="text-xs text-gray-400 mb-1">{t("Search.status.terminal")}</p>
-                          <p className="text-sm font-semibold text-gray-900">{flightStatusResult.terminalDep} → {flightStatusResult.terminalArr}</p>
+                      <div className="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100">
+                        <div className="text-center">
+                          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">{t("Search.status.gate")} ({t("Search.status.depLabel")})</p>
+                          <p className="text-sm font-black text-brand-primary bg-brand-primary/5 px-3 py-1 rounded-lg inline-block">{flightStatusResult.gateDep}</p>
                         </div>
-                        <div>
-                          <p className="text-xs text-gray-400 mb-1">{t("Search.status.gate")}</p>
-                          <p className="text-sm font-semibold text-gray-900">{flightStatusResult.gateDep}</p>
+                        <div className="text-center">
+                          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">{t("Search.status.gate")} ({t("Search.status.arrLabel")})</p>
+                          <p className="text-sm font-black text-brand-primary bg-brand-primary/5 px-3 py-1 rounded-lg inline-block">{flightStatusResult.gateArr}</p>
                         </div>
-                        <div>
-                          <p className="text-xs text-gray-400 mb-1">{t("Search.status.baggage")}</p>
-                          <p className="text-sm font-semibold text-gray-900">{flightStatusResult.baggage}</p>
-                        </div>
+                        {flightStatusResult.status === "landed" && (
+                          <div className="col-span-2 text-center pt-2">
+                             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">{t("Search.status.baggage")}</p>
+                             <p className="text-base font-black text-orange-600 bg-orange-50 px-4 py-1.5 rounded-xl inline-block">{flightStatusResult.baggage}</p>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   );
@@ -1788,7 +1805,8 @@ function HotDealsSection({ onNavigate, onSearchFlights }: HotDealsSectionProps) 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex justify-between items-end">
           <div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 flex items-center gap-3">
+              <Flame className="h-15 w-15 text-blue-600 animate-pulse" />
               {t("HotDeals.title")}
             </h2>
             <p className="text-lg text-gray-600">

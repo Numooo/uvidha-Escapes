@@ -145,6 +145,9 @@
       "scheduled": "Scheduled",
       "estimated": "Estimated",
       "baggage": "Baggage Claim",
+      "depLabel": "Departure",
+      "arrLabel": "Arrival",
+      "fact": "actual",
       "searchByDate": "All Flights by Date",
       "airport": "Airport",
       "flightListTitle": "Flights on",
@@ -1288,7 +1291,7 @@
     "success": "Operation successful"
   },
   "HotDeals": {
-    "title": "🔥 Hot Deals",
+    "title": "Hot Deals",
     "subtitle": "Book now at the best prices!",
     "badgeFast": "Direct Flight",
     "badgeHot": "Hot Price",

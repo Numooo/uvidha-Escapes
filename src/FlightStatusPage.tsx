@@ -28,8 +28,11 @@ interface MockFlight {
   actualDep: string | null;
   scheduledArr: string;
   actualArr: string | null;
-  terminal: string;
-  gate: string;
+  terminalDep: string;
+  gateDep: string;
+  terminalArr: string;
+  gateArr: string;
+  baggage: string;
   status: string;
   date: string;
 }
@@ -48,6 +51,7 @@ interface SingleResult {
   terminalDep: string;
   gateDep: string;
   terminalArr: string;
+  gateArr: string;
   baggage: string;
   date: string;
 }
@@ -109,8 +113,11 @@ function generateMockFlights(date: string): MockFlight[] {
       actualDep,
       scheduledArr: `${arrH}:${depM}`,
       actualArr,
-      terminal: terminals[i % terminals.length],
-      gate: gates[i % gates.length],
+      terminalDep: terminals[i % terminals.length],
+      gateDep: gates[i % gates.length],
+      terminalArr: terminals[(i + 1) % terminals.length],
+      gateArr: gates[(i + 1) % gates.length],
+      baggage: `Belt ${1 + (i % 8)}`,
       status,
       date,
     };
@@ -118,12 +125,12 @@ function generateMockFlights(date: string): MockFlight[] {
 }
 
 function statusColor(s: string): string {
-  if (s === "ontime")    return "bg-green-100 text-green-700";
-  if (s === "delayed")   return "bg-yellow-100 text-yellow-700";
-  if (s === "cancelled") return "bg-red-100 text-red-700";
-  if (s === "enroute")   return "bg-blue-100 text-blue-700";
-  if (s === "landed")    return "bg-purple-100 text-purple-700";
-  return "bg-gray-100 text-gray-600";
+  if (s === "ontime")    return "bg-emerald-50 text-emerald-600 border border-emerald-100";
+  if (s === "delayed")   return "bg-amber-50 text-amber-600 border border-amber-100";
+  if (s === "cancelled") return "bg-rose-50 text-rose-600 border border-rose-100";
+  if (s === "enroute")   return "bg-sky-50 text-sky-600 border border-sky-100";
+  if (s === "landed")    return "bg-indigo-50 text-indigo-600 border border-indigo-100";
+  return "bg-gray-50 text-gray-500 border border-gray-100";
 }
 
 export function FlightStatusPage() {
@@ -177,6 +184,7 @@ export function FlightStatusPage() {
           terminalDep: "Terminal 2",
           gateDep: "A4",
           terminalArr: "Terminal 1",
+          gateArr: "B2",
           baggage: "Belt 5",
           date,
         });
@@ -255,7 +263,7 @@ export function FlightStatusPage() {
             {/* Fields */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 mb-5">
               {mode === "flightNumber" && (
-                <div className="md:col-span-2">
+                <div className="col-span-1 md:col-span-2 lg:col-span-3">
                   <label className="mb-1.5 block text-sm font-medium text-gray-700">{t("flightNumber")}</label>
                   <div className="relative">
                     <PlaneTakeoff className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -306,18 +314,20 @@ export function FlightStatusPage() {
                 </>
               )}
 
-              <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700">{t("date")}</label>
-                <div className="relative">
-                  <Calendar className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-11 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 transition-all"
-                  />
+              {mode !== "flightNumber" && (
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-gray-700">{t("date")}</label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-11 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 transition-all"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <button
@@ -365,10 +375,10 @@ export function FlightStatusPage() {
                         {/* Col headers */}
                         <div className="hidden md:grid grid-cols-12 gap-3 px-6 py-3 bg-gray-50 text-[11px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
                           <div className="col-span-2">{t("tableHeaders.flight")}</div>
-                          <div className="col-span-4">{t("tableHeaders.route")}</div>
+                          <div className="col-span-3">{t("tableHeaders.route")}</div>
                           <div className="col-span-2">{t("tableHeaders.departure")}</div>
                           <div className="col-span-2">{t("tableHeaders.arrival")}</div>
-                          <div className="col-span-2">{t("tableHeaders.status")}</div>
+                          <div className="col-span-3">{t("tableHeaders.status")}</div>
                         </div>
 
                         <div className="divide-y divide-gray-50 bg-white">
@@ -384,7 +394,7 @@ export function FlightStatusPage() {
                                 <p className="text-sm font-bold text-gray-900">{fl.flightNum}</p>
                                 <p className="text-xs text-gray-500 truncate">{fl.airline}</p>
                               </div>
-                              <div className="col-span-1 md:col-span-4 flex items-center gap-2">
+                              <div className="col-span-1 md:col-span-3 flex items-center gap-2">
                                 <span className="text-sm font-bold text-gray-800">{fl.origin}</span>
                                 <Plane className="h-3.5 w-3.5 text-brand-primary/40 shrink-0" />
                                 <span className="text-sm font-bold text-gray-800">{fl.destination}</span>
@@ -394,13 +404,17 @@ export function FlightStatusPage() {
                                   <>
                                     <p className="text-xs text-gray-300 line-through">{fl.scheduledDep}</p>
                                     <p className="text-sm font-bold text-gray-900">{fl.actualDep} <span className="text-[10px] text-brand-secondary font-bold">ФАКТ.</span></p>
+                                    <p className="text-xs text-gray-400 font-medium">{fl.terminalDep} · {fl.gateDep}</p>
                                   </>
                                 ) : (
                                   <>
-                                    <p className="text-sm font-bold text-gray-900">{fl.scheduledDep}</p>
-                                    {fl.estimatedDep !== fl.scheduledDep && (
-                                      <p className="text-xs text-orange-500 font-bold">{fl.estimatedDep} ↑</p>
-                                    )}
+                                    <div className="flex flex-col">
+                                      <p className="text-sm font-bold text-gray-900">{fl.scheduledDep}</p>
+                                      {fl.estimatedDep !== fl.scheduledDep && (
+                                        <p className="text-xs text-orange-500 font-bold">{fl.estimatedDep} ↑</p>
+                                      )}
+                                      <p className="text-xs text-gray-400 font-medium">{fl.terminalDep} · {fl.gateDep}</p>
+                                    </div>
                                   </>
                                 )}
                               </div>
@@ -408,19 +422,21 @@ export function FlightStatusPage() {
                                 {fl.status === "landed" && fl.actualArr ? (
                                   <>
                                     <p className="text-xs text-gray-300 line-through">{fl.scheduledArr}</p>
-                                    <p className="text-sm font-bold text-gray-900">{fl.actualArr} <span className="text-[10px] text-brand-secondary font-bold">ФАКТ.</span></p>
-                                    <p className="text-xs text-gray-400">{fl.terminal} · {fl.gate}</p>
+                                    <p className="text-sm font-bold text-gray-900">{fl.actualArr} <span className="text-[10px] text-brand-secondary font-bold uppercase">{t("fact")}</span></p>
+                                    <p className="text-xs text-gray-400 font-medium">{fl.terminalArr} · {fl.gateArr}</p>
                                   </>
                                 ) : (
                                   <>
-                                    <p className="text-sm font-bold text-gray-900">{fl.scheduledArr}</p>
-                                    <p className="text-xs text-gray-400">{fl.terminal} · {fl.gate}</p>
+                                    <div className="flex flex-col">
+                                      <p className="text-sm font-bold text-gray-900">{fl.scheduledArr}</p>
+                                      <p className="text-xs text-gray-400 font-medium">{fl.terminalArr} · {fl.gateArr}</p>
+                                    </div>
                                   </>
                                 )}
                               </div>
-                              <div className="col-span-2 md:col-span-2 flex items-center">
-                                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider ${statusColor(fl.status)}`}>
-                                  <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
+                              <div className="col-span-2 md:col-span-2 flex items-center pr-2">
+                                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap ${statusColor(fl.status)}`}>
+                                  <span className="h-1.5 w-1.5 rounded-full bg-current" />
                                   {t(`statusLabels.${fl.status}`)}
                                 </span>
                               </div>
@@ -475,8 +491,8 @@ export function FlightStatusPage() {
                           <h2 className="text-4xl font-black text-gray-900 tracking-tight">{result.flightNum}</h2>
                           <p className="text-base text-gray-500 mt-2 font-medium">{result.airline} · {format(new Date(result.date), "dd MMMM yyyy")}</p>
                         </div>
-                        <span className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-sm ${statusColor(result.status)}`}>
-                          <span className="h-2 w-2 rounded-full bg-current animate-pulse" />
+                        <span className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 shadow-sm whitespace-nowrap ${statusColor(result.status)}`}>
+                          <span className="h-2 w-2 rounded-full bg-current" />
                           {t(`statusLabels.${result.status}`)}
                         </span>
                       </div>
@@ -499,22 +515,29 @@ export function FlightStatusPage() {
                       </div>
 
                       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 bg-gray-50 rounded-3xl p-8 border border-gray-100">
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("terminal")} (DEP)</p>
+                        <div className="space-y-1 text-center lg:text-left">
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("terminal")} ({t("depLabel")})</p>
                           <p className="text-lg font-black text-gray-900">{result.terminalDep}</p>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("gate")}</p>
-                          <p className="text-lg font-black text-gray-900 text-brand-primary">{result.gateDep}</p>
+                        <div className="space-y-1 text-center lg:text-left">
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("gate")} ({t("depLabel")})</p>
+                          <p className="text-lg font-black text-brand-primary bg-brand-primary/5 px-3 py-1 rounded-lg inline-block">{result.gateDep}</p>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("terminal")} (ARR)</p>
+                        <div className="space-y-1 text-center lg:text-left">
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("terminal")} ({t("arrLabel")})</p>
                           <p className="text-lg font-black text-gray-900">{result.terminalArr}</p>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("baggage")}</p>
-                          <p className="text-lg font-black text-gray-900 text-orange-600">{result.baggage}</p>
+                        <div className="space-y-1 text-center lg:text-left">
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("gate")} ({t("arrLabel")})</p>
+                          <p className="text-lg font-black text-brand-primary bg-brand-primary/5 px-3 py-1 rounded-lg inline-block">{result.gateArr}</p>
                         </div>
+
+                        {result.status === "landed" && (
+                          <div className="col-span-full pt-6 mt-6 border-t border-gray-100 flex items-center justify-center gap-4">
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("baggage")}:</span>
+                            <span className="text-lg font-black text-orange-600 bg-orange-50 px-4 py-1.5 rounded-xl">{result.baggage}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
