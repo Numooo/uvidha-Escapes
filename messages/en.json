@@ -998,7 +998,7 @@
     "travelers": "Got it! Who will be traveling?",
     "interests": "Awesome! 🌟 What are your main interests? (Select multiple, then click Done)",
     "generating": "Perfect! I have all the information I need. Let me create your personalized itinerary... 🎨",
-    "itinerary": "✨ Your personalized {days}-day itinerary for {destination} is ready! I've planned activities based on your interests: {interests}. Budget: {budget}. Perfect for {travelers}!",
+    "itineraryReady": "✨ Your personalized {days}-day itinerary for {destination} is ready!",
     "done": "✅ Done - Generate Itinerary",
     "selectInterests": "Please select at least one interest before continuing.",
     "placeholder": "Type your message...",
@@ -1027,6 +1027,124 @@
       "shopping": "🛍️ Shopping",
       "art": "🎨 Art & Museums",
       "nightlife": "🌃 Nightlife"
+    },
+    "dayTitles": {
+      "arrival": "Arrival & {destination} Welcome",
+      "exploring": "Exploring the City",
+      "culture": "Cultural Immersion",
+      "adventure": "Adventure Day",
+      "hiddenGems": "Hidden Gems Tour",
+      "relaxation": "Relaxation & Beach Time",
+      "departure": "Departure & Farewell",
+      "exploringDest": "Exploring {destination}"
+    },
+    "activityDetails": {
+      "arrival": {
+        "title": "Airport Pickup & Hotel Check-in",
+        "desc": "Private transfer to your hotel. Rest and freshen up."
+      },
+      "welcomeLunch": {
+        "title": "Welcome Lunch",
+        "desc": "Try authentic local cuisine at a recommended restaurant."
+      },
+      "orientation": {
+        "title": "City Orientation Walk",
+        "desc": "Explore nearby markets and get your bearings."
+      },
+      "sunset": {
+        "title": "Sunset View & Dinner",
+        "desc": "Watch the sunset from a scenic viewpoint."
+      },
+      "beachMorning": {
+        "title": "Beach Morning",
+        "desc": "Relax on pristine beaches, swimming and sunbathing."
+      },
+      "beachsideLunch": {
+        "title": "Beachside Lunch",
+        "desc": "Fresh seafood and tropical drinks by the shore."
+      },
+      "waterSports": {
+        "title": "Water Sports Adventure",
+        "desc": "Snorkeling, kayaking, or paddleboarding."
+      },
+      "beachSunset": {
+        "title": "Beach Sunset & Bonfire",
+        "desc": "Watch the sunset and enjoy a beach bonfire."
+      },
+      "cultureTour": {
+        "title": "Temple & Heritage Tour",
+        "desc": "Visit ancient temples and historical landmarks."
+      },
+      "cookingClass": {
+        "title": "Traditional Cooking Class",
+        "desc": "Learn to cook authentic local dishes."
+      },
+      "marketShopping": {
+        "title": "Local Market Shopping",
+        "desc": "Browse handicrafts and souvenirs."
+      },
+      "culturalDance": {
+        "title": "Cultural Dance Performance",
+        "desc": "Traditional music and dance show with dinner."
+      },
+      "sunriseTrek": {
+        "title": "Mountain Sunrise Trek",
+        "desc": "Hike to a scenic viewpoint for sunrise."
+      },
+      "adventureLunch": {
+        "title": "Adventure Lunch",
+        "desc": "Picnic lunch with panoramic views."
+      },
+      "rafting": {
+        "title": "Zip-lining & Rafting",
+        "desc": "Thrilling adventure activities in nature."
+      },
+      "spa": {
+        "title": "Relaxation & Spa",
+        "desc": "Unwind with a traditional massage."
+      },
+      "defaultMorning": {
+        "title": "Morning Exploration",
+        "desc": "Discover hidden gems and local favorites."
+      },
+      "defaultLunch": {
+        "title": "Lunch Break",
+        "desc": "Enjoy local specialties at a popular restaurant."
+      },
+      "defaultAfternoon": {
+        "title": "Afternoon Activities",
+        "desc": "Continue exploring based on your interests."
+      },
+      "defaultEvening": {
+        "title": "Evening Leisure",
+        "desc": "Dinner and free time to relax."
+      }
+    },
+    "durationOptions": {
+      "3-4": "3-4 days",
+      "5-7": "5-7 days",
+      "7": "1 week",
+      "10-14": "10-14 days"
+    },
+    "budgetOptions": {
+      "budget": "Budget",
+      "midrange": "Mid-range",
+      "luxury": "Luxury",
+      "ultraLuxury": "Ultra Luxury"
+    },
+    "travelerOptions": {
+      "solo": "Solo",
+      "couple": "Couple",
+      "familySmall": "Family (3-4)",
+      "friends": "Group of Friends",
+      "familyLarge": "Family (5+)"
+    },
+    "labels": {
+      "destination": "Destination",
+      "duration": "Duration",
+      "budget": "Budget",
+      "travelers": "Travelers",
+      "interests": "Interests"
     }
   },
   "Booking": {

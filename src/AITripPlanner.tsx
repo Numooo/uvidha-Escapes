@@ -21,7 +21,7 @@ import { useCurrency } from "@/CurrencyContext";
 interface Message {
   id: string;
   type: "user" | "bot" | "quick-reply";
-  content: string;
+  content: React.ReactNode;
   timestamp: Date;
   options?: string[];
   isTranslated?: boolean;
@@ -123,7 +123,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
   const addMessage = (
     type: "user" | "bot" | "quick-reply",
-    content: string,
+    content: React.ReactNode,
     options?: string[]
   ) => {
     const newMessage: Message = {
@@ -165,65 +165,71 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
     addMessage(
       "bot",
-      t("itinerary", {
-        days,
-        destination: preferences.destination || "",
-        interests: preferences.interests?.join(", ") || "",
-        budget: preferences.budget || "",
-        travelers: preferences.travelers || ""
-      })
+      <div className="space-y-2">
+        <p>{t("itineraryReady", { 
+          days, 
+          destination: preferences.destination || "" 
+        })}</p>
+        <div className="flex flex-wrap gap-2 text-xs">
+          <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md">{preferences.duration}</span>
+          <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md flex items-center gap-1">
+            <CurrencySymbol className="h-3 w-3" />
+            {preferences.budget}
+          </span>
+          <span className="bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md">{preferences.travelers}</span>
+        </div>
+      </div>
     );
   };
 
   const getDayTitle = (day: number, destination: string): string => {
     const titles = [
-      `Arrival & ${destination} Welcome`,
-      "Exploring the City",
-      "Cultural Immersion",
-      "Adventure Day",
-      "Hidden Gems Tour",
-      "Relaxation & Beach Time",
-      "Departure & Farewell",
+      t("dayTitles.arrival", { destination }),
+      t("dayTitles.exploring"),
+      t("dayTitles.culture"),
+      t("dayTitles.adventure"),
+      t("dayTitles.hiddenGems"),
+      t("dayTitles.relaxation"),
+      t("dayTitles.departure"),
     ];
-    return titles[day - 1] || `Exploring ${destination}`;
+    return titles[day - 1] || t("dayTitles.exploringDest", { destination });
   };
 
   const generateDayActivities = (
     day: number,
     prefs: TripPreferences
   ): DayActivity[] => {
-    const hasBeachInterest = prefs.interests?.some((i) => i.includes("Beach"));
-    const hasAdventure = prefs.interests?.some((i) => i.includes("Adventure"));
-    const hasCulture = prefs.interests?.some((i) => i.includes("Culture"));
+    const hasBeachInterest = prefs.interests?.some((i) => i.includes(t("interestsList.beach")));
+    const hasAdventure = prefs.interests?.some((i) => i.includes(t("interestsList.adventure")));
+    const hasCulture = prefs.interests?.some((i) => i.includes(t("interestsList.culture")));
 
     if (day === 1) {
       return [
         {
           time: "10:00 AM",
-          title: "Airport Pickup & Hotel Check-in",
-          description: "Private transfer to your hotel. Rest and freshen up.",
+          title: t("activityDetails.arrival.title"),
+          description: t("activityDetails.arrival.desc"),
           icon: <Plane className="h-5 w-5" />,
           duration: "2 hours",
         },
         {
           time: "1:00 PM",
-          title: "Welcome Lunch",
-          description:
-            "Try authentic local cuisine at a recommended restaurant.",
+          title: t("activityDetails.welcomeLunch.title"),
+          description: t("activityDetails.welcomeLunch.desc"),
           icon: <UtensilsCrossed className="h-5 w-5" />,
           duration: "1.5 hours",
         },
         {
           time: "3:00 PM",
-          title: "City Orientation Walk",
-          description: "Explore nearby markets and get your bearings.",
+          title: t("activityDetails.orientation.title"),
+          description: t("activityDetails.orientation.desc"),
           icon: <MapPin className="h-5 w-5" />,
           duration: "2 hours",
         },
         {
           time: "7:00 PM",
-          title: "Sunset View & Dinner",
-          description: "Watch the sunset from a scenic viewpoint.",
+          title: t("activityDetails.sunset.title"),
+          description: t("activityDetails.sunset.desc"),
           icon: <Camera className="h-5 w-5" />,
           duration: "2 hours",
         },
@@ -234,29 +240,29 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       return [
         {
           time: "8:00 AM",
-          title: "Beach Morning",
-          description: "Relax on pristine beaches, swimming and sunbathing.",
+          title: t("activityDetails.beachMorning.title"),
+          description: t("activityDetails.beachMorning.desc"),
           icon: <Heart className="h-5 w-5" />,
           duration: "3 hours",
         },
         {
           time: "12:00 PM",
-          title: "Beachside Lunch",
-          description: "Fresh seafood and tropical drinks by the shore.",
+          title: t("activityDetails.beachsideLunch.title"),
+          description: t("activityDetails.beachsideLunch.desc"),
           icon: <UtensilsCrossed className="h-5 w-5" />,
           duration: "1 hour",
         },
         {
           time: "2:00 PM",
-          title: "Water Sports Adventure",
-          description: "Snorkeling, kayaking, or paddleboarding.",
+          title: t("activityDetails.waterSports.title"),
+          description: t("activityDetails.waterSports.desc"),
           icon: <Plane className="h-5 w-5" />,
           duration: "2 hours",
         },
         {
           time: "6:00 PM",
-          title: "Beach Sunset & Bonfire",
-          description: "Watch the sunset and enjoy a beach bonfire.",
+          title: t("activityDetails.beachSunset.title"),
+          description: t("activityDetails.beachSunset.desc"),
           icon: <Camera className="h-5 w-5" />,
           duration: "2 hours",
         },
@@ -267,29 +273,29 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       return [
         {
           time: "9:00 AM",
-          title: "Temple & Heritage Tour",
-          description: "Visit ancient temples and historical landmarks.",
+          title: t("activityDetails.cultureTour.title"),
+          description: t("activityDetails.cultureTour.desc"),
           icon: <MapPin className="h-5 w-5" />,
           duration: "3 hours",
         },
         {
           time: "1:00 PM",
-          title: "Traditional Cooking Class",
-          description: "Learn to cook authentic local dishes.",
+          title: t("activityDetails.cookingClass.title"),
+          description: t("activityDetails.cookingClass.desc"),
           icon: <UtensilsCrossed className="h-5 w-5" />,
           duration: "2 hours",
         },
         {
           time: "4:00 PM",
-          title: "Local Market Shopping",
-          description: "Browse handicrafts and souvenirs.",
+          title: t("activityDetails.marketShopping.title"),
+          description: t("activityDetails.marketShopping.desc"),
           icon: <Camera className="h-5 w-5" />,
           duration: "2 hours",
         },
         {
           time: "7:00 PM",
-          title: "Cultural Dance Performance",
-          description: "Traditional music and dance show with dinner.",
+          title: t("activityDetails.culturalDance.title"),
+          description: t("activityDetails.culturalDance.desc"),
           icon: <Heart className="h-5 w-5" />,
           duration: "2 hours",
         },
@@ -300,29 +306,29 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       return [
         {
           time: "6:00 AM",
-          title: "Mountain Sunrise Trek",
-          description: "Hike to a scenic viewpoint for sunrise.",
+          title: t("activityDetails.sunriseTrek.title"),
+          description: t("activityDetails.sunriseTrek.desc"),
           icon: <Plane className="h-5 w-5" />,
           duration: "4 hours",
         },
         {
           time: "11:00 AM",
-          title: "Adventure Lunch",
-          description: "Picnic lunch with panoramic views.",
+          title: t("activityDetails.adventureLunch.title"),
+          description: t("activityDetails.adventureLunch.desc"),
           icon: <UtensilsCrossed className="h-5 w-5" />,
           duration: "1 hour",
         },
         {
           time: "1:00 PM",
-          title: "Zip-lining & Rafting",
-          description: "Thrilling adventure activities in nature.",
+          title: t("activityDetails.rafting.title"),
+          description: t("activityDetails.rafting.desc"),
           icon: <Heart className="h-5 w-5" />,
           duration: "3 hours",
         },
         {
           time: "6:00 PM",
-          title: "Relaxation & Spa",
-          description: "Unwind with a traditional massage.",
+          title: t("activityDetails.spa.title"),
+          description: t("activityDetails.spa.desc"),
           icon: <Hotel className="h-5 w-5" />,
           duration: "2 hours",
         },
@@ -333,29 +339,29 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     return [
       {
         time: "9:00 AM",
-        title: "Morning Exploration",
-        description: "Discover hidden gems and local favorites.",
+        title: t("activityDetails.defaultMorning.title"),
+        description: t("activityDetails.defaultMorning.desc"),
         icon: <MapPin className="h-5 w-5" />,
         duration: "3 hours",
       },
       {
         time: "12:30 PM",
-        title: "Lunch Break",
-        description: "Enjoy local specialties at a popular restaurant.",
+        title: t("activityDetails.defaultLunch.title"),
+        description: t("activityDetails.defaultLunch.desc"),
         icon: <UtensilsCrossed className="h-5 w-5" />,
         duration: "1.5 hours",
       },
       {
         time: "2:30 PM",
-        title: "Afternoon Activities",
-        description: "Continue exploring based on your interests.",
+        title: t("activityDetails.defaultAfternoon.title"),
+        description: t("activityDetails.defaultAfternoon.desc"),
         icon: <Camera className="h-5 w-5" />,
         duration: "3 hours",
       },
       {
         time: "7:00 PM",
-        title: "Evening Leisure",
-        description: "Dinner and free time to relax.",
+        title: t("activityDetails.defaultEvening.title"),
+        description: t("activityDetails.defaultEvening.desc"),
         icon: <Heart className="h-5 w-5" />,
         duration: "2 hours",
       },
@@ -374,29 +380,29 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     if (currentStep === "destination") {
       setPreferences((prev) => ({ ...prev, destination: inputValue }));
       addMessage("bot", t("duration"), [
-        "3-4 days",
-        "5-7 days",
-        "1 week",
-        "10-14 days",
+         t("durationOptions.3-4"),
+         t("durationOptions.5-7"),
+         t("durationOptions.7"),
+         t("durationOptions.10-14")
       ]);
       setCurrentStep("duration");
     } else if (currentStep === "duration") {
       setPreferences((prev) => ({ ...prev, duration: inputValue }));
       addMessage("bot", t("budget"), [
-        `Budget (${symbol}20k-40k)`,
-        `Mid-range (${symbol}40k-80k)`,
-        `Luxury (${symbol}80k+)`,
-        `Ultra Luxury (${symbol}150k+)`,
+        t("budgetOptions.budget") + " (20k-40k)",
+        t("budgetOptions.midrange") + " (40k-80k)",
+        t("budgetOptions.luxury") + " (80k+)",
+        t("budgetOptions.ultraLuxury") + " (150k+)",
       ]);
       setCurrentStep("budget");
     } else if (currentStep === "budget") {
       setPreferences((prev) => ({ ...prev, budget: inputValue }));
       addMessage("bot", t("travelers"), [
-        "Solo",
-        "Couple",
-        "Family (3-4)",
-        "Group of Friends",
-        "Family (5+)",
+        t("travelerOptions.solo"),
+        t("travelerOptions.couple"),
+        t("travelerOptions.familySmall"),
+        t("travelerOptions.friends"),
+        t("travelerOptions.familyLarge"),
       ]);
       setCurrentStep("travelers");
     } else if (currentStep === "travelers") {
@@ -417,35 +423,38 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
     await simulateTyping();
 
     if (currentStep === "destination") {
-      // Extract destination from quick reply
-      const dest = option
-        .replace("Plan a trip to ", "")
-        .replace("near me", "India");
+      // Extract destination from quick reply (this is a bit tricky with localized strings, but we can assume the option matches one of the quickQuestion values)
+      let dest = option;
+      // Simple fallback for known quick questions
+      if (option === t("quickQuestions.bali")) dest = "Bali";
+      else if (option === t("quickQuestions.weekend")) dest = "Bishkek (FRU)";
+      else if (option === t("quickQuestions.romantic")) dest = "Maldives";
+      
       setPreferences((prev) => ({ ...prev, destination: dest }));
       addMessage("bot", t("duration"), [
-        "3-4 days",
-        "5-7 days",
-        "1 week",
-        "10-14 days",
+        t("durationOptions.3-4"),
+        t("durationOptions.5-7"),
+        t("durationOptions.7"),
+        t("durationOptions.10-14")
       ]);
       setCurrentStep("duration");
     } else if (currentStep === "duration") {
       setPreferences((prev) => ({ ...prev, duration: option }));
       addMessage("bot", t("budget"), [
-        `Budget (${symbol}20k-40k)`,
-        `Mid-range (${symbol}40k-80k)`,
-        `Luxury (${symbol}80k+)`,
-        `Ultra Luxury (${symbol}150k+)`,
+        t("budgetOptions.budget") + " (20k-40k)",
+        t("budgetOptions.midrange") + " (40k-80k)",
+        t("budgetOptions.luxury") + " (80k+)",
+        t("budgetOptions.ultraLuxury") + " (150k+)",
       ]);
       setCurrentStep("budget");
     } else if (currentStep === "budget") {
       setPreferences((prev) => ({ ...prev, budget: option }));
       addMessage("bot", t("travelers"), [
-        "Solo",
-        "Couple",
-        "Family (3-4)",
-        "Group of Friends",
-        "Family (5+)",
+        t("travelerOptions.solo"),
+        t("travelerOptions.couple"),
+        t("travelerOptions.familySmall"),
+        t("travelerOptions.friends"),
+        t("travelerOptions.familyLarge"),
       ]);
       setCurrentStep("travelers");
     } else if (currentStep === "travelers") {
@@ -457,7 +466,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
       );
       setCurrentStep("interests");
     } else if (currentStep === "interests") {
-      if (option.includes("Done")) {
+      if (option === t("done")) {
         const selectedInterests = preferences.interests || [];
         if (selectedInterests.length === 0) {
           addMessage(
@@ -466,12 +475,6 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
           );
           return;
         }
-        addMessage("quick-reply", option);
-        await simulateTyping();
-        addMessage(
-          "bot",
-          t("generating")
-        );
         await generateItinerary();
       } else {
         // Toggle interest selection without adding message
@@ -494,7 +497,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>${preferences.destination} Itinerary - Avia Travel Club</title>
+  <title>${preferences.destination} ${t("itineraryTitle")}</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -635,7 +638,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
   <div class="container">
     <div class="header">
       <div class="logo">✈️ Avia Travel Club</div>
-      <div class="title">Your Personalized Travel Itinerary</div>
+      <div class="title">${t("itineraryTitle")}</div>
       <div class="subtitle">${preferences.destination || ""} • ${
       preferences.duration || ""
     }</div>
@@ -643,23 +646,23 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
 
     <div class="trip-info">
       <div class="info-item">
-        <div class="info-label">📍 Destination</div>
+        <div class="info-label">📍 ${t("labels.destination")}</div>
         <div class="info-value">${preferences.destination || ""}</div>
       </div>
       <div class="info-item">
-        <div class="info-label">⏱️ Duration</div>
+        <div class="info-label">⏱️ ${t("labels.duration")}</div>
         <div class="info-value">${preferences.duration || ""}</div>
       </div>
       <div class="info-item">
-        <div class="info-label">💰 Budget</div>
+        <div class="info-label">💰 ${t("labels.budget")}</div>
         <div class="info-value">${preferences.budget || ""}</div>
       </div>
       <div class="info-item">
-        <div class="info-label">👥 Travelers</div>
+        <div class="info-label">👥 ${t("labels.travelers")}</div>
         <div class="info-value">${preferences.travelers || ""}</div>
       </div>
       <div class="info-item" style="grid-column: 1 / -1;">
-        <div class="info-label">❤️ Interests</div>
+        <div class="info-label">❤️ ${t("labels.interests")}</div>
         <div class="info-value">${preferences.interests?.join(", ") || ""}</div>
       </div>
     </div>
@@ -679,7 +682,7 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
             <div class="activity-time">🕐 ${activity.time}</div>
             <div class="activity-title">${activity.title}</div>
             <div class="activity-description">${activity.description}</div>
-            <div class="activity-duration">Duration: ${activity.duration}</div>
+            <div class="activity-duration">${t("labels.duration")}: ${activity.duration}</div>
           </div>
         `
           )
@@ -821,8 +824,11 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                                     : "bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary border-2 border-transparent"
                                 }`}
                               >
-                                {isSelected && "✓ "}
-                                {option}
+                                <div className="flex items-center gap-1">
+                                  {isSelected && "✓ "}
+                                  {option.includes("0k") && <CurrencySymbol className="h-3 w-3 inline-block" />}
+                                  {option}
+                                </div>
                               </button>
                             );
                           })}
@@ -898,8 +904,8 @@ export function AITripPlanner({ isOpen, onClose }: AITripPlannerProps) {
                       <h3 className="text-xl font-bold text-gray-900">
                         {t("yourItinerary")}
                       </h3>
-                      <p className="text-sm text-gray-600">
-                        {preferences.destination} • {preferences.duration}
+                      <p className="text-sm text-gray-600 flex items-center gap-1">
+                        {preferences.destination} • {preferences.duration} • <CurrencySymbol className="h-3 w-3" /> {preferences.budget}
                       </p>
                     </div>
                   </div>

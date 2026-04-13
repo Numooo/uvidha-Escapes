@@ -110,47 +110,8 @@ export function Sidebar({ activePage, onNavigate, isPinned = true }: SidebarProp
             );
           })}
         </div>
-
-        <div className="my-6 px-6">
-          <div className="h-px bg-gray-100 w-full" />
-        </div>
-
-        <div className="px-4 space-y-2">
-          {bottomItems.map((item) => (
-            <button
-              key={item.id}
-              className="w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-400 hover:text-brand-primary hover:bg-brand-primary/5 transition-all group relative cursor-pointer"
-            >
-              <div className="flex items-center justify-center w-6 min-w-[24px]">
-                <item.icon className="h-5 w-5 transition-transform group-hover:scale-110" />
-              </div>
-              {isExpanded && (
-                <span className="text-sm font-medium">{item.label}</span>
-              )}
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* Collapse Toggle */}
-      <div className="p-4 border-t border-gray-50">
-        <div className={`flex items-center ${isExpanded ? "justify-between" : "justify-center"} bg-gray-50 rounded-2xl p-2`}>
-          {isExpanded && (
-            <div className="flex items-center gap-3 px-2">
-              <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center">
-                <Settings className="h-4 w-4 text-brand-primary" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[11px] font-bold text-gray-900 uppercase tracking-tighter">Premium</span>
-                <span className="text-[10px] text-gray-400">v2.1.0</span>
-              </div>
-            </div>
-          )}
-          <button className="p-2 rounded-xl text-gray-400 hover:text-brand-primary hover:bg-white transition-all shadow-none hover:shadow-sm">
-            {isExpanded ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-          </button>
-        </div>
-      </div>
     </motion.div>
   );
 }
