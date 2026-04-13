@@ -22,7 +22,8 @@
       "flights": "Flights",
       "hotels": "Hotels",
       "holidays": "Holidays",
-      "visa": "Visa"
+      "visa": "Visa",
+      "cargo": "Cargo"
     },
     "flights": {
       "oneWay": "One-way",
@@ -97,6 +98,20 @@
         "singapore": "Singapore",
         "thailand": "Thailand"
       }
+    },
+    "cargo": {
+      "from": "Origin",
+      "to": "Destination",
+      "date": "Shipping Date",
+      "weight": "Weight (kg)",
+      "type": "Cargo Type",
+      "types": {
+        "standard": "Standard",
+        "fragile": "Fragile",
+        "hazardous": "Hazardous",
+        "refrigerated": "Refrigerated"
+      },
+      "search": "Find Transport"
     }
   },
   "Featured": {
@@ -113,7 +128,11 @@
         "title": "Goa Beach Escape",
         "destination": "Goa, India",
         "duration": "5D / 4N",
-        "highlights": ["Beach Resort", "Water Sports", "Sunset Cruise"],
+        "highlights": [
+          "Beach Resort",
+          "Water Sports",
+          "Sunset Cruise"
+        ],
         "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800",
         "rating": 4.7,
         "reviewCount": 128,
@@ -124,7 +143,11 @@
         "title": "Himalayan Adventure",
         "destination": "Manali, HP",
         "duration": "6D / 5N",
-        "highlights": ["Rohtang Pass", "Paragliding", "Trekking"],
+        "highlights": [
+          "Rohtang Pass",
+          "Paragliding",
+          "Trekking"
+        ],
         "image": "https://images.unsplash.com/photo-1544074246-99320294132c?w=800",
         "rating": 4.9,
         "reviewCount": 85,
@@ -135,7 +158,11 @@
         "title": "Kerala Backwaters",
         "destination": "Kerala, India",
         "duration": "4D / 3N",
-        "highlights": ["Houseboat Cruise", "Ayurveda Spa", "Backwaters"],
+        "highlights": [
+          "Houseboat Cruise",
+          "Ayurveda Spa",
+          "Backwaters"
+        ],
         "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800",
         "rating": 4.8,
         "reviewCount": 92,
@@ -146,7 +173,11 @@
         "title": "Rajasthan Heritage",
         "destination": "Jaipur, Udaipur",
         "duration": "7D / 6N",
-        "highlights": ["Amber Fort", "City Palace", "Lake Pichola"],
+        "highlights": [
+          "Amber Fort",
+          "City Palace",
+          "Lake Pichola"
+        ],
         "image": "https://images.unsplash.com/photo-1599661046289-e31897826741?w=800",
         "rating": 4.6,
         "reviewCount": 110,
@@ -157,7 +188,11 @@
         "title": "Andaman Paradise",
         "destination": "Port Blair, Havelock",
         "duration": "5D / 4N",
-        "highlights": ["Radhanagar Beach", "Scuba Diving", "Island Hopping"],
+        "highlights": [
+          "Radhanagar Beach",
+          "Scuba Diving",
+          "Island Hopping"
+        ],
         "image": "https://images.unsplash.com/photo-1589135410974-dc30709b1f07?w=800",
         "rating": 4.9,
         "reviewCount": 74,
@@ -168,7 +203,11 @@
         "title": "Leh Ladakh Expedition",
         "destination": "Leh, Ladakh",
         "duration": "8D / 7N",
-        "highlights": ["Pangong Lake", "Nubra Valley", "Khardung La"],
+        "highlights": [
+          "Pangong Lake",
+          "Nubra Valley",
+          "Khardung La"
+        ],
         "image": "https://images.unsplash.com/photo-1583141103046-2f08a8a4740e?w=800",
         "rating": 4.8,
         "reviewCount": 156,
@@ -278,7 +317,16 @@
         "reviewCount": 1234,
         "reviewScore": "Excellent",
         "stars": 5,
-        "amenities": ["WiFi", "Pool", "Spa", "Restaurant", "Gym", "Parking", "Bar", "Room Service"],
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Spa",
+          "Restaurant",
+          "Gym",
+          "Parking",
+          "Bar",
+          "Room Service"
+        ],
         "price": 15000,
         "availableRooms": 5,
         "description": "Iconic luxury hotel overlooking the Gateway of India"
@@ -297,7 +345,14 @@
         "reviewCount": 892,
         "reviewScore": "Outstanding",
         "stars": 5,
-        "amenities": ["WiFi", "Pool", "Spa", "Restaurant", "Gym", "Airport Shuttle"],
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Spa",
+          "Restaurant",
+          "Gym",
+          "Airport Shuttle"
+        ],
         "price": 18000,
         "availableRooms": 3,
         "description": "Unmatched hospitality and stunning views of the Arabian Sea"
@@ -316,7 +371,13 @@
         "reviewCount": 567,
         "reviewScore": "Very Good",
         "stars": 5,
-        "amenities": ["WiFi", "Pool", "Restaurant", "Gym", "Business Center"],
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Restaurant",
+          "Gym",
+          "Business Center"
+        ],
         "price": 12000,
         "availableRooms": 8,
         "description": "Contemporary luxury in the heart of Mumbai's business district"
@@ -335,7 +396,15 @@
         "reviewCount": 743,
         "reviewScore": "Excellent",
         "stars": 5,
-        "amenities": ["WiFi", "Pool", "Spa", "Restaurant", "Gym", "Airport Shuttle", "Bar"],
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Spa",
+          "Restaurant",
+          "Gym",
+          "Airport Shuttle",
+          "Bar"
+        ],
         "price": 10000,
         "availableRooms": 12,
         "description": "Experience the grandeur of Maratha dynasty"
@@ -354,7 +423,15 @@
         "reviewCount": 1089,
         "reviewScore": "Excellent",
         "stars": 5,
-        "amenities": ["WiFi", "Beach Access", "Pool", "Spa", "Restaurant", "Gym", "Bar"],
+        "amenities": [
+          "WiFi",
+          "Beach Access",
+          "Pool",
+          "Spa",
+          "Restaurant",
+          "Gym",
+          "Bar"
+        ],
         "price": 14000,
         "availableRooms": 6,
         "description": "Direct access to the famous Juhu Beach"
@@ -373,7 +450,12 @@
         "reviewCount": 445,
         "reviewScore": "Good",
         "stars": 3,
-        "amenities": ["WiFi", "Restaurant", "Room Service", "Laundry"],
+        "amenities": [
+          "WiFi",
+          "Restaurant",
+          "Room Service",
+          "Laundry"
+        ],
         "price": 5000,
         "availableRooms": 15,
         "description": "Boutique hotel with panoramic views of the Queen's Necklace"
@@ -408,41 +490,121 @@
         "id": "1",
         "title": "Goa Beach Escape",
         "destination": "Goa, India",
-        "images": ["https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800"],
-        "duration": { "days": 5, "nights": 4 },
+        "images": [
+          "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800"
+        ],
+        "duration": {
+          "days": 5,
+          "nights": 4
+        },
         "price": 35000,
         "rating": 4.9,
         "reviewCount": 234,
-        "theme": ["Beach", "Leisure"],
-        "inclusions": ["Flights", "Hotels", "Transfers", "Breakfast"],
-        "highlights": ["Beach resorts", "Water sports", "Sunset cruise", "Local cuisine"],
+        "theme": [
+          "Beach",
+          "Leisure"
+        ],
+        "inclusions": [
+          "Flights",
+          "Hotels",
+          "Transfers",
+          "Breakfast"
+        ],
+        "highlights": [
+          "Beach resorts",
+          "Water sports",
+          "Sunset cruise",
+          "Local cuisine"
+        ],
         "itinerary": [
-          { "day": 1, "title": "Arrival & Beach Relaxation", "desc": "Welcome to Goa! Transfer to your beach resort and spend the afternoon relaxing." },
-          { "day": 2, "title": "North Goa Sightseeing", "desc": "Visit Fort Aguada, Chapora Fort, and famous beaches like Calangute and Baga." },
-          { "day": 3, "title": "Water Sports & Adventure", "desc": "Try parasailing, jet skiing, and banana boat rides at Calangute Beach." },
-          { "day": 4, "title": "South Goa Exploration", "desc": "Discover Palolem Beach and the ancient Cabo de Rama Fort." },
-          { "day": 5, "title": "Departure", "desc": "Final breakfast and transfer to the airport." }
+          {
+            "day": 1,
+            "title": "Arrival & Beach Relaxation",
+            "desc": "Welcome to Goa! Transfer to your beach resort and spend the afternoon relaxing."
+          },
+          {
+            "day": 2,
+            "title": "North Goa Sightseeing",
+            "desc": "Visit Fort Aguada, Chapora Fort, and famous beaches like Calangute and Baga."
+          },
+          {
+            "day": 3,
+            "title": "Water Sports & Adventure",
+            "desc": "Try parasailing, jet skiing, and banana boat rides at Calangute Beach."
+          },
+          {
+            "day": 4,
+            "title": "South Goa Exploration",
+            "desc": "Discover Palolem Beach and the ancient Cabo de Rama Fort."
+          },
+          {
+            "day": 5,
+            "title": "Departure",
+            "desc": "Final breakfast and transfer to the airport."
+          }
         ]
       },
       {
         "id": "2",
         "title": "Himalayan Adventure",
         "destination": "Manali, HP",
-        "images": ["https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800"],
-        "duration": { "days": 6, "nights": 5 },
+        "images": [
+          "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800"
+        ],
+        "duration": {
+          "days": 6,
+          "nights": 5
+        },
         "price": 28000,
         "rating": 4.8,
         "reviewCount": 189,
-        "theme": ["Adventure", "Mountains"],
-        "inclusions": ["Accommodation", "Meals", "Transfers", "Activities"],
-        "highlights": ["Rohtang Pass", "Solang Valley", "Trekking", "Paragliding"],
+        "theme": [
+          "Adventure",
+          "Mountains"
+        ],
+        "inclusions": [
+          "Accommodation",
+          "Meals",
+          "Transfers",
+          "Activities"
+        ],
+        "highlights": [
+          "Rohtang Pass",
+          "Solang Valley",
+          "Trekking",
+          "Paragliding"
+        ],
         "itinerary": [
-          { "day": 1, "title": "Arrival in Manali", "desc": "Check-in and evening walk at Mall Road." },
-          { "day": 2, "title": "Local Sightseeing", "desc": "Visit Hadimba Devi Temple and Vashisht springs." },
-          { "day": 3, "title": "Rohtang Pass", "desc": "Full day snow adventure at Rohtang Pass." },
-          { "day": 4, "title": "Solang Valley", "desc": "Try paragliding and zorbing in Solang Valley." },
-          { "day": 5, "title": "Kullu Exploration", "desc": "Visit Kullu Valley for river rafting." },
-          { "day": 6, "title": "Departure", "desc": "Transfer to Bhuntar Airport." }
+          {
+            "day": 1,
+            "title": "Arrival in Manali",
+            "desc": "Check-in and evening walk at Mall Road."
+          },
+          {
+            "day": 2,
+            "title": "Local Sightseeing",
+            "desc": "Visit Hadimba Devi Temple and Vashisht springs."
+          },
+          {
+            "day": 3,
+            "title": "Rohtang Pass",
+            "desc": "Full day snow adventure at Rohtang Pass."
+          },
+          {
+            "day": 4,
+            "title": "Solang Valley",
+            "desc": "Try paragliding and zorbing in Solang Valley."
+          },
+          {
+            "day": 5,
+            "title": "Kullu Exploration",
+            "desc": "Visit Kullu Valley for river rafting."
+          },
+          {
+            "day": 6,
+            "title": "Departure",
+            "desc": "Transfer to Bhuntar Airport."
+          }
         ]
       }
     ]
@@ -536,41 +698,30 @@
     ]
   },
   "VisaDetail": {
-    "back": "Back",
+    "back": "Back to Visa Services",
+    "thankYou": "Thank you! Our visa consultant will contact you within 24 hours.",
     "documentRequirements": "Document Requirements",
-    "itemsCount": "{count} items required",
     "processingTimeline": "Processing Timeline",
     "feesBreakdown": "Fees Breakdown",
     "importantInformation": "Important Information",
     "faqs": "Frequently Asked Questions",
+    "enquiryTitle": "Enquire Now",
+    "enquiryDesc": "Get expert guidance for your visa application",
+    "itemsCount": "{count} items",
+    "day": "Day {count}",
     "fees": {
       "embassy": "Embassy Fee",
       "service": "Service Charge",
       "processing": "Processing Fee",
       "total": "Total Amount"
     },
-    "timeline": {
-      "step1": { "title": "Application Submission", "desc": "Submit your application with all required documents" },
-      "step2": { "title": "Document Verification", "desc": "Our team verifies all documents for completeness" },
-      "step3": { "title": "Embassy Submission", "desc": "Application forwarded to embassy/consulate" },
-      "step4": { "title": "Processing", "desc": "Embassy processes your visa application" },
-      "step5": { "title": "Visa Issuance", "desc": "Approved visa sent to your email" }
-    },
-    "perApplicant": "per applicant",
-    "bookNow": "Book Now",
-    "helpTitle": "Need Help?",
-    "secureTrusted": "Secure & Trusted",
-    "visasProcessed": "10,000+ visas processed successfully",
-    "thankYou": "Thank you! We will get back to you shortly.",
-    "enquiryTitle": "Visa Enquiry",
     "form": {
       "name": "Full Name",
       "email": "Email Address",
       "phone": "Phone Number",
-      "travelDate": "Planned Travel Date",
+      "travelDate": "Travel Date",
       "message": "Message",
-      "submit": "Submit Enquiry",
-      "cancel": "Cancel"
+      "submit": "Send Enquiry"
     }
   },
   "Airports": {
@@ -668,92 +819,83 @@
       "address": "123 Travel Street, Mumbai, Maharashtra 400001, India"
     }
   },
-  "VisaDetail": {
-    "back": "Back to Visa Services",
-    "thankYou": "Thank you! Our visa consultant will contact you within 24 hours.",
-    "documentRequirements": "Document Requirements",
-    "processingTimeline": "Processing Timeline",
-    "feesBreakdown": "Fees Breakdown",
-    "importantInformation": "Important Information",
-    "faqs": "Frequently Asked Questions",
-    "enquiryTitle": "Enquire Now",
-    "enquiryDesc": "Get expert guidance for your visa application",
-    "itemsCount": "{count} items",
-    "day": "Day {count}",
-    "fees": {
-      "embassy": "Embassy Fee",
-      "service": "Service Charge",
-      "processing": "Processing Fee",
-      "total": "Total Amount"
-    },
-    "form": {
-      "name": "Full Name",
-      "email": "Email Address",
-      "phone": "Phone Number",
-      "travelDate": "Travel Date",
-      "message": "Message",
-      "submit": "Send Enquiry"
-    }
-  },
   "HotelDetail": {
-    "back": "Back to Hotels",
+    "back": "Back",
     "noImages": "No images available",
-    "morePhotos": "+{count} photos",
     "starHotel": "{count}-Star Hotel",
     "checkIn": "Check-in: {time}",
     "checkOut": "Check-out: {time}",
-    "amenitiesTitle": "Hotel Amenities",
+    "amenitiesTitle": "Amenities & Facilities",
     "roomsTitle": "Available Rooms",
     "guestsUpTo": "Up to {count} guests",
     "moreAmenities": "+{count} more",
     "perNight": "per night",
-    "left": "Only {count} left",
-    "selected": "Selected for booking",
+    "left": "Only {count} rooms left",
+    "selected": "Selected",
     "importantInfo": "Important Information",
-    "helpTitle": "Need Help?",
-    "callUs": "Call us",
-    "emailUs": "Email us",
-    "reservationSummary": "Reservation Summary",
+    "helpTitle": "Need help with this hotel?",
+    "callUs": "Call Us",
+    "emailUs": "Email Us",
     "checkInLabel": "Check-in Date",
     "checkOutLabel": "Check-out Date",
     "roomsLabel": "Rooms",
-    "guestsLabel": "Guests",
-    "priceBreakdown": "Price Breakdown",
     "room": "Room",
     "rooms": "Rooms",
+    "guestsLabel": "Guests",
     "guest": "Guest",
     "guests": "Guests",
-    "night": "night",
-    "nights": "nights",
-    "taxesLabel": "Taxes & Fees (12%)",
-    "total": "Total",
+    "night": "Night",
+    "nights": "Nights",
+    "taxesLabel": "Taxes & Fees",
+    "total": "Total Amount",
     "bookNow": "Book Now",
-    "securePayments": "100% Secure Payments",
+    "securePayments": "Secure Payments",
     "instantConfirmation": "Instant Confirmation",
-    "support247": "24/7 Support"
+    "support247": "24/7 Support",
+    "off": "OFF",
+    "taxes": "taxes",
+    "infoItems": [
+      "Valid ID proof required at check-in",
+      "Early check-in subject to availability",
+      "Pets not allowed",
+      "Smoking only in designated areas",
+      "Cancellation charges as per policy"
+    ]
   },
   "PackageDetail": {
-    "back": "Back to Packages",
-    "daysNights": "{days} Days / {nights} Nights",
-    "meals": "Meals",
-    "itineraryTitle": "Detailed Itinerary",
+    "back": "Back",
+    "daysNights": "{days}D / {nights}N",
+    "itineraryTitle": "Day-by-Day Itinerary",
+    "itineraryPlaceholder": "Itinerary details for this package will be available soon.",
     "dayTitle": "Day {day}: {title}",
-    "activities": "Activities:",
-    "itineraryPlaceholder": "Detailed itinerary will be shared upon booking",
+    "activities": "Activities",
+    "meals": "Meals",
     "includedTitle": "What's Included",
     "notIncludedTitle": "What's Not Included",
     "included": [
-      "Travel insurance",
       "Personal expenses",
-      "Additional meals not mentioned",
-      "Monument entrance fees",
-      "Tips and gratuities",
-      "Anything not mentioned in inclusions"
+      "Optional tours",
+      "Travel insurance",
+      "Tips and gratuities"
     ],
     "importantInfo": "Important Information",
-    "helpTitle": "Need Help Planning?",
-    "callUs": "Call us",
-    "emailUs": "Email us"
+    "helpTitle": "Need help with this package?",
+    "callUs": "Call Us",
+    "emailUs": "Email Us",
+    "perPerson": "per person",
+    "taxesIncluded": "Taxes included",
+    "selectTravelDate": "Select Travel Date",
+    "numberOfTravelers": "Number of Travelers",
+    "travelersCount": "{count, plural, =1 {Traveler} other {Travelers}}",
+    "taxesFees": "Taxes & Fees",
+    "total": "Total",
+    "infoItems": [
+      "Minimum 2 travelers required for this package",
+      "Booking must be made at least 7 days before departure",
+      "Cancellation charges apply as per terms & conditions",
+      "Valid government ID required for all travelers",
+      "Package prices may vary during peak season"
+    ]
   },
   "AITripPlanner": {
     "title": "AI Trip Planner",
@@ -885,87 +1027,31 @@
     "signUpSuccess": "Account created successfully!"
   },
   "Cargo": {
-    "title": "Cargo Services",
-    "description": "We are working hard to bring you the best freight and cargo solutions. This service will be available very soon!",
-    "comingSoon": "Coming Soon"
-  },
-  "HotelDetail": {
-    "back": "Back",
-    "noImages": "No images available",
-    "starHotel": "{count}-Star Hotel",
-    "checkIn": "Check-in: {time}",
-    "checkOut": "Check-out: {time}",
-    "amenitiesTitle": "Amenities & Facilities",
-    "roomsTitle": "Available Rooms",
-    "guestsUpTo": "Up to {count} guests",
-    "moreAmenities": "+{count} more",
-    "perNight": "per night",
-    "left": "Only {count} rooms left",
-    "selected": "Selected",
-    "importantInfo": "Important Information",
-    "helpTitle": "Need help with this hotel?",
-    "callUs": "Call Us",
-    "emailUs": "Email Us",
-    "checkInLabel": "Check-in Date",
-    "checkOutLabel": "Check-out Date",
-    "roomsLabel": "Rooms",
-    "room": "Room",
-    "rooms": "Rooms",
-    "guestsLabel": "Guests",
-    "guest": "Guest",
-    "guests": "Guests",
-    "night": "Night",
-    "nights": "Nights",
-    "taxesLabel": "Taxes & Fees",
-    "total": "Total Amount",
-    "bookNow": "Book Now",
-    "securePayments": "Secure Payments",
-    "instantConfirmation": "Instant Confirmation",
-    "support247": "24/7 Support",
-    "off": "OFF",
-    "taxes": "taxes",
-    "infoItems": [
-      "Valid ID proof required at check-in",
-      "Early check-in subject to availability",
-      "Pets not allowed",
-      "Smoking only in designated areas",
-      "Cancellation charges as per policy"
-    ]
-  },
-  "PackageDetail": {
-    "back": "Back",
-    "daysNights": "{days}D / {nights}N",
-    "itineraryTitle": "Day-by-Day Itinerary",
-    "itineraryPlaceholder": "Itinerary details for this package will be available soon.",
-    "dayTitle": "Day {day}: {title}",
-    "activities": "Activities",
-    "meals": "Meals",
-    "includedTitle": "What's Included",
-    "notIncludedTitle": "What's Not Included",
-    "included": [
-      "Personal expenses",
-      "Optional tours",
-      "Travel insurance",
-      "Tips and gratuities"
+    "title": "Cargo & Logistics",
+    "subtitle": "Reliable and fast freight solutions",
+    "comingSoon": "Coming Soon",
+    "trackingTitle": "Track Your Shipment",
+    "trackingPlaceholder": "Enter tracking number (e.g. TRK123456789)...",
+    "trackBtn": "Track",
+    "servicesTitle": "Our Freight Services",
+    "services": [
+      {
+        "title": "Road Freight",
+        "desc": "Cost-effective ground shipping across the country with real-time tracking.",
+        "icon": "truck"
+      },
+      {
+        "title": "Air Freight",
+        "desc": "Fastest delivery options for urgent and time-sensitive shipments globally.",
+        "icon": "plane"
+      },
+      {
+        "title": "Ocean Freight",
+        "desc": "Economical shipping for large volume international cargo and containers.",
+        "icon": "ship"
+      }
     ],
-    "importantInfo": "Important Information",
-    "helpTitle": "Need help with this package?",
-    "callUs": "Call Us",
-    "emailUs": "Email Us",
-    "perPerson": "per person",
-    "taxesIncluded": "Taxes included",
-    "selectTravelDate": "Select Travel Date",
-    "numberOfTravelers": "Number of Travelers",
-    "travelersCount": "{count, plural, =1 {Traveler} other {Travelers}}",
-    "taxesFees": "Taxes & Fees",
-    "total": "Total",
-    "infoItems": [
-      "Minimum 2 travelers required for this package",
-      "Booking must be made at least 7 days before departure",
-      "Cancellation charges apply as per terms & conditions",
-      "Valid government ID required for all travelers",
-      "Package prices may vary during peak season"
-    ]
+    "bookNow": "Request Quote"
   },
   "Common": {
     "back": "Back",

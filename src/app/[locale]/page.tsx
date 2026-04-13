@@ -32,7 +32,7 @@ export default function Home() {
   } | null>(null);
 
   const handleNavigate = (
-    page: "home" | "flights" | "hotels" | "holidays" | "visa"
+    page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo"
   ) => {
     setCurrentPage(page);
     setBookingData(null); // Clear booking data when navigating

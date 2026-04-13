@@ -18,6 +18,9 @@ import {
   Minus,
   Baby,
   User,
+  Truck,
+  Scale,
+  Package as PackageIcon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -27,13 +30,13 @@ import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import type { Package } from "./types";
 
-type TabType = "flights" | "hotels" | "holidays" | "visa";
+type TabType = "flights" | "hotels" | "holidays" | "visa" | "cargo";
 type TripType = "oneway" | "roundtrip";
 type CabinClass = "economy" | "premium-economy" | "business" | "first";
 
 interface HomePageProps {
   onSearchFlights?: () => void;
-  onNavigate?: (page: "flights" | "hotels" | "holidays" | "visa") => void;
+  onNavigate?: (page: "flights" | "hotels" | "holidays" | "visa" | "cargo") => void;
 }
 
 export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
@@ -41,7 +44,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
   const [activeTab, setActiveTab] = useState<TabType>("flights");
   const [tripType, setTripType] = useState<TabType | any>("roundtrip"); // Using any for tripType consistency
   const [cabinClass, setCabinClass] = useState<CabinClass>("economy");
-  const { symbol, CurrencyIcon, CurrencySymbol } = useCurrency();
+  const { symbolText, CurrencyIcon, CurrencySymbol } = useCurrency();
 
   // Passenger counters
   const [adults, setAdults] = useState(1);
@@ -78,6 +81,15 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
     format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), "yyyy-MM-dd")
   );
   const [visaApplicants, setVisaApplicants] = useState(1);
+
+  // Cargo search state
+  const [cargoOrigin, setCargoOrigin] = useState("");
+  const [cargoDestination, setCargoDestination] = useState("");
+  const [cargoDate, setCargoDate] = useState(
+    format(new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), "yyyy-MM-dd")
+  );
+  const [cargoWeight, setCargoWeight] = useState("");
+  const [cargoType, setCargoType] = useState("standard");
 
   const totalPassengers = adults + children;
   const canAddPassenger = totalPassengers < 9;
@@ -161,6 +173,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                   icon: Palmtree,
                 },
                 { id: "visa" as TabType, label: t("Search.tabs.visa"), icon: FileText },
+                { id: "cargo" as TabType, label: t("Search.tabs.cargo"), icon: Truck },
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -849,6 +862,101 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 </button>
               </div>
             )}
+
+            {/* Cargo Search Form */}
+            {activeTab === "cargo" && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div className="relative">
+                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                      {t("Search.cargo.from")}
+                    </label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="text"
+                        value={cargoOrigin}
+                        onChange={(e) => setCargoOrigin(e.target.value)}
+                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary"
+                      />
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                      {t("Search.cargo.to")}
+                    </label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="text"
+                        value={cargoDestination}
+                        onChange={(e) => setCargoDestination(e.target.value)}
+                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  <div className="relative">
+                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                      {t("Search.cargo.date")}
+                    </label>
+                    <div className="relative">
+                      <Calendar className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="date"
+                        value={cargoDate}
+                        onChange={(e) => setCargoDate(e.target.value)}
+                        min={format(new Date(), "yyyy-MM-dd")}
+                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary"
+                      />
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                      {t("Search.cargo.weight")}
+                    </label>
+                    <div className="relative">
+                      <Scale className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="number"
+                        min="1"
+                        value={cargoWeight}
+                        onChange={(e) => setCargoWeight(e.target.value)}
+                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary"
+                      />
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                      {t("Search.cargo.type")}
+                    </label>
+                    <div className="relative">
+                      <PackageIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <select
+                        value={cargoType}
+                        onChange={(e) => setCargoType(e.target.value)}
+                        className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary"
+                      >
+                        <option value="standard">{t("Search.cargo.types.standard")}</option>
+                        <option value="fragile">{t("Search.cargo.types.fragile")}</option>
+                        <option value="hazardous">{t("Search.cargo.types.hazardous")}</option>
+                        <option value="refrigerated">{t("Search.cargo.types.refrigerated")}</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={handleSearch}
+                  disabled={!cargoOrigin || !cargoDestination}
+                  className="w-full rounded-xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Truck className="h-5 w-5" />
+                  {t("Search.cargo.search")}
+                </button>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
@@ -1027,7 +1135,7 @@ interface FeaturedPackagesSectionProps {
 
 function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
   const t = useTranslations();
-  const { symbol, CurrencySymbol } = useCurrency();
+  const { CurrencySymbol } = useCurrency();
   const [isPaused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 

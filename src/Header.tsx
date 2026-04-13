@@ -33,7 +33,7 @@ const currencies: CurrencyCode[] = ["KGS", "RUB", "USD", "EUR"];
 
 interface HeaderProps {
   onNavigate?: (
-    page: "home" | "flights" | "hotels" | "holidays" | "visa"
+    page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo"
   ) => void;
   isSidebarPinned?: boolean;
   onToggleSidebar?: () => void;
@@ -65,7 +65,8 @@ export function Header({
         | "flights"
         | "hotels"
         | "holidays"
-        | "visa";
+        | "visa"
+        | "cargo";
       onNavigate(page || "home");
     }
   };
@@ -265,7 +266,7 @@ export function Header({
               >
                 <div className="space-y-1 pb-4 pt-2 border-t border-gray-100">
                   {/* For mobile, we might still want the links since the sidebar is hidden on small screens */}
-                  {["flights", "hotels", "holidays", "visa"].map((id) => (
+                  {["flights", "hotels", "holidays", "visa", "cargo"].map((id) => (
                     <button
                       key={id}
                       onClick={(e) => {
