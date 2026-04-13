@@ -6,9 +6,10 @@ import { X, Mail, Lock, Eye, EyeOff, User, Phone } from "lucide-react";
 interface SignInModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSignInSuccess?: () => void;
 }
 
-export function SignInModal({ isOpen, onClose }: SignInModalProps) {
+export function SignInModal({ isOpen, onClose, onSignInSuccess }: SignInModalProps) {
   const t = useTranslations("SignIn");
   const commonT = useTranslations("Common");
   
@@ -26,12 +27,8 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle authentication
-    console.log("Form submitted:", formData);
-    // For now, just close the modal
-    alert(
-      isSignUp ? t("signUpSuccess") : t("signInSuccess")
-    );
+
+    onSignInSuccess?.();
     onClose();
     setFormData({ name: "", email: "", phone: "", password: "", corporateId: "", companyName: "" });
   };

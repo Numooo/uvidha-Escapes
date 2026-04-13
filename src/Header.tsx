@@ -13,6 +13,8 @@ import {
   LogIn,
   Languages,
   DollarSign,
+  User,
+  LogOut,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AITripPlanner } from "./AITripPlanner";
@@ -33,16 +35,22 @@ const currencies: CurrencyCode[] = ["KGS", "RUB", "USD", "EUR"];
 
 interface HeaderProps {
   onNavigate?: (
-    page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo"
+    page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "profile"
   ) => void;
   isSidebarPinned?: boolean;
   onToggleSidebar?: () => void;
+  isAuthenticated?: boolean;
+  onLogout?: () => void;
+  onSignInSuccess?: () => void;
 }
 
 export function Header({ 
   onNavigate, 
   isSidebarPinned, 
-  onToggleSidebar 
+  onToggleSidebar,
+  isAuthenticated,
+  onLogout,
+  onSignInSuccess
 }: HeaderProps = {}) {
   const t = useTranslations("Header");
   const locale = useLocale();
@@ -56,6 +64,7 @@ export function Header({
   const { currency: selectedCurrency, setCurrency, symbol, CurrencyIcon, CurrencySymbol } = useCurrency();
   const [aiPlannerOpen, setAiPlannerOpen] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const handleNavClick = (href: string, e: React.MouseEvent) => {
     if (onNavigate) {
@@ -66,7 +75,8 @@ export function Header({
         | "hotels"
         | "holidays"
         | "visa"
-        | "cargo";
+        | "cargo"
+        | "profile";
       onNavigate(page || "home");
     }
   };
@@ -231,14 +241,62 @@ export function Header({
                 </AnimatePresence>
               </div>
 
-              {/* Sign In Button */}
-              <button
-                onClick={() => setSignInOpen(true)}
-                className="hidden md:inline-flex items-center gap-2 rounded-lg border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-white hover:text-brand-primary shadow-sm hover:shadow-md"
-              >
-                <LogIn className="h-4 w-4" />
-                <span>{t("signIn")}</span>
-              </button>
+               {/* Sign In or Profile */}
+              {isAuthenticated ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                    className="flex items-center gap-2 rounded-lg bg-white/10 p-1 pr-3 border border-white/20 transition-all hover:bg-white/20"
+                  >
+                    <div className="w-8 h-8 rounded-md bg-brand-accent flex items-center justify-center text-white font-bold text-xs">
+                      JD
+                    </div>
+                    <span className="hidden sm:inline text-xs font-bold text-white uppercase tracking-wider">John Doe</span>
+                    <ChevronDown size={14} className={`text-white/50 transition-transform ${userDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {userDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute right-0 mt-2 w-48 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden py-1"
+                      >
+                        <button
+                          onClick={() => {
+                            onNavigate?.("profile");
+                            setUserDropdownOpen(false);
+                          }}
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          <User size={16} className="text-gray-400" />
+                          <span>{t("myCabinet")}</span>
+                        </button>
+                        <div className="h-px bg-gray-100 my-1" />
+                        <button
+                          onClick={() => {
+                            onLogout?.();
+                            setUserDropdownOpen(false);
+                          }}
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 transition-colors"
+                        >
+                          <LogOut size={16} />
+                          <span>{t("logout")}</span>
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setSignInOpen(true)}
+                  className="hidden md:inline-flex items-center gap-2 rounded-lg border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-white hover:text-brand-primary shadow-sm hover:shadow-md"
+                >
+                  <LogIn className="h-4 w-4" />
+                  <span>{t("signIn")}</span>
+                </button>
+              )}
 
               {/* Mobile Menu Button */}
               <button
@@ -311,14 +369,12 @@ export function Header({
         </nav>
       </header>
 
-      {/* AI Trip Planner Modal */}
-      <AITripPlanner
-        isOpen={aiPlannerOpen}
-        onClose={() => setAiPlannerOpen(false)}
+      <SignInModal 
+        isOpen={signInOpen} 
+        onClose={() => setSignInOpen(false)} 
+        onSignInSuccess={onSignInSuccess}
       />
-
-      {/* Sign In Modal */}
-      <SignInModal isOpen={signInOpen} onClose={() => setSignInOpen(false)} />
+      <AITripPlanner isOpen={aiPlannerOpen} onClose={() => setAiPlannerOpen(false)} />
     </>
   );
 }

@@ -11,7 +11,9 @@
     "aiPlanner": "AI Планировщик",
     "signIn": "Войти",
     "tagline": "Ваше путешествие начинается",
-    "cargo": "Грузоперевозка"
+    "cargo": "Грузоперевозка",
+    "myCabinet": "Мой кабинет",
+    "logout": "Выйти"
   },
   "Sidebar": {
     "expand": "Развернуть",
@@ -1154,5 +1156,46 @@
       }
     ],
     "viewAll": "Больше горящих предложений"
+  },
+  "Profile": {
+    "title": "Личный кабинет",
+    "welcome": "Добро пожаловать",
+    "tabs": {
+      "cards": "Мои карты",
+      "flights": "Авиабилеты",
+      "hotels": "Отели",
+      "tours": "Туры",
+      "cargo": "Грузоперевозки",
+      "analytics": "Аналитика"
+    },
+    "cards": {
+      "addCard": "Добавить карту",
+      "balance": "Баланс",
+      "validThru": "Действует до",
+      "cardNumber": "Номер карты"
+    },
+    "booking": {
+      "status": "Статус",
+      "completed": "Завершен",
+      "upcoming": "Ожидается",
+      "inTransit": "В пути",
+      "delivered": "Доставлен",
+      "date": "Дата",
+      "price": "Сумма",
+      "bookingId": "Бронь",
+      "cargoWeight": "Вес",
+      "flightTo": "Куда",
+      "hotelLocation": "Место"
+    },
+    "analytics": {
+      "totalTrips": "Всего поездок",
+      "totalSpent": "Всего потрачено",
+      "milesEarned": "Накоплено миль",
+      "topDestination": "Лучшее направление",
+      "recentActivity": "Последняя активность",
+      "spentByCategory": "Расходы по категориям",
+      "activityChart": "График активности"
+    },
+    "logout": "Выйти"
   }
 }

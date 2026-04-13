@@ -10,14 +10,16 @@ import { Header } from "../../Header";
 import { Footer } from "../../Footer";
 import { Sidebar } from "../../Sidebar";
 import { CargoPage } from "../../CargoPage";
+import { ProfilePage } from "../../ProfilePage";
 import { UnifiedBookingFlow } from "../../UnifiedBookingFlow";
 import { ChatWidget } from "../../ChatWidget";
 import type { FlightOffer, Hotel, Package, VisaRequirement } from "../../types";
 
-type PageType = "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "booking";
+type PageType = "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "booking" | "profile";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<PageType>("home");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [targetDestination, setTargetDestination] = useState<string | null>(null);
   const [isSidebarPinned, setIsSidebarPinned] = useState(true);
   const [bookingData, setBookingData] = useState<{
@@ -33,7 +35,7 @@ export default function Home() {
   } | null>(null);
 
   const handleNavigate = (
-    page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | string
+    page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "profile" | string
   ) => {
     setCurrentPage(page as PageType);
     setBookingData(null); // Clear booking data when navigating
@@ -61,14 +63,25 @@ export default function Home() {
         onNavigate={handleNavigate} 
         isSidebarPinned={isSidebarPinned}
         onToggleSidebar={() => setIsSidebarPinned(!isSidebarPinned)}
+        isAuthenticated={isAuthenticated}
+        onLogout={() => {
+          setIsAuthenticated(false);
+          setCurrentPage("home");
+        }}
+        onSignInSuccess={() => {
+          setIsAuthenticated(true);
+          setCurrentPage("profile");
+        }}
       />
 
       <div className="flex flex-1 relative">
-        <Sidebar 
-          activePage={currentPage} 
-          onNavigate={handleNavigate} 
-          isPinned={isSidebarPinned}
-        />
+        {currentPage !== "profile" && (
+          <Sidebar 
+            activePage={currentPage} 
+            onNavigate={handleNavigate} 
+            isPinned={isSidebarPinned}
+          />
+        )}
         
         <div className="flex-1 flex flex-col min-w-0">
           <main className="flex-1">
@@ -133,6 +146,7 @@ export default function Home() {
               />
             )}
             {currentPage === "cargo" && <CargoPage />}
+            {currentPage === "profile" && <ProfilePage />}
           </main>
           <Footer />
         </div>

@@ -11,7 +11,9 @@
     "aiPlanner": "AI Trip Planner",
     "signIn": "Sign In",
     "tagline": "Your Journey Begins",
-    "cargo": "Cargo"
+    "cargo": "Cargo",
+    "myCabinet": "My Cabinet",
+    "logout": "Sign Out"
   },
   "Sidebar": {
     "expand": "Expand",
@@ -1103,9 +1105,9 @@
     "success": "Operation successful"
   },
   "HotDeals": {
-    "title": "🔥 Hot Tickets",
-    "subtitle": "Grab them while they are cheap!",
-    "badgeFast": "Direct",
+    "title": "🔥 Hot Deals",
+    "subtitle": "Book now at the best prices!",
+    "badgeFast": "Direct Flight",
     "badgeHot": "Hot Price",
     "cards": [
       {
@@ -1153,6 +1155,47 @@
         "oldPrice": 58500
       }
     ],
-    "viewAll": "See all hot deals"
+    "viewAll": "More hot deals"
+  },
+  "Profile": {
+    "title": "Personal Cabinet",
+    "welcome": "Welcome",
+    "tabs": {
+      "cards": "My Cards",
+      "flights": "Flights",
+      "hotels": "Hotels",
+      "tours": "Tours",
+      "cargo": "Cargo",
+      "analytics": "Analytics"
+    },
+    "cards": {
+      "addCard": "Add Card",
+      "balance": "Balance",
+      "validThru": "Valid Thru",
+      "cardNumber": "Card Number"
+    },
+    "booking": {
+      "status": "Status",
+      "completed": "Completed",
+      "upcoming": "Upcoming",
+      "inTransit": "In Transit",
+      "delivered": "Delivered",
+      "date": "Date",
+      "price": "Amount",
+      "bookingId": "Booking ID",
+      "cargoWeight": "Weight",
+      "flightTo": "Destination",
+      "hotelLocation": "Location"
+    },
+    "analytics": {
+      "totalTrips": "Total Trips",
+      "totalSpent": "Total Spent",
+      "milesEarned": "Miles Earned",
+      "topDestination": "Top Destination",
+      "recentActivity": "Recent Activity",
+      "spentByCategory": "Spent by Category",
+      "activityChart": "Activity Chart"
+    },
+    "logout": "Logout"
   }
 }

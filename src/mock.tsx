@@ -10,6 +10,7 @@ import { HolidaysPage } from "./HolidaysPage";
 import { VisaPage } from "./VisaPage";
 import { VisaDetailPage } from "./VisaDetailPage";
 import { CargoPage } from "./CargoPage";
+import { ProfilePage } from "./ProfilePage";
 import { UnifiedBookingFlow } from "./UnifiedBookingFlow";
 import type {
   FlightOffer,
@@ -28,7 +29,8 @@ type Page =
   | "booking-flight"
   | "booking-hotel"
   | "booking-package"
-  | "cargo";
+  | "cargo"
+  | "profile";
 
 interface BookingMetadata {
   checkInDate?: string;
@@ -48,6 +50,7 @@ function MockApp() {
   const [selectedVisa, setSelectedVisa] = useState<VisaRequirement | null>(
     null
   );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [bookingMetadata, setBookingMetadata] = useState<BookingMetadata>({});
 
   const handleBookFlight = (flight: FlightOffer) => {
@@ -95,7 +98,18 @@ function MockApp() {
   return (
     <div className="min-h-screen flex flex-col">
       {!isBookingPage && currentPage !== "visa-detail" && (
-        <Header onNavigate={handleNavigate} />
+        <Header 
+          onNavigate={handleNavigate} 
+          isAuthenticated={isAuthenticated}
+          onLogout={() => {
+            setIsAuthenticated(false);
+            setCurrentPage("home");
+          }}
+          onSignInSuccess={() => {
+            setIsAuthenticated(true);
+            setCurrentPage("profile");
+          }}
+        />
       )}
       <main className="flex-1">
         {currentPage === "home" && (
@@ -115,6 +129,7 @@ function MockApp() {
         )}
         {currentPage === "visa" && <VisaPage onVisaSelect={handleSelectVisa} />}
         {currentPage === "cargo" && <CargoPage />}
+        {currentPage === "profile" && <ProfilePage />}
         {currentPage === "visa-detail" && selectedVisa && (
           <VisaDetailPage
             visa={selectedVisa}

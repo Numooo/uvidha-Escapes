@@ -28,9 +28,6 @@ export const AIRPORTS: Airport[] = [
   { code: "HYD", city: "Hyderabad", name: "Rajiv Gandhi Intl" },
   { code: "MAA", city: "Chennai", name: "Chennai Intl" },
   { code: "MOW", city: "Moscow", name: "Moscow Airports" },
-  { code: "IST", city: "Istanbul", name: "Istanbul Airport" },
-  { code: "DXB", city: "Dubai", name: "Dubai International" },
-  { code: "BKK", city: "Bangkok", name: "Suvarnabhumi Airport" },
   { code: "GOI", city: "Goa", name: "Dabolim Airport" },
   { code: "MLE", city: "Maldives", name: "Velana International" },
 ];
