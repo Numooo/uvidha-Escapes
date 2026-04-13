@@ -42,6 +42,7 @@ interface HeaderProps {
   isAuthenticated?: boolean;
   onLogout?: () => void;
   onSignInSuccess?: () => void;
+  currentPage?: string;
 }
 
 export function Header({ 
@@ -50,7 +51,8 @@ export function Header({
   onToggleSidebar,
   isAuthenticated,
   onLogout,
-  onSignInSuccess
+  onSignInSuccess,
+  currentPage: propCurrentPage
 }: HeaderProps = {}) {
   const t = useTranslations("Header");
   const locale = useLocale();
@@ -65,6 +67,9 @@ export function Header({
   const [aiPlannerOpen, setAiPlannerOpen] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+  const currentPage = propCurrentPage || pathname;
+  const isProfilePage = currentPage.includes("profile");
 
   const handleNavClick = (href: string, e: React.MouseEvent) => {
     if (onNavigate) {
@@ -96,13 +101,14 @@ export function Header({
             {/* Left Side: Toggle & Logo */}
             <div className="flex items-center gap-4">
               {/* Sidebar Toggle Button (Desktop) */}
-              <button
-                onClick={onToggleSidebar}
-                className="hidden lg:flex items-center justify-center p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-                aria-label="Toggle Sidebar"
-              >
-                <Menu className="h-6 w-6" />
-              </button>
+              {!isProfilePage && (
+                <button
+                  onClick={onToggleSidebar}
+                  className="hidden lg:flex items-center justify-center w-10 h-10 rounded-xl border border-white/20 bg-white/5 text-white hover:bg-white/10 transition-all shadow-sm"
+                >
+                  {isSidebarPinned ? <X size={20} /> : <Menu size={20} />}
+                </button>
+              )}
 
               <Link
                 href="/"
@@ -299,22 +305,24 @@ export function Header({
               )}
 
               {/* Mobile Menu Button */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden rounded-lg p-2 text-white hover:bg-white/10 transition-colors"
-              >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
+              {!isProfilePage && (
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="lg:hidden rounded-lg p-2 text-white hover:bg-white/10 transition-colors"
+                >
+                  {mobileMenuOpen ? (
+                    <X className="h-6 w-6" />
+                  ) : (
+                    <Menu className="h-6 w-6" />
+                  )}
+                </button>
+              )}
             </div>
           </div>
 
           {/* Mobile Menu */}
           <AnimatePresence>
-            {mobileMenuOpen && (
+            {mobileMenuOpen && !isProfilePage && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
