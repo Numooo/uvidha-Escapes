@@ -23,6 +23,9 @@ import {
   Truck,
   Scale,
   Package as PackageIcon,
+  Clock,
+  PlaneTakeoff,
+  Activity
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -32,7 +35,7 @@ import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import type { Package } from "./types";
 
-type TabType = "flights" | "hotels" | "holidays" | "visa" | "cargo";
+type TabType = "flights" | "hotels" | "holidays" | "visa" | "cargo" | "status";
 type TripType = "oneway" | "roundtrip";
 type CabinClass = "economy" | "premium-economy" | "business" | "first";
 
@@ -93,6 +96,17 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
   const [cargoWeight, setCargoWeight] = useState("");
   const [cargoType, setCargoType] = useState("standard");
 
+  // Flight Status state
+  const [statusSearchType, setStatusSearchType] = useState<"flightNumber" | "route" | "allFlights">("flightNumber");
+  const [statusFlightNumber, setStatusFlightNumber] = useState("");
+  const [statusDate, setStatusDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [statusOrigin, setStatusOrigin] = useState("");
+  const [statusDestination, setStatusDestination] = useState("");
+  const [flightStatusResult, setFlightStatusResult] = useState<any>(null);
+  const [isStatusSearching, setIsStatusSearching] = useState(false);
+  const [currentStatusPage, setCurrentStatusPage] = useState(1);
+  const STATUS_PAGE_SIZE = 8;
+
   const totalPassengers = adults + children;
   const canAddPassenger = totalPassengers < 9;
   const canRemoveAdult = adults > 1;
@@ -111,9 +125,109 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  const generateMockFlights = (date: string) => {
+    const routes = [
+      { origin: "FRU", destination: "MOW", airline: "Avia Traffic", prefix: "YK" },
+      { origin: "FRU", destination: "IST", airline: "Turkish Airlines", prefix: "TK" },
+      { origin: "FRU", destination: "DXB", airline: "FlyDubai", prefix: "FZ" },
+      { origin: "FRU", destination: "ALA", airline: "Air Astana", prefix: "KC" },
+      { origin: "FRU", destination: "TAS", airline: "Uzbekistan Airways", prefix: "HY" },
+      { origin: "MOW", destination: "FRU", airline: "S7 Airlines", prefix: "S7" },
+      { origin: "IST", destination: "FRU", airline: "Turkish Airlines", prefix: "TK" },
+      { origin: "DXB", destination: "FRU", airline: "FlyDubai", prefix: "FZ" },
+      { origin: "BOM", destination: "FRU", airline: "Air Arabia", prefix: "G9" },
+      { origin: "FRU", destination: "BOM", airline: "IndiGo", prefix: "6E" },
+      { origin: "FRU", destination: "BKK", airline: "Thai Airways", prefix: "TG" },
+      { origin: "KUL", destination: "FRU", airline: "Malaysia Airlines", prefix: "MH" },
+      { origin: "FRU", destination: "SVO", airline: "Aeroflot", prefix: "SU" },
+      { origin: "FRU", destination: "LED", airline: "Nordwind", prefix: "N4" },
+      { origin: "OSS", destination: "FRU", airline: "Avia Traffic", prefix: "YK" },
+    ];
+    const statuses = ["ontime", "ontime", "ontime", "delayed", "enroute", "landed", "cancelled"];
+    const hoursArr = ["05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22"];
+    const terminals = ["Terminal 1", "Terminal 2"];
+    const gates = ["A1","A2","A3","A4","B1","B2","B3","C1","C2"];
+    return Array.from({ length: 25 }, (_, i) => {
+      const route = routes[i % routes.length];
+      const depH = hoursArr[i % hoursArr.length];
+      const depM = i % 2 === 0 ? "00" : "30";
+      const arrH = String((parseInt(depH) + 3 + (i % 3)) % 24).padStart(2, "0");
+      const status = statuses[i % statuses.length];
+      const actualDep = status === "landed"
+        ? `${String((parseInt(depH) + (i % 2 === 0 ? 0 : 1)) % 24).padStart(2, "0")}:${i % 3 === 0 ? "05" : depM}`
+        : null;
+      const actualArr = status === "landed"
+        ? `${String((parseInt(arrH) + (i % 2 === 0 ? 0 : 1)) % 24).padStart(2, "0")}:${i % 3 === 0 ? "12" : depM}`
+        : null;
+      return {
+        id: i,
+        flightNum: `${route.prefix} ${100 + i * 7}`,
+        airline: route.airline,
+        origin: route.origin,
+        destination: route.destination,
+        scheduledDep: `${depH}:${depM}`,
+        estimatedDep: status === "delayed"
+          ? `${String((parseInt(depH) + 1) % 24).padStart(2, "0")}:${depM}`
+          : `${depH}:${depM}`,
+        actualDep,
+        scheduledArr: `${arrH}:${depM}`,
+        actualArr,
+        terminal: terminals[i % terminals.length],
+        gate: gates[i % gates.length],
+        status,
+        date,
+      };
+    });
+  };
+
+  const handleStatusSearch = () => {
+    if (statusSearchType === "flightNumber" && !statusFlightNumber) return;
+    if (statusSearchType === "route" && !statusOrigin && !statusDestination) return;
+    setIsStatusSearching(true);
+    setFlightStatusResult(null);
+    setCurrentStatusPage(1);
+    setTimeout(() => {
+      setIsStatusSearching(false);
+      if (statusSearchType === "allFlights") {
+        setFlightStatusResult({ type: "list", flights: generateMockFlights(statusDate) });
+      } else if (statusSearchType === "route") {
+        // Filter mock flights by whichever fields are filled
+        const all = generateMockFlights(statusDate);
+        const filtered = all.filter((f) => {
+          const matchOrigin = !statusOrigin || f.origin === statusOrigin;
+          const matchDest   = !statusDestination || f.destination === statusDestination;
+          return matchOrigin && matchDest;
+        });
+        setFlightStatusResult({
+          type: "list",
+          flights: filtered.length > 0 ? filtered : all.slice(0, 10),
+        });
+      } else {
+        setFlightStatusResult({
+          type: "single",
+          flightNum: statusFlightNumber.toUpperCase(),
+          airline: "Suvidha Airways",
+          status: "ontime",
+          origin: "FRU",
+          destination: "MOW",
+          scheduledDep: "10:30",
+          actualDep: "10:30",
+          scheduledArr: "16:45",
+          estimatedArr: "16:45",
+          terminalDep: "Terminal 2",
+          gateDep: "A4",
+          terminalArr: "Terminal 1",
+          baggage: "Belt 5",
+          date: statusDate,
+        });
+      }
+    }, 1500);
+  };
 
   const handleSearch = () => {
-    if (activeTab === "flights" && onSearchFlights) {
+    if (activeTab === "status") {
+      handleStatusSearch();
+    } else if (activeTab === "flights" && onSearchFlights) {
       onSearchFlights();
     } else if (onNavigate) {
       onNavigate(activeTab);
@@ -176,6 +290,7 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                 },
                 { id: "visa" as TabType, label: t("Search.tabs.visa"), icon: FileText },
                 { id: "cargo" as TabType, label: t("Search.tabs.cargo"), icon: Truck },
+                { id: "status" as TabType, label: t("Search.tabs.status"), icon: Activity },
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -971,6 +1086,307 @@ export function HomePage({ onSearchFlights, onNavigate }: HomePageProps = {}) {
                   <Truck className="h-5 w-5" />
                   {t("Search.cargo.search")}
                 </button>
+              </div>
+            )}
+
+            {/* Flight Status Search Form */}
+            {activeTab === "status" && (
+              <div className="space-y-6">
+                {/* Mode Toggles */}
+                <div className="flex flex-wrap gap-5 mb-2">
+                  {[
+                    { value: "flightNumber", labelKey: "Search.status.searchByFlightNumber" },
+                    { value: "route",        labelKey: "Search.status.searchByRoute" },
+                    { value: "allFlights",   labelKey: "Search.status.searchByDate" },
+                  ].map(({ value, labelKey }) => (
+                    <label key={value} className="flex items-center gap-2.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="statusSearchType"
+                        value={value}
+                        checked={statusSearchType === value}
+                        onChange={(e) => {
+                          setStatusSearchType(e.target.value as any);
+                          setFlightStatusResult(null);
+                        }}
+                        className="h-4 w-4 accent-brand-primary"
+                      />
+                      <span className="text-sm font-medium text-gray-700">{t(labelKey)}</span>
+                    </label>
+                  ))}
+                </div>
+
+                {/* Fields */}
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {statusSearchType === "flightNumber" && (
+                    <div>
+                      <label className="mb-1 block text-sm font-medium text-gray-700">{t("Search.status.flightNumber")}</label>
+                      <div className="relative">
+                        <PlaneTakeoff className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <input
+                          type="text"
+                          value={statusFlightNumber}
+                          onChange={(e) => setStatusFlightNumber(e.target.value)}
+                          placeholder={t("Search.status.flightNumberPlaceholder")}
+                          className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {statusSearchType === "route" && (
+                    <>
+                      <div>
+                        <label className="mb-1 block text-sm font-medium text-gray-700">{t("Search.status.origin")}</label>
+                        <div className="relative">
+                          <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                          <select value={statusOrigin} onChange={(e) => setStatusOrigin(e.target.value)} className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none">
+                            <option value="">{t("Search.flights.from")}</option>
+                            {AIRPORTS.map((a) => <option key={a.code} value={a.code}>{a.city} ({a.code})</option>)}
+                          </select>
+                          <ChevronDown className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-sm font-medium text-gray-700">{t("Search.status.destination")}</label>
+                        <div className="relative">
+                          <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                          <select value={statusDestination} onChange={(e) => setStatusDestination(e.target.value)} className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none">
+                            <option value="">{t("Search.flights.to")}</option>
+                            {AIRPORTS.map((a) => <option key={a.code} value={a.code}>{a.city} ({a.code})</option>)}
+                          </select>
+                          <ChevronDown className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  <div>
+                    <label className="mb-1 block text-sm font-medium text-gray-700">{t("Search.status.date")}</label>
+                    <div className="relative">
+                      <Calendar className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="date"
+                        value={statusDate}
+                        onChange={(e) => setStatusDate(e.target.value)}
+                        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search button */}
+                <button
+                  onClick={handleSearch}
+                  disabled={
+                    isStatusSearching ||
+                    (statusSearchType === "flightNumber" && !statusFlightNumber) ||
+                    (statusSearchType === "route" && !statusOrigin && !statusDestination)
+                  }
+                  className="w-full rounded-xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isStatusSearching ? (
+                    <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <><Activity className="h-5 w-5" /> {t("Search.status.checkStatus")}</>
+                  )}
+                </button>
+
+                {/* Results */}
+                {flightStatusResult && !isStatusSearching && (() => {
+                  const statusColor = (s: string) => {
+                    if (s === "ontime")    return "bg-green-100 text-green-700";
+                    if (s === "delayed")   return "bg-yellow-100 text-yellow-700";
+                    if (s === "cancelled") return "bg-red-100 text-red-700";
+                    if (s === "enroute")   return "bg-blue-100 text-blue-700";
+                    return "bg-gray-100 text-gray-600";
+                  };
+
+                  /* ── LIST VIEW ── */
+                  if (flightStatusResult.type === "list") {
+                    const flights: any[] = flightStatusResult.flights;
+                    const totalPages = Math.ceil(flights.length / STATUS_PAGE_SIZE);
+                    const paged = flights.slice(
+                      (currentStatusPage - 1) * STATUS_PAGE_SIZE,
+                      currentStatusPage * STATUS_PAGE_SIZE,
+                    );
+                    return (
+                      <motion.div
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-4 border border-gray-200 rounded-2xl bg-white shadow-sm overflow-hidden"
+                      >
+                        {/* Header */}
+                        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                          <div>
+                            <h3 className="text-base font-bold text-gray-900">
+                              {t("Search.status.flightListTitle")} {format(new Date(statusDate), "dd MMM yyyy")}
+                            </h3>
+                            <p className="text-xs text-gray-400 mt-0.5">{flights.length} рейсов найдено</p>
+                          </div>
+                          <span className="text-xs text-gray-400">стр. {currentStatusPage}/{totalPages}</span>
+                        </div>
+
+                        {/* Column headers */}
+                        <div className="hidden md:grid grid-cols-12 gap-3 px-5 py-2 bg-gray-50 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                          <div className="col-span-2">{t("Search.status.tableHeaders.flight")}</div>
+                          <div className="col-span-4">{t("Search.status.tableHeaders.route")}</div>
+                          <div className="col-span-2">{t("Search.status.tableHeaders.departure")}</div>
+                          <div className="col-span-2">{t("Search.status.tableHeaders.arrival")}</div>
+                          <div className="col-span-2">{t("Search.status.tableHeaders.status")}</div>
+                        </div>
+
+                        {/* Rows */}
+                        <div className="divide-y divide-gray-50">
+                          {paged.map((fl: any, idx: number) => (
+                            <motion.div
+                              key={fl.id}
+                              initial={{ opacity: 0, y: 4 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.03 }}
+                              className="grid grid-cols-2 md:grid-cols-12 gap-3 px-5 py-3.5 hover:bg-gray-50/80 transition-colors"
+                            >
+                              <div className="col-span-1 md:col-span-2">
+                                <p className="text-sm font-bold text-gray-900">{fl.flightNum}</p>
+                                <p className="text-xs text-gray-400 truncate">{fl.airline}</p>
+                              </div>
+                              <div className="col-span-1 md:col-span-4 flex items-center gap-1.5">
+                                <span className="text-sm font-semibold text-gray-800">{fl.origin}</span>
+                                <Plane className="h-3 w-3 text-brand-primary shrink-0" />
+                                <span className="text-sm font-semibold text-gray-800">{fl.destination}</span>
+                              </div>
+                              <div className="col-span-1 md:col-span-2">
+                                {fl.status === "landed" && fl.actualDep ? (
+                                  <>
+                                    <p className="text-xs text-gray-400 line-through">{fl.scheduledDep}</p>
+                                    <p className="text-sm font-semibold text-gray-900">{fl.actualDep}
+                                      <span className="ml-1 text-[10px] text-gray-400 no-underline">факт.</span>
+                                    </p>
+                                  </>
+                                ) : (
+                                  <>
+                                    <p className="text-sm font-medium text-gray-900">{fl.scheduledDep}</p>
+                                    {fl.estimatedDep !== fl.scheduledDep && (
+                                      <p className="text-xs text-yellow-600 font-medium">{fl.estimatedDep} ↑</p>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                              <div className="col-span-1 md:col-span-2">
+                                {fl.status === "landed" && fl.actualArr ? (
+                                  <>
+                                    <p className="text-xs text-gray-400 line-through">{fl.scheduledArr}</p>
+                                    <p className="text-sm font-semibold text-gray-900">{fl.actualArr}
+                                      <span className="ml-1 text-[10px] text-gray-400">факт.</span>
+                                    </p>
+                                    <p className="text-xs text-gray-400">{fl.terminal} · {fl.gate}</p>
+                                  </>
+                                ) : (
+                                  <>
+                                    <p className="text-sm font-medium text-gray-900">{fl.scheduledArr}</p>
+                                    <p className="text-xs text-gray-400">{fl.terminal} · {fl.gate}</p>
+                                  </>
+                                )}
+                              </div>
+                              <div className="col-span-2 md:col-span-2 flex items-center">
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${statusColor(fl.status)}`}>
+                                  <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                                  {t(`Search.status.statusLabels.${fl.status}`)}
+                                </span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+
+                        {/* Pagination */}
+                        <div className="flex items-center justify-between px-5 py-3 border-t border-gray-100 bg-gray-50/50">
+                          <span className="text-xs text-gray-500">
+                            {(currentStatusPage - 1) * STATUS_PAGE_SIZE + 1}–{Math.min(currentStatusPage * STATUS_PAGE_SIZE, flights.length)} из {flights.length}
+                          </span>
+                          <div className="flex items-center gap-1">
+                            <button
+                              onClick={() => setCurrentStatusPage(p => Math.max(1, p - 1))}
+                              disabled={currentStatusPage === 1}
+                              className="p-1.5 rounded-lg hover:bg-gray-200 disabled:opacity-30 transition-colors"
+                            >
+                              <ChevronLeft className="h-4 w-4 text-gray-600" />
+                            </button>
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(pg => (
+                              <button
+                                key={pg}
+                                onClick={() => setCurrentStatusPage(pg)}
+                                className={`w-7 h-7 rounded-lg text-xs font-semibold transition-colors ${
+                                  pg === currentStatusPage
+                                    ? "bg-brand-primary text-white shadow-sm"
+                                    : "hover:bg-gray-200 text-gray-600"
+                                }`}
+                              >
+                                {pg}
+                              </button>
+                            ))}
+                            <button
+                              onClick={() => setCurrentStatusPage(p => Math.min(totalPages, p + 1))}
+                              disabled={currentStatusPage === totalPages}
+                              className="p-1.5 rounded-lg hover:bg-gray-200 disabled:opacity-30 transition-colors"
+                            >
+                              <ChevronRight className="h-4 w-4 text-gray-600" />
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  }
+
+                  /* ── SINGLE CARD VIEW ── */
+                  return (
+                    <motion.div
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-4 border border-gray-200 rounded-2xl bg-white p-6 shadow-sm"
+                    >
+                      <div className="flex flex-wrap items-center justify-between mb-6">
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900">{flightStatusResult.flightNum}</h3>
+                          <p className="text-sm text-gray-400">{flightStatusResult.airline} · {format(new Date(flightStatusResult.date), "dd MMM yyyy")}</p>
+                        </div>
+                        <span className={`px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 ${statusColor(flightStatusResult.status)}`}>
+                          <span className="h-2 w-2 rounded-full bg-current" />
+                          {t(`Search.status.statusLabels.${flightStatusResult.status}`)}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between mb-8">
+                        <div className="text-center">
+                          <div className="text-3xl font-bold text-gray-900">{flightStatusResult.origin}</div>
+                          <div className="text-sm text-gray-500 mt-0.5">{flightStatusResult.scheduledDep}</div>
+                        </div>
+                        <div className="flex-1 flex items-center px-6 relative">
+                          <div className="w-full border-t-2 border-dashed border-gray-200" />
+                          <Plane className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 text-brand-primary h-6 w-6 bg-white" />
+                        </div>
+                        <div className="text-center">
+                          <div className="text-3xl font-bold text-gray-900">{flightStatusResult.destination}</div>
+                          <div className="text-sm text-gray-500 mt-0.5">{flightStatusResult.estimatedArr}</div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-4 bg-gray-50 rounded-xl p-4">
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">{t("Search.status.terminal")}</p>
+                          <p className="text-sm font-semibold text-gray-900">{flightStatusResult.terminalDep} → {flightStatusResult.terminalArr}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">{t("Search.status.gate")}</p>
+                          <p className="text-sm font-semibold text-gray-900">{flightStatusResult.gateDep}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">{t("Search.status.baggage")}</p>
+                          <p className="text-sm font-semibold text-gray-900">{flightStatusResult.baggage}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })()}
               </div>
             )}
           </motion.div>

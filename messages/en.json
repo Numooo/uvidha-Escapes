@@ -29,7 +29,8 @@
       "hotels": "Hotels",
       "holidays": "Holidays",
       "visa": "Visa",
-      "cargo": "Cargo"
+      "cargo": "Cargo",
+      "status": "Flight Status"
     },
     "flights": {
       "oneWay": "One-way",
@@ -118,6 +119,41 @@
         "refrigerated": "Refrigerated"
       },
       "search": "Find Transport"
+    },
+    "status": {
+      "searchByFlightNumber": "By Flight Number",
+      "searchByRoute": "By Route",
+      "flightNumber": "Flight Number",
+      "flightNumberPlaceholder": "e.g., SU 123",
+      "date": "Departure Date",
+      "checkStatus": "Check Status",
+      "origin": "Origin",
+      "destination": "Destination",
+      "statusLabels": {
+        "ontime": "On Time",
+        "delayed": "Delayed",
+        "cancelled": "Cancelled",
+        "enroute": "En Route",
+        "landed": "Landed"
+      },
+      "terminal": "Terminal",
+      "gate": "Gate",
+      "scheduled": "Scheduled",
+      "estimated": "Estimated",
+      "baggage": "Baggage Claim",
+      "searchByDate": "All Flights by Date",
+      "airport": "Airport",
+      "flightListTitle": "Flights on",
+      "tableHeaders": {
+        "flight": "Flight",
+        "route": "Route",
+        "departure": "Departure",
+        "arrival": "Arrival",
+        "status": "Status"
+      },
+      "prev": "Prev",
+      "next": "Next",
+      "showing": "Showing {from}-{to} of {total} flights"
     }
   },
   "Featured": {
@@ -307,7 +343,10 @@
         "name": "The Taj Mahal Palace",
         "location": "Colaba, Mumbai",
         "distance": "2.5 km from center",
-        "coordinates": { "lat": 18.9217, "lng": 72.8332 },
+        "coordinates": {
+          "lat": 18.9217,
+          "lng": 72.8332
+        },
         "images": [
           "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
           "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200",
@@ -343,7 +382,10 @@
         "name": "The Oberoi",
         "location": "Nariman Point, Mumbai",
         "distance": "1.2 km from center",
-        "coordinates": { "lat": 18.9256, "lng": 72.8242 },
+        "coordinates": {
+          "lat": 18.9256,
+          "lng": 72.8242
+        },
         "images": [
           "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800",
           "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800",
@@ -370,7 +412,10 @@
         "name": "Trident BKC",
         "location": "Bandra Kurla Complex",
         "distance": "8 km from center",
-        "coordinates": { "lat": 19.0653, "lng": 72.8672 },
+        "coordinates": {
+          "lat": 19.0653,
+          "lng": 72.8672
+        },
         "images": [
           "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
           "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800",
@@ -396,7 +441,10 @@
         "name": "ITC Maratha",
         "location": "Andheri East, Mumbai",
         "distance": "6 km from airport",
-        "coordinates": { "lat": 19.0990, "lng": 72.8740 },
+        "coordinates": {
+          "lat": 19.099,
+          "lng": 72.874
+        },
         "images": [
           "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
           "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
@@ -424,7 +472,10 @@
         "name": "JW Marriott Juhu",
         "location": "Juhu Beach, Mumbai",
         "distance": "15 km from center",
-        "coordinates": { "lat": 19.0936, "lng": 72.8267 },
+        "coordinates": {
+          "lat": 19.0936,
+          "lng": 72.8267
+        },
         "images": [
           "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
           "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800",
@@ -452,7 +503,10 @@
         "name": "Hotel Sea Green",
         "location": "Marine Drive, Mumbai",
         "distance": "0.8 km from center",
-        "coordinates": { "lat": 18.9432, "lng": 72.8235 },
+        "coordinates": {
+          "lat": 18.9432,
+          "lng": 72.8235
+        },
         "images": [
           "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800",
           "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
@@ -502,7 +556,10 @@
         "id": "1",
         "title": "Goa Beach Escape",
         "destination": "Goa, India",
-        "coordinates": { "lat": 15.2993, "lng": 74.1240 },
+        "coordinates": {
+          "lat": 15.2993,
+          "lng": 74.124
+        },
         "images": [
           "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800",
           "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800",
@@ -567,7 +624,10 @@
         "id": "2",
         "title": "Himalayan Adventure",
         "destination": "Manali, HP",
-        "coordinates": { "lat": 32.2396, "lng": 77.1887 },
+        "coordinates": {
+          "lat": 32.2396,
+          "lng": 77.1887
+        },
         "images": [
           "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800",
           "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800",

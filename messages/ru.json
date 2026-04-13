@@ -29,7 +29,8 @@
       "hotels": "Отели",
       "holidays": "Туры",
       "visa": "Визы",
-      "cargo": "Грузоперевозки"
+      "cargo": "Грузоперевозки",
+      "status": "Статус рейса"
     },
     "flights": {
       "oneWay": "В одну сторону",
@@ -118,6 +119,41 @@
         "refrigerated": "С темп. режимом"
       },
       "search": "Найти транспорт"
+    },
+    "status": {
+      "searchByFlightNumber": "По номеру",
+      "searchByRoute": "По маршруту",
+      "flightNumber": "Номер рейса",
+      "flightNumberPlaceholder": "Напр., SU 123",
+      "date": "Дата вылета",
+      "checkStatus": "Проверить статус",
+      "origin": "Откуда",
+      "destination": "Куда",
+      "statusLabels": {
+        "ontime": "По расписанию",
+        "delayed": "Задержан",
+        "cancelled": "Отменен",
+        "enroute": "В полете",
+        "landed": "Приземлился"
+      },
+      "terminal": "Терминал",
+      "gate": "Гейт",
+      "scheduled": "По плану",
+      "estimated": "Ожидается",
+      "baggage": "Выдача багажа",
+      "searchByDate": "Все рейсы по дате",
+      "airport": "Аэропорт",
+      "flightListTitle": "Рейсы на",
+      "tableHeaders": {
+        "flight": "Рейс",
+        "route": "Маршрут",
+        "departure": "Вылет",
+        "arrival": "Прилёт",
+        "status": "Статус"
+      },
+      "prev": "Назад",
+      "next": "Вперёд",
+      "showing": "Показано {from}-{to} из {total} рейсов"
     }
   },
   "Featured": {
@@ -307,7 +343,10 @@
         "name": "The Taj Mahal Palace",
         "location": "Колаба, Мумбаи",
         "distance": "2.5 км от центра",
-        "coordinates": { "lat": 18.9217, "lng": 72.8332 },
+        "coordinates": {
+          "lat": 18.9217,
+          "lng": 72.8332
+        },
         "images": [
           "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
           "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200",
@@ -343,7 +382,10 @@
         "name": "The Oberoi",
         "location": "Нариман-Пойнт, Мумбаи",
         "distance": "1.2 км от центра",
-        "coordinates": { "lat": 18.9256, "lng": 72.8242 },
+        "coordinates": {
+          "lat": 18.9256,
+          "lng": 72.8242
+        },
         "images": [
           "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800",
           "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800",
@@ -370,7 +412,10 @@
         "name": "Trident BKC",
         "location": "Бандра-Курла Комплекс",
         "distance": "8 км от центра",
-        "coordinates": { "lat": 19.0653, "lng": 72.8672 },
+        "coordinates": {
+          "lat": 19.0653,
+          "lng": 72.8672
+        },
         "images": [
           "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
           "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800",
@@ -396,7 +441,10 @@
         "name": "ITC Maratha",
         "location": "Андхери-Ист, Мумбаи",
         "distance": "6 км от аэропорта",
-        "coordinates": { "lat": 19.0990, "lng": 72.8740 },
+        "coordinates": {
+          "lat": 19.099,
+          "lng": 72.874
+        },
         "images": [
           "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
           "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
@@ -424,7 +472,10 @@
         "name": "JW Marriott Juhu",
         "location": "Джуху-Бич, Мумбаи",
         "distance": "15 км от центра",
-        "coordinates": { "lat": 19.0936, "lng": 72.8267 },
+        "coordinates": {
+          "lat": 19.0936,
+          "lng": 72.8267
+        },
         "images": [
           "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
           "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800",
@@ -452,7 +503,10 @@
         "name": "Hotel Sea Green",
         "location": "Марин-Драйв, Мумбаи",
         "distance": "0.8 км от центра",
-        "coordinates": { "lat": 18.9432, "lng": 72.8235 },
+        "coordinates": {
+          "lat": 18.9432,
+          "lng": 72.8235
+        },
         "images": [
           "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800",
           "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
@@ -502,7 +556,10 @@
         "id": "1",
         "title": "Пляжный побег в Гоа",
         "destination": "Гоа, Индия",
-        "coordinates": { "lat": 15.2993, "lng": 74.1240 },
+        "coordinates": {
+          "lat": 15.2993,
+          "lng": 74.124
+        },
         "images": [
           "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800",
           "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800",
@@ -567,7 +624,10 @@
         "id": "2",
         "title": "Гималайское приключение",
         "destination": "Манали, Гб",
-        "coordinates": { "lat": 32.2396, "lng": 77.1887 },
+        "coordinates": {
+          "lat": 32.2396,
+          "lng": 77.1887
+        },
         "images": [
           "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800",
           "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800",
