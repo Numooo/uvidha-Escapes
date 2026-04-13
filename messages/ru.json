@@ -1,4 +1,8 @@
 {
+  "Metadata": {
+    "title": "AviaTravelClub - авиаперелеты и туры в Бишкеке",
+    "description": "Ваше путешествие начинается"
+  },
   "Header": {
     "flights": "Авиабилеты",
     "hotels": "Отели",

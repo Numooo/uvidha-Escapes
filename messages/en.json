@@ -1,4 +1,8 @@
 {
+  "Metadata": {
+    "title": "AviaTravelClub - air travel and tours in Bishkek",
+    "description": "Your Journey Begins"
+  },
   "Header": {
     "flights": "Flights",
     "hotels": "Hotels",

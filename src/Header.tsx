@@ -100,7 +100,7 @@ export function Header({
                 className="flex items-center gap-2.5 group"
               >
                 <div className="relative flex h-12 min-w-[180px] items-center justify-start transition-all group-hover:scale-105">
-                  <Image src={logo} alt="Suvidha Escapes Logo" className="h-10 w-auto object-contain object-left brightness-0 invert" priority />
+                  <Image src={logo} alt="Logo" className="h-10 w-auto object-contain object-left" priority />
                 </div>
               </Link>
             </div>

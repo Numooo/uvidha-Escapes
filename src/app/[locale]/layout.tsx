@@ -17,10 +17,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Suvidha Escapes",
-  description: "Your Journey Begins",
-};
+import { getTranslations } from "next-intl/server";
+import logo from "../logo.png";
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    icons: {
+      icon: logo.src,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,

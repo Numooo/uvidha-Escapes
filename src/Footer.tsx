@@ -9,7 +9,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import logo from "./app/logo.png";
+import logo from "./app/logo1.png";
 import Image from "next/image";
 
 const socialLinks = [
@@ -59,7 +59,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="flex h-12 w-auto items-center justify-center">
-                <Image src={logo} alt="Suvidha Escapes Logo" className="h-10 w-auto object-contain brightness-0 invert" />
+                <Image src={logo} alt="Suvidha Escapes Logo" className="h-10 w-auto object-contain" />
               </div>
             </div>
             <p className="mb-4 text-sm leading-relaxed">
