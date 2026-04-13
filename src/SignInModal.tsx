@@ -33,14 +33,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
       isSignUp ? t("signUpSuccess") : t("signInSuccess")
     );
     onClose();
-    setFormData({ 
-      name: "", 
-      email: "", 
-      phone: "", 
-      password: "",
-      corporateId: "",
-      companyName: ""
-    });
+    setFormData({ name: "", email: "", phone: "", password: "", corporateId: "", companyName: "" });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

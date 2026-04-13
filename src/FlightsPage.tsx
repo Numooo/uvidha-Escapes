@@ -21,9 +21,10 @@ interface SearchParams {
 interface FlightsPageProps {
   onBookFlight?: (flight: FlightOffer) => void;
   onBack?: () => void;
+  initialDestination?: string | null;
 }
 
-export function FlightsPage({ onBookFlight, onBack }: FlightsPageProps = {}) {
+export function FlightsPage({ onBookFlight, onBack, initialDestination }: FlightsPageProps = {}) {
   const t = useTranslations("Flights");
   const tSearch = useTranslations("Search.flights");
   const [filters, setFilters] = useState<FilterState>({
@@ -54,17 +55,21 @@ export function FlightsPage({ onBookFlight, onBack }: FlightsPageProps = {}) {
 
   // Mock search params (in real app, these would come from URL/state)
   const searchParams: SearchParams = {
-    from: "DEL",
-    to: "BOM",
+    from: "MOW",
+    to: initialDestination || "BOM",
     depart: "2024-01-15",
     passengers: 1,
     cabin: "Economy",
     tripType: "one-way",
   };
 
-  // Filter flights based on filter state
+  // Filter flights based on filter state and destination
   const getFilteredFlights = () => {
-    let filtered = [...MOCK_FLIGHTS];
+    let filtered = [...MOCK_FLIGHTS].filter((f) => {
+      // Basic destination check: the final segment's destination should match
+      const lastSegment = f.segments[f.segments.length - 1];
+      return lastSegment.to === searchParams.to;
+    });
 
     // Price filter
     filtered = filtered.filter(

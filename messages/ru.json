@@ -1101,5 +1101,58 @@
     "loading": "Загрузка...",
     "error": "Что-то пошло не так",
     "success": "Операция выполнена успешно"
+  },
+  "HotDeals": {
+    "title": "🔥 Горящие билеты",
+    "subtitle": "Успейте забронировать по лучшей цене!",
+    "badgeFast": "Прямой рейс",
+    "badgeHot": "Огонь цена",
+    "cards": [
+      {
+        "id": "ist",
+        "destination": "Стамбул",
+        "country": "Турция",
+        "price": 24500,
+        "image": "https://images.unsplash.com/photo-1527838832700-5059252407fa?w=800&fit=crop",
+        "badge": "badgeHot",
+        "oldPrice": 31850
+      },
+      {
+        "id": "dxb",
+        "destination": "Дубай",
+        "country": "ОАЭ",
+        "price": 18900,
+        "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&fit=crop",
+        "badge": "badgeFast",
+        "oldPrice": 24570
+      },
+      {
+        "id": "bkk",
+        "destination": "Бангкок",
+        "country": "Таиланд",
+        "price": 32400,
+        "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&fit=crop",
+        "oldPrice": 42120
+      },
+      {
+        "id": "goi",
+        "destination": "Гоа",
+        "country": "Индия",
+        "price": 12000,
+        "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&fit=crop",
+        "badge": "badgeFast",
+        "oldPrice": 15600
+      },
+      {
+        "id": "mle",
+        "destination": "Мальдивы",
+        "country": "Мальдивы",
+        "price": 45000,
+        "image": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&fit=crop",
+        "badge": "badgeHot",
+        "oldPrice": 58500
+      }
+    ],
+    "viewAll": "Больше горящих предложений"
   }
 }

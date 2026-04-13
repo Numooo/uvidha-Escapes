@@ -101,7 +101,7 @@ function MockApp() {
         {currentPage === "home" && (
           <HomePage
             onSearchFlights={() => setCurrentPage("flights")}
-            onNavigate={handleNavigate}
+            onNavigate={(page) => handleNavigate(page as Page)}
           />
         )}
         {currentPage === "flights" && (
