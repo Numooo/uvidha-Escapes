@@ -9,6 +9,7 @@ import { HotelsPage } from "./HotelsPage";
 import { HolidaysPage } from "./HolidaysPage";
 import { VisaPage } from "./VisaPage";
 import { VisaDetailPage } from "./VisaDetailPage";
+import { CargoPage } from "./CargoPage";
 import { UnifiedBookingFlow } from "./UnifiedBookingFlow";
 import type {
   FlightOffer,
@@ -26,7 +27,8 @@ type Page =
   | "visa-detail"
   | "booking-flight"
   | "booking-hotel"
-  | "booking-package";
+  | "booking-package"
+  | "cargo";
 
 interface BookingMetadata {
   checkInDate?: string;
@@ -112,6 +114,7 @@ function MockApp() {
           <HolidaysPage onPackageSelect={handleSelectPackage} />
         )}
         {currentPage === "visa" && <VisaPage onVisaSelect={handleSelectVisa} />}
+        {currentPage === "cargo" && <CargoPage />}
         {currentPage === "visa-detail" && selectedVisa && (
           <VisaDetailPage
             visa={selectedVisa}

@@ -300,7 +300,7 @@ export function BookingConfirmation({
           <div className="space-y-8">
             <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">
                   <Clock className="h-6 w-6" />
                 </div>
                 <div className="h-full w-0.5 bg-gray-300"></div>
@@ -318,7 +318,7 @@ export function BookingConfirmation({
 
             <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">
                   <FileText className="h-6 w-6" />
                 </div>
                 <div className="h-full w-0.5 bg-gray-300"></div>
@@ -334,7 +334,7 @@ export function BookingConfirmation({
 
             <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary text-white">
                   <Plane className="h-6 w-6" />
                 </div>
               </div>

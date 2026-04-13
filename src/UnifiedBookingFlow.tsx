@@ -144,6 +144,51 @@ export function UnifiedBookingFlow({
     setStep("confirmation");
   };
 
+  const handleDownloadConfirmation = () => {
+    // Create a simple HTML confirmation document
+    const confirmationHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Booking Confirmation - ${bookingRef}</title>
+        <style>
+          body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+          .header { text-align: center; border-bottom: 3px solid #0a57a1; padding-bottom: 20px; }
+          .logo { color: #0a57a1; font-size: 32px; font-weight: bold; }
+          .section { background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; }
+          .total { font-size: 20px; color: #10b981; font-weight: bold; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="logo">Suvidha Escapes</div>
+          <div>Booking Confirmation: ${bookingRef}</div>
+        </div>
+        <div class="section">
+          <h2>Booking Summary</h2>
+          <p><strong>Item:</strong> ${getItemTitle()}</p>
+          <p><strong>Price:</strong> ${symbolText}${pricing.total.toLocaleString()}</p>
+        </div>
+        <div class="section">
+          <h2>Guest Details</h2>
+          <p><strong>Name:</strong> ${guestDetails.firstName} ${guestDetails.lastName}</p>
+          <p><strong>Email:</strong> ${guestDetails.email}</p>
+        </div>
+      </body>
+      </html>
+    `;
+    const blob = new Blob([confirmationHTML], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Booking-${bookingRef}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const getItemTitle = () => {
     if (type === "flight") {
       const flight = item as FlightOffer;
@@ -165,8 +210,9 @@ export function UnifiedBookingFlow({
     } else {
       const pkg = item as Package;
       // Handle both package and visa (visa doesn't have duration)
-      if (pkg.duration?.days && pkg.duration?.nights) {
-        return `${pkg.duration.days} Days / ${pkg.duration.nights} Nights`;
+      const duration = pkg.duration;
+      if (duration && typeof duration === "object" && "days" in duration && "nights" in duration) {
+        return `${duration.days} Days / ${duration.nights} Nights`;
       }
       // For visa or packages without duration, check if it has a country property
       const itemWithCountry = item as {
@@ -501,6 +547,7 @@ export function UnifiedBookingFlow({
                     guestDetails={guestDetails}
                     pricing={pricing}
                     onBack={onComplete}
+                    onDownload={handleDownloadConfirmation}
                   />
                 </motion.div>
               )}
@@ -651,6 +698,8 @@ function PaymentSection({
   onPayment,
   onBack,
 }: PaymentSectionProps) {
+  const t = useTranslations("Booking");
+  const commonT = useTranslations("Common");
   const [paymentMethod, setPaymentMethod] = useState<
     "card" | "upi" | "netbanking" | "wallet"
   >("card");
@@ -670,7 +719,7 @@ function PaymentSection({
       <div className="space-y-4 mb-8">
         {[
           { id: "card", label: t("paymentMethods.card"), icon: CreditCard },
-          { id: "upi", label: t("paymentMethods.upi"), icon: IndianRupee },
+          { id: "upi", label: t("paymentMethods.upi"), icon: CreditCard },
           { id: "netbanking", label: t("paymentMethods.netbanking"), icon: Home },
           { id: "wallet", label: t("paymentMethods.wallet"), icon: CreditCard },
         ].map((method) => (
@@ -742,6 +791,7 @@ interface ConfirmationSectionProps {
   guestDetails: GuestDetails;
   pricing: { basePrice: number; taxes: number; total: number; label: string };
   onBack: () => void;
+  onDownload: () => void;
 }
 
 function ConfirmationSection({
@@ -752,190 +802,12 @@ function ConfirmationSection({
   guestDetails,
   pricing,
   onBack,
+  onDownload,
 }: ConfirmationSectionProps) {
-  const handleDownloadConfirmation = () => {
-    // Create a simple HTML confirmation document
-    const confirmationHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Booking Confirmation - ${bookingRef}</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      color: #333;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
-      padding-bottom: 20px;
-      border-bottom: 3px solid #0a57a1;
-    }
-    .logo {
-      font-size: 32px;
-      font-weight: bold;
-      color: #0a57a1;
-      margin-bottom: 10px;
-    }
-    .confirmed {
-      color: #10b981;
-      font-size: 24px;
-      font-weight: bold;
-      margin: 20px 0;
-    }
-    .booking-ref {
-      color: #0a57a1;
-      font-size: 28px;
-      font-weight: bold;
-      margin: 10px 0;
-    }
-    .section {
-      margin: 30px 0;
-      padding: 20px;
-      background: #f9fafb;
-      border-radius: 8px;
-    }
-    .section-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #0a57a1;
-      margin-bottom: 15px;
-    }
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .detail-row:last-child {
-      border-bottom: none;
-    }
-    .label {
-      color: #6b7280;
-    }
-    .value {
-      font-weight: 600;
-      color: #111827;
-    }
-    .total {
-      font-size: 20px;
-      color: #10b981;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 2px solid #e5e7eb;
-      color: #6b7280;
-      font-size: 14px;
-    }
-    .contact {
-      margin: 20px 0;
-    }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <div class="logo">Suvidha Escapes</div>
-    <div>Your Journey, Our Priority</div>
-  </div>
+  const t = useTranslations("Booking");
+  const commonT = useTranslations("Common");
+  const { symbol, symbolText, CurrencySymbol } = useCurrency();
 
-  <div class="confirmed">✓ ${t("confirmed")}</div>
-  
-  <div style="text-align: center; margin: 30px 0;">
-    <div style="color: #6b7280; font-size: 14px; margin-bottom: 10px;">${t("summary")}</div>
-    <div class="booking-ref">${bookingRef}</div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">${t("summary")}</div>
-    <div class="detail-row">
-      <span class="label">${
-        type === "flight" ? "Flight" : type === "hotel" ? "Hotel" : "Package"
-      }</span>
-      <span class="value">${itemTitle}</span>
-    </div>
-    <div class="detail-row">
-      <span class="label">Details</span>
-      <span class="value">${itemSubtitle}</span>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Guest Information</div>
-    <div class="detail-row">
-      <span class="label">Name</span>
-      <span class="value">${guestDetails.firstName} ${
-      guestDetails.lastName
-    }</span>
-    </div>
-    <div class="detail-row">
-      <span class="label">Email</span>
-      <span class="value">${guestDetails.email}</span>
-    </div>
-    <div class="detail-row">
-      <span class="label">Phone</span>
-      <span class="value">${guestDetails.phone}</span>
-    </div>
-    <div class="detail-row">
-      <span class="label">Address</span>
-      <span class="value">${guestDetails.address}, ${guestDetails.city} - ${
-      guestDetails.zipCode
-    }</span>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">${t("total")}</div>
-    <div class="detail-row">
-      <span class="label">${pricing.label}</span>
-      <span class="value">${symbol}${pricing.basePrice.toLocaleString()}</span>
-    </div>
-    <div class="detail-row">
-      <span class="label">${t("taxes")}</span>
-      <span class="value">${symbol}${pricing.taxes.toLocaleString()}</span>
-    </div>
-    <div class="detail-row">
-      <span class="label">${t("total")}</span>
-      <span class="value total">${symbol}${pricing.total.toLocaleString()}</span>
-    </div>
-  </div>
-
-  <div class="contact">
-    <div class="section-title" style="text-align: center;">${t("support247")}</div>
-    <div style="text-align: center; color: #6b7280;">
-      <p>📧 Email: support@suvidhaescapes.com</p>
-      <p>📞 Phone: +91 98765 43210</p>
-      <p>🕐 Available: 24/7</p>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p><strong>Suvidha Escapes</strong></p>
-    <p>Making your travel dreams come true</p>
-    <p>© ${new Date().getFullYear()} Suvidha Escapes. All rights reserved.</p>
-  </div>
-</body>
-</html>
-    `;
-
-    // Create a Blob from the HTML
-    const blob = new Blob([confirmationHTML], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-
-    // Create a temporary link and trigger download
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `Booking-Confirmation-${bookingRef}.html`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -1018,8 +890,9 @@ function ConfirmationSection({
               </div>
               <div className="flex justify-center gap-2 text-center pt-3 border-t border-gray-200">
                 <span className="text-gray-700">Total Amount:</span>
-                <span className="text-xl font-bold text-green-600">
-                  {symbol}{pricing.total.toLocaleString()}
+                <span className="text-xl font-bold text-green-600 flex items-center justify-center">
+                  <CurrencySymbol className="h-5 w-5 mr-1" />
+                  {pricing.total.toLocaleString()}
                 </span>
               </div>
             </div>
@@ -1051,7 +924,7 @@ function ConfirmationSection({
           {commonT("back")}
         </Button>
         <Button
-          onClick={handleDownloadConfirmation}
+          onClick={onDownload}
           className="flex-1 h-12 gap-2 bg-brand-primary hover:bg-brand-secondary"
         >
           <Download className="h-5 w-5" />
