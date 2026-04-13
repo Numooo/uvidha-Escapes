@@ -84,8 +84,8 @@ export default function Home() {
           />
         )}
         
-        <div className="flex-1 flex flex-col min-w-0">
-          <main className="flex-1">
+        <div className="flex-1 flex flex-col min-h-full">
+          <main className={`flex-1 flex flex-col ${currentPage === 'status' ? 'bg-brand-primary' : ''}`}>
             {currentPage === "booking" && bookingData && (
               <UnifiedBookingFlow
                 type={bookingData.type as "flight" | "hotel" | "package"}
