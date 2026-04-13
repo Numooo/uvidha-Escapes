@@ -1373,7 +1373,7 @@
     "analytics": {
       "totalTrips": "Total Trips",
       "totalSpent": "Total Spent",
-      "milesEarned": "Miles Earned",
+      "milesEarned": "Distance Traveled (km)",
       "topDestination": "Top Destination",
       "recentActivity": "Recent Activity",
       "spentByCategory": "Spent by Category",

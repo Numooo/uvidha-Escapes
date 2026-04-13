@@ -29,7 +29,6 @@ export function FlightFilters({
   const t = useTranslations("Flights.filtersSidebar");
   const tSearch = useTranslations("Search.flights");
   const { symbol, symbolText, CurrencySymbol } = useCurrency();
-  const [localFilters, setLocalFilters] = useState(filters);
 
   const TIME_SLOTS = [
     { id: "morning", label: tSearch("morning" as any), time: "6AM - 12PM" },
@@ -42,16 +41,14 @@ export function FlightFilters({
     key: K,
     value: FilterState[K]
   ) => {
-    const newFilters = { ...localFilters, [key]: value };
-    setLocalFilters(newFilters);
-    onFilterChange(newFilters);
+    onFilterChange({ ...filters, [key]: value });
   };
 
   const toggleArrayFilter = <K extends keyof FilterState>(
     key: K,
     value: string
   ) => {
-    const currentArray = localFilters[key] as string[];
+    const currentArray = filters[key] as string[];
     const newArray = currentArray.includes(value)
       ? currentArray.filter((item) => item !== value)
       : [...currentArray, value];
@@ -59,13 +56,13 @@ export function FlightFilters({
   };
 
   const hasActiveFilters =
-    localFilters.stops.length > 0 ||
-    localFilters.airlines.length > 0 ||
-    localFilters.departureTime.length > 0 ||
-    localFilters.arrivalTime.length > 0 ||
-    localFilters.cabinClass.length > 0 ||
-    localFilters.priceRange[0] > 0 ||
-    localFilters.priceRange[1] < 50000;
+    filters.stops.length > 0 ||
+    filters.airlines.length > 0 ||
+    filters.departureTime.length > 0 ||
+    filters.arrivalTime.length > 0 ||
+    filters.cabinClass.length > 0 ||
+    filters.priceRange[0] > 0 ||
+    filters.priceRange[1] < 50000;
 
   return (
     <div
@@ -113,7 +110,7 @@ export function FlightFilters({
               min="0"
               max="50000"
               step="1000"
-              value={localFilters.priceRange[1]}
+              value={filters.priceRange[1]}
               onChange={(e) =>
                 updateFilter("priceRange", [0, parseInt(e.target.value)])
               }
@@ -126,7 +123,7 @@ export function FlightFilters({
               </span>
               <span className="font-semibold text-gray-900 flex items-center">
                 <CurrencySymbol className="h-4 w-4 mr-1" />
-                {localFilters.priceRange[1].toLocaleString()}
+                {filters.priceRange[1].toLocaleString()}
               </span>
             </div>
           </div>
@@ -149,7 +146,7 @@ export function FlightFilters({
               >
                 <input
                   type="checkbox"
-                  checked={localFilters.stops.includes(stop.id)}
+                  checked={filters.stops.includes(stop.id)}
                   onChange={() => toggleArrayFilter("stops", stop.id)}
                   className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
@@ -172,7 +169,7 @@ export function FlightFilters({
               >
                 <input
                   type="checkbox"
-                  checked={localFilters.airlines.includes(airline)}
+                  checked={filters.airlines.includes(airline)}
                   onChange={() => toggleArrayFilter("airlines", airline)}
                   className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
@@ -193,7 +190,7 @@ export function FlightFilters({
                 key={slot.id}
                 onClick={() => toggleArrayFilter("departureTime", slot.id)}
                 className={`rounded-lg border p-2 text-left transition-colors ${
-                  localFilters.departureTime.includes(slot.id)
+                  filters.departureTime.includes(slot.id)
                     ? "border-blue-600 bg-blue-50 text-blue-700"
                     : "border-gray-300 hover:border-gray-400"
                 }`}
@@ -216,7 +213,7 @@ export function FlightFilters({
                 key={slot.id}
                 onClick={() => toggleArrayFilter("arrivalTime", slot.id)}
                 className={`rounded-lg border p-2 text-left transition-colors ${
-                  localFilters.arrivalTime.includes(slot.id)
+                  filters.arrivalTime.includes(slot.id)
                     ? "border-blue-600 bg-blue-50 text-blue-700"
                     : "border-gray-300 hover:border-gray-400"
                 }`}
@@ -238,17 +235,17 @@ export function FlightFilters({
               type="range"
               min="1"
               max="24"
-              value={localFilters.duration[1]}
+              value={filters.duration[1]}
               onChange={(e) =>
                 updateFilter("duration", [
-                  localFilters.duration[0],
+                  filters.duration[0],
                   parseInt(e.target.value),
                 ])
               }
               className="w-full"
             />
             <div className="text-center text-sm font-semibold text-gray-900">
-              {localFilters.duration[1]} {t("hours")}
+              {filters.duration[1]} {t("hours")}
             </div>
           </div>
         </div>
@@ -271,7 +268,7 @@ export function FlightFilters({
               >
                 <input
                   type="checkbox"
-                  checked={localFilters.cabinClass.includes(cabin.id)}
+                  checked={filters.cabinClass.includes(cabin.id)}
                   onChange={() => toggleArrayFilter("cabinClass", cabin.id)}
                   className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />

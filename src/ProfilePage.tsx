@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   User, 
@@ -93,7 +94,14 @@ export function ProfilePage() {
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header / Banner */}
       <div className="bg-brand-primary pt-32 pb-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+        <Image 
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=2074" 
+          alt="Profile Background"
+          fill
+          className="object-cover opacity-20 mix-blend-luminosity"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-brand-primary/90" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="relative">
@@ -181,7 +189,7 @@ export function ProfilePage() {
                         {[
                           { label: t("analytics.totalTrips"), value: "12", icon: MapPin, color: "blue" },
                           { label: t("analytics.totalSpent"), value: 3450, icon: CreditCard, color: "green", prefix: true },
-                          { label: t("analytics.milesEarned"), value: "4,200", icon: Plane, color: "purple" },
+                          { label: t("analytics.milesEarned"), value: "6,700", icon: Plane, color: "purple" },
                           { label: t("analytics.topDestination"), value: "Dubai", icon: Palmtree, color: "orange" },
                         ].map((stat, i) => (
                           <div key={i} className="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">

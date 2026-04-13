@@ -1373,7 +1373,7 @@
     "analytics": {
       "totalTrips": "Всего поездок",
       "totalSpent": "Всего потрачено",
-      "milesEarned": "Накоплено миль",
+      "milesEarned": "Пройдено км",
       "topDestination": "Лучшее направление",
       "recentActivity": "Последняя активность",
       "spentByCategory": "Расходы по категориям",
