@@ -57,7 +57,7 @@ const MOCK_BOOKINGS: BookingItem[] = [
 
 export function ProfilePage() {
   const t = useTranslations("Profile");
-  const { symbol, symbolText, CurrencySymbol } = useCurrency();
+  const { CurrencySymbol } = useCurrency();
   const [activeTab, setActiveTab ] = useState<"cards" | "flights" | "hotels" | "tours" | "cargo" | "analytics">("analytics");
 
   const tabs = [
@@ -111,9 +111,6 @@ export function ProfilePage() {
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <span className="flex items-center gap-2 text-white/80 bg-white/5 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10 text-sm">
                   <User size={14} /> Personal Account
-                </span>
-                <span className="flex items-center gap-2 text-white/80 bg-white/5 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10 text-sm">
-                  <TrendingUp size={14} className="text-green-400" /> Platinum Member
                 </span>
               </div>
             </div>
@@ -176,14 +173,14 @@ export function ProfilePage() {
                       <div className="flex items-center justify-between mb-8">
                         <h2 className="text-2xl font-bold text-gray-900">{t("tabs.analytics")}</h2>
                         <div className="bg-brand-primary/5 text-brand-primary px-4 py-2 rounded-xl text-sm font-bold">
-                          Year 2024
+                          Year 2026
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         {[
                           { label: t("analytics.totalTrips"), value: "12", icon: MapPin, color: "blue" },
-                          { label: t("analytics.totalSpent"), value: `${symbolText} 3,450`, icon: CreditCard, color: "green" },
+                          { label: t("analytics.totalSpent"), value: 3450, icon: CreditCard, color: "green", prefix: true },
                           { label: t("analytics.milesEarned"), value: "4,200", icon: Plane, color: "purple" },
                           { label: t("analytics.topDestination"), value: "Dubai", icon: Palmtree, color: "orange" },
                         ].map((stat, i) => (
@@ -192,7 +189,10 @@ export function ProfilePage() {
                               <stat.icon size={20} className={`text-${stat.color}-600`} />
                             </div>
                             <div className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">{stat.label}</div>
-                            <div className="text-2xl font-black text-gray-900">{stat.value}</div>
+                            <div className="text-2xl font-black text-gray-900 flex items-center gap-1">
+                              {stat.prefix && <CurrencySymbol className="h-5 w-5" />}
+                              {typeof stat.value === "number" ? stat.value.toLocaleString() : stat.value}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -211,7 +211,10 @@ export function ProfilePage() {
                               <div key={i}>
                                 <div className="flex justify-between text-sm font-semibold mb-2">
                                   <span className="text-gray-700">{item.label}</span>
-                                  <span className="text-gray-900">{symbolText} {item.val}</span>
+                                  <span className="text-gray-900 flex items-center gap-1">
+                                    <CurrencySymbol className="h-3 w-3" />
+                                    {item.val}
+                                  </span>
                                 </div>
                                 <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
                                   <motion.div 
@@ -241,8 +244,9 @@ export function ProfilePage() {
                                   <div className="text-sm font-bold text-gray-900 truncate">{item.title}</div>
                                   <div className="text-xs text-gray-500">{item.date}</div>
                                 </div>
-                                <div className="text-sm font-black text-brand-primary">
-                                  {symbolText} {item.price}
+                                <div className="text-sm font-black text-brand-primary flex items-center gap-1">
+                                  <CurrencySymbol className="h-3 w-3" />
+                                  {item.price.toLocaleString()}
                                 </div>
                               </div>
                             ))}
