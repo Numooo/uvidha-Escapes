@@ -51,6 +51,10 @@
       "premiumEconomy": "Premium Economy",
       "business": "Business Class",
       "first": "First Class",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening",
+      "night": "Night",
       "search": "Search Flights"
     },
     "hotels": {
@@ -154,7 +158,7 @@
           "Paragliding",
           "Trekking"
         ],
-        "image": "https://images.unsplash.com/photo-1544074246-99320294132c?w=800",
+        "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800",
         "rating": 4.9,
         "reviewCount": 85,
         "price": 18500
@@ -184,7 +188,7 @@
           "City Palace",
           "Lake Pichola"
         ],
-        "image": "https://images.unsplash.com/photo-1599661046289-e31897826741?w=800",
+        "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800",
         "rating": 4.6,
         "reviewCount": 110,
         "price": 27500
@@ -199,7 +203,7 @@
           "Scuba Diving",
           "Island Hopping"
         ],
-        "image": "https://images.unsplash.com/photo-1589135410974-dc30709b1f07?w=800",
+        "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800",
         "rating": 4.9,
         "reviewCount": 74,
         "price": 32999
@@ -214,7 +218,7 @@
           "Nubra Valley",
           "Khardung La"
         ],
-        "image": "https://images.unsplash.com/photo-1583141103046-2f08a8a4740e?w=800",
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800",
         "rating": 4.8,
         "reviewCount": 156,
         "price": 38500
@@ -885,7 +889,8 @@
       "Pets not allowed",
       "Smoking only in designated areas",
       "Cancellation charges as per policy"
-    ]
+    ],
+    "morePhotos": "+{count, plural, one {# Photo} other {# Photos}}"
   },
   "PackageDetail": {
     "back": "Back",

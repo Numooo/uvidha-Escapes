@@ -35,6 +35,7 @@ import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import { LocationMap } from "./LocationMap";
 import { Badge } from "./primitives/badge";
+import { ImageModal } from "./ImageModal";
 import type { Hotel, HotelRoom } from "./types";
 
 interface HotelDetailPageProps {
@@ -68,6 +69,8 @@ export function HotelDetailPage({
   const [rooms, setRooms] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
   const hotelImages = hotelData.images || [];
   const hotelPrice = hotelData.price || 0;
@@ -103,6 +106,11 @@ export function HotelDetailPage({
     setCurrentImageIndex((prev) =>
       prev === 0 ? hotelImages.length - 1 : prev - 1
     );
+  };
+
+  const openGallery = (index: number) => {
+    setGalleryIndex(index);
+    setIsGalleryOpen(true);
   };
 
   const amenityIcons: Record<
@@ -196,7 +204,7 @@ export function HotelDetailPage({
               <div className="hidden sm:block">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3 h-[300px] md:h-[480px]">
                   {/* Main Large Image */}
-                  <div className="md:col-span-3 relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => setCurrentImageIndex(0)}>
+                  <div className="md:col-span-3 relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(0)}>
                     {hotelImages.length > 0 ? (
                       <img
                         src={hotelImages[0]}
@@ -213,7 +221,7 @@ export function HotelDetailPage({
                   
                   {/* Side Stacked Images */}
                   <div className="hidden md:grid grid-rows-2 gap-3 h-full">
-                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => setCurrentImageIndex(1 % hotelImages.length)}>
+                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(1 % hotelImages.length)}>
                       <img
                         src={hotelImages[1] || hotelImages[0]}
                         alt={`${hotelData.name} 2`}
@@ -221,7 +229,7 @@ export function HotelDetailPage({
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                     </div>
-                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => setCurrentImageIndex(2 % hotelImages.length)}>
+                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(2 % hotelImages.length)}>
                       <img
                         src={hotelImages[2] || (hotelImages.length > 1 ? hotelImages[1] : hotelImages[0])}
                         alt={`${hotelData.name} 3`}
@@ -239,7 +247,7 @@ export function HotelDetailPage({
                       <div 
                         key={idx} 
                         className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer"
-                        onClick={() => setCurrentImageIndex((idx + 3) % hotelImages.length)}
+                        onClick={() => openGallery((idx + 3) % hotelImages.length)}
                       >
                         <img
                           src={img}
@@ -268,7 +276,8 @@ export function HotelDetailPage({
                       <img
                         src={hotelImages[currentImageIndex]}
                         alt={hotelData.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover cursor-pointer"
+                        onClick={() => openGallery(currentImageIndex)}
                       />
                       {hotelImages.length > 1 && (
                         <>
@@ -771,6 +780,16 @@ export function HotelDetailPage({
           </div>
         </div>
       </div>
+      {/* Image Gallery Modal */}
+      <ImageModal
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        images={hotelImages}
+        currentIndex={galleryIndex}
+        onPrev={() => setGalleryIndex((prev) => (prev === 0 ? hotelImages.length - 1 : prev - 1))}
+        onNext={() => setGalleryIndex((prev) => (prev === hotelImages.length - 1 ? 0 : prev + 1))}
+        onThumbnailClick={(idx) => setGalleryIndex(idx)}
+      />
     </div>
   );
 }

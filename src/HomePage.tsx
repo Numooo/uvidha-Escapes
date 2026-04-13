@@ -1228,14 +1228,14 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group cursor-pointer"
+              className="group cursor-pointer h-full"
               onClick={() => onNavigate?.("holidays")}
             >
-              <div className="relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100">
+              <div className="relative h-full flex flex-col rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100">
                 {/* Image */}
                 <div className="relative h-56 overflow-hidden">
                   <img
-                    src={pkg.image}
+                    src={pkg.image || (pkg.images && pkg.images[0]) || "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&auto=format&fit=crop"}
                     alt={pkg.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -1251,16 +1251,16 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="flex items-center gap-1.5 text-white/90 text-sm mb-2">
                       <MapPin className="h-4 w-4" />
-                      <span>{pkg.destination}</span>
+                      <span className="line-clamp-1">{pkg.destination}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-brand-secondary transition-colors">
+                    <h3 className="text-xl font-bold text-white group-hover:text-brand-secondary transition-colors line-clamp-1">
                       {pkg.title}
                     </h3>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-5">
+                <div className="p-5 flex-1 flex flex-col">
                   {/* Rating & Duration */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-1.5">
@@ -1299,7 +1299,7 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
                   </div>
 
                   {/* Price */}
-                  <div className="flex items-end justify-between pt-4 border-t border-gray-200">
+                  <div className="flex items-end justify-between pt-4 border-t border-gray-200 mt-auto">
                     <div>
                       <p className="text-xs text-gray-600 mb-0.5">
                         {t("Featured.startingFrom")}
@@ -1423,7 +1423,11 @@ function HotDealsSection({ onNavigate, onSearchFlights }: HotDealsSectionProps) 
               }}
             >
               <div className="relative w-[300px] h-[380px] rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-orange-500/20 transition-all duration-300 transform group-hover:-translate-y-2">
-                <img src={card.image} alt={card.destination} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <img 
+                  src={card.image || "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&auto=format&fit=crop"} 
+                  alt={card.destination} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent" />
                 
 

@@ -33,3 +33,16 @@ input[type="submit"],
 select {
   cursor: pointer;
 }
+
+input, select, textarea {
+  background-color: #ffffff;
+  color: #171717;
+}
+
+/* Fix for browser autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}

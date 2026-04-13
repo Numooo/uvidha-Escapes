@@ -26,6 +26,7 @@ import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import { LocationMap } from "./LocationMap";
 import { Badge } from "./primitives/badge";
+import { ImageModal } from "./ImageModal";
 import type { Package } from "./types";
 
 interface PackageDetailPageProps {
@@ -46,6 +47,8 @@ export function PackageDetailPage({
   const [selectedDate, setSelectedDate] = useState("");
   const [travelers, setTravelers] = useState(2);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
   const packagePrice = packageData.price || packageData.pricePerPerson || 0;
   const packageImages = packageData.images || [packageData.image || ""];
@@ -63,6 +66,11 @@ export function PackageDetailPage({
     setCurrentImageIndex((prev) =>
       prev === 0 ? packageImages.length - 1 : prev - 1
     );
+  };
+
+  const openGallery = (index: number) => {
+    setGalleryIndex(index);
+    setIsGalleryOpen(true);
   };
 
   return (
@@ -102,7 +110,7 @@ export function PackageDetailPage({
               <div className="hidden sm:block">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3 h-[300px] md:h-[480px]">
                   {/* Main Large Image */}
-                  <div className="md:col-span-3 relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => setCurrentImageIndex(0)}>
+                  <div className="md:col-span-3 relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(0)}>
                     {packageImages.length > 0 ? (
                       <img
                         src={packageImages[0]}
@@ -119,7 +127,7 @@ export function PackageDetailPage({
                   
                   {/* Side Stacked Images */}
                   <div className="hidden md:grid grid-rows-2 gap-3 h-full">
-                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => setCurrentImageIndex(1 % packageImages.length)}>
+                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(1 % packageImages.length)}>
                       <img
                         src={packageImages[1] || packageImages[0]}
                         alt={`${packageData.title} 2`}
@@ -127,7 +135,7 @@ export function PackageDetailPage({
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                     </div>
-                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => setCurrentImageIndex(2 % packageImages.length)}>
+                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(2 % packageImages.length)}>
                       <img
                         src={packageImages[2] || (packageImages.length > 1 ? packageImages[1] : packageImages[0])}
                         alt={`${packageData.title} 3`}
@@ -145,7 +153,7 @@ export function PackageDetailPage({
                       <div 
                         key={idx} 
                         className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer"
-                        onClick={() => setCurrentImageIndex((idx + 3) % packageImages.length)}
+                        onClick={() => openGallery((idx + 3) % packageImages.length)}
                       >
                         <img
                           src={img}
@@ -174,7 +182,8 @@ export function PackageDetailPage({
                       <img
                         src={packageImages[currentImageIndex]}
                         alt={packageData.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover cursor-pointer"
+                        onClick={() => openGallery(currentImageIndex)}
                       />
                       {packageImages.length > 1 && (
                         <>
@@ -576,6 +585,16 @@ export function PackageDetailPage({
           </div>
         </div>
       </div>
+      {/* Image Gallery Modal */}
+      <ImageModal
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        images={packageImages}
+        currentIndex={galleryIndex}
+        onPrev={() => setGalleryIndex((prev) => (prev === 0 ? packageImages.length - 1 : prev - 1))}
+        onNext={() => setGalleryIndex((prev) => (prev === packageImages.length - 1 ? 0 : prev + 1))}
+        onThumbnailClick={(idx) => setGalleryIndex(idx)}
+      />
     </div>
   );
 }
