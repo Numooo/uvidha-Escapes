@@ -50,6 +50,7 @@ export interface Hotel {
   city?: string;
   location: string;
   distance?: string; // distance from center
+  coordinates?: { lat: number; lng: number };
   rating: number;
   reviews?: number;
   reviewCount?: number;
@@ -86,6 +87,7 @@ export interface Package {
   id: string;
   title: string;
   destination?: string;
+  coordinates?: { lat: number; lng: number };
   duration: string | { days: number; nights: number };
   pricePerPerson?: number;
   price?: number; // per person (alternative)

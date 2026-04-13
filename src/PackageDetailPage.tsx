@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
+import { LocationMap } from "./LocationMap";
 import { Badge } from "./primitives/badge";
 import type { Package } from "./types";
 
@@ -409,6 +410,16 @@ export function PackageDetailPage({
                 </ul>
               </div>
             </div>
+
+            {/* Location Map */}
+            {packageData.coordinates && (
+              <LocationMap
+                lat={packageData.coordinates.lat}
+                lng={packageData.coordinates.lng}
+                name={packageData.title}
+                location={packageData.destination}
+              />
+            )}
 
             {/* Important Information */}
             <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6">

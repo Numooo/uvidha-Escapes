@@ -33,6 +33,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
+import { LocationMap } from "./LocationMap";
 import { Badge } from "./primitives/badge";
 import type { Hotel, HotelRoom } from "./types";
 
@@ -492,6 +493,16 @@ export function HotelDetailPage({
                 </div>
               </div>
             </div>
+
+            {/* Location Map */}
+            {hotelData.coordinates && (
+              <LocationMap
+                lat={hotelData.coordinates.lat}
+                lng={hotelData.coordinates.lng}
+                name={hotelData.name}
+                location={hotelData.location}
+              />
+            )}
 
             {/* Contact */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
