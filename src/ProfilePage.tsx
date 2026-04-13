@@ -279,7 +279,7 @@ export function ProfilePage() {
                               
                               {/* Left Side: Type Icon + ID */}
                               <div className="flex md:flex-col items-center md:items-start justify-between md:justify-center gap-4 min-w-[120px]">
-                                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:bg-brand-primary group-hover:text-white transition-all transform group-hover:rotate-6">
+                                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:bg-brand-primary group-hover:text-white transition-all">
                                   {booking.type === "flight" ? <Plane size={32} /> : 
                                    booking.type === "hotel" ? <Hotel size={32} /> : 
                                    booking.type === "package" ? <Palmtree size={32} /> : <Truck size={32} />}
@@ -350,9 +350,7 @@ export function ProfilePage() {
                                     {booking.price.toLocaleString()}
                                   </div>
                                 </div>
-                                <button className="mt-4 hidden md:block w-full py-2 px-4 rounded-xl bg-gray-100 text-gray-600 text-[10px] font-black uppercase tracking-widest hover:bg-brand-primary hover:text-white transition-all shadow-sm">
-                                  {t("cards.balance")} Details
-                                </button>
+
                               </div>
 
                             </div>

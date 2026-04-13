@@ -73,6 +73,7 @@ export default function Home() {
           setIsAuthenticated(true);
           setCurrentPage("profile");
         }}
+        currentPage={currentPage}
       />
 
       <div className="flex flex-1 relative">
