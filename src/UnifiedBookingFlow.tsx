@@ -17,8 +17,8 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
-import { Button } from "./shared/ui/button";
-import { Input } from "./shared/ui/input";
+import { Button } from "./components/shared/ui/button";
+import { Input } from "./components/shared/ui/input";
 import type { FlightOffer, Hotel, Package } from "./types";
 
 type BookingType = "flight" | "hotel" | "package";
@@ -60,7 +60,7 @@ export function UnifiedBookingFlow({
   const { symbol, symbolText, CurrencySymbol } = useCurrency();
 
   const [step, setStep] = useState<"details" | "payment" | "confirmation">(
-    "details"
+    "details",
   );
   const [guestDetails, setGuestDetails] = useState<GuestDetails>({
     firstName: "",
@@ -99,8 +99,8 @@ export function UnifiedBookingFlow({
               Math.ceil(
                 (new Date(metadata.checkOutDate).getTime() -
                   new Date(metadata.checkInDate).getTime()) /
-                  (1000 * 60 * 60 * 24)
-              )
+                  (1000 * 60 * 60 * 24),
+              ),
             )
           : 1;
       const basePrice = hotelPrice * nights * rooms;
@@ -211,7 +211,12 @@ export function UnifiedBookingFlow({
       const pkg = item as Package;
       // Handle both package and visa (visa doesn't have duration)
       const duration = pkg.duration;
-      if (duration && typeof duration === "object" && "days" in duration && "nights" in duration) {
+      if (
+        duration &&
+        typeof duration === "object" &&
+        "days" in duration &&
+        "nights" in duration
+      ) {
         return `${duration.days} Days / ${duration.nights} Nights`;
       }
       // For visa or packages without duration, check if it has a country property
@@ -288,8 +293,8 @@ export function UnifiedBookingFlow({
                     (step === "payment" && idx === 1)
                       ? "bg-brand-primary text-white"
                       : idx < (step === "details" ? 0 : 1)
-                      ? "bg-green-500 text-white"
-                      : "bg-gray-200 text-gray-500"
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-200 text-gray-500"
                   }`}
                 >
                   {idx < (step === "details" ? 0 : 1) ? (
@@ -720,14 +725,18 @@ function PaymentSection({
         {[
           { id: "card", label: t("paymentMethods.card"), icon: CreditCard },
           { id: "upi", label: t("paymentMethods.upi"), icon: CreditCard },
-          { id: "netbanking", label: t("paymentMethods.netbanking"), icon: Home },
+          {
+            id: "netbanking",
+            label: t("paymentMethods.netbanking"),
+            icon: Home,
+          },
           { id: "wallet", label: t("paymentMethods.wallet"), icon: CreditCard },
         ].map((method) => (
           <button
             key={method.id}
             onClick={() =>
               setPaymentMethod(
-                method.id as "card" | "upi" | "netbanking" | "wallet"
+                method.id as "card" | "upi" | "netbanking" | "wallet",
               )
             }
             className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
@@ -808,7 +817,6 @@ function ConfirmationSection({
   const commonT = useTranslations("Common");
   const { symbol, symbolText, CurrencySymbol } = useCurrency();
 
-
   return (
     <div className="max-w-3xl mx-auto">
       <motion.div
@@ -841,9 +849,7 @@ function ConfirmationSection({
         <h1 className="text-4xl font-bold text-gray-900 mb-2">
           {t("confirmed")}
         </h1>
-        <p className="text-lg text-gray-600">
-          {t("instantConfirmation")}
-        </p>
+        <p className="text-lg text-gray-600">{t("instantConfirmation")}</p>
       </motion.div>
 
       <motion.div
@@ -854,9 +860,7 @@ function ConfirmationSection({
       >
         <div className="text-center mb-6 pb-6 border-b border-gray-200">
           <p className="text-sm text-gray-600 mb-2">{t("summary")}</p>
-          <p className="text-3xl font-bold text-brand-primary">
-            {bookingRef}
-          </p>
+          <p className="text-3xl font-bold text-brand-primary">{bookingRef}</p>
         </div>
 
         <div className="space-y-6">
@@ -870,8 +874,8 @@ function ConfirmationSection({
                   {type === "flight"
                     ? "Flight"
                     : type === "hotel"
-                    ? "Hotel"
-                    : "Package"}
+                      ? "Hotel"
+                      : "Package"}
                   :
                 </span>
                 <span className="font-medium text-gray-900">{itemTitle}</span>

@@ -1,5 +1,5 @@
 // Mock Data for Avia Travel Club
-import type { Airport, FlightOffer, Hotel, Package } from "../../types";
+import type { Airport, FlightOffer, Hotel, Package } from "../../../types";
 
 export const AIRPORTS: Airport[] = [
   { code: "FRU", city: "Bishkek", name: "Manas Intl" },
@@ -126,9 +126,20 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "HD-IST",
     airline: "Turkish Airlines",
-    airlineLogo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&h=200&fit=crop&q=80",
     flightNumber: "TK-402",
-    segments: [{ from: "MOW", to: "IST", departure: "2024-01-15T09:00:00", arrival: "2024-01-15T13:30:00", duration: 270, cabin: "Economy", flightNumber: "TK-402" }],
+    segments: [
+      {
+        from: "MOW",
+        to: "IST",
+        departure: "2024-01-15T09:00:00",
+        arrival: "2024-01-15T13:30:00",
+        duration: 270,
+        cabin: "Economy",
+        flightNumber: "TK-402",
+      },
+    ],
     duration: 270,
     price: 24500,
     cabin: "Economy",
@@ -140,9 +151,20 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "HD-DXB",
     airline: "Emirates",
-    airlineLogo: "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=200&fit=crop&q=80",
     flightNumber: "EK-133",
-    segments: [{ from: "MOW", to: "DXB", departure: "2024-01-15T23:50:00", arrival: "2024-01-16T06:15:00", duration: 325, cabin: "Economy", flightNumber: "EK-133" }],
+    segments: [
+      {
+        from: "MOW",
+        to: "DXB",
+        departure: "2024-01-15T23:50:00",
+        arrival: "2024-01-16T06:15:00",
+        duration: 325,
+        cabin: "Economy",
+        flightNumber: "EK-133",
+      },
+    ],
     duration: 325,
     price: 18900,
     cabin: "Economy",
@@ -154,9 +176,20 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "HD-BKK",
     airline: "Aeroflot",
-    airlineLogo: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
     flightNumber: "SU-270",
-    segments: [{ from: "MOW", to: "BKK", departure: "2024-01-15T19:40:00", arrival: "2024-01-16T08:30:00", duration: 530, cabin: "Economy", flightNumber: "SU-270" }],
+    segments: [
+      {
+        from: "MOW",
+        to: "BKK",
+        departure: "2024-01-15T19:40:00",
+        arrival: "2024-01-16T08:30:00",
+        duration: 530,
+        cabin: "Economy",
+        flightNumber: "SU-270",
+      },
+    ],
     duration: 530,
     price: 32400,
     cabin: "Economy",
@@ -168,10 +201,29 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "HD-GOI",
     airline: "Air India",
-    airlineLogo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&h=200&fit=crop&q=80",
     flightNumber: "AI-156",
-    segments: [{ from: "MOW", to: "DEL", departure: "2024-01-15T15:00:00", arrival: "2024-01-15T23:30:00", duration: 390, cabin: "Economy", flightNumber: "AI-156" },
-               { from: "DEL", to: "GOI", departure: "2024-01-16T02:00:00", arrival: "2024-01-16T04:30:00", duration: 150, cabin: "Economy", flightNumber: "AI-888" }],
+    segments: [
+      {
+        from: "MOW",
+        to: "DEL",
+        departure: "2024-01-15T15:00:00",
+        arrival: "2024-01-15T23:30:00",
+        duration: 390,
+        cabin: "Economy",
+        flightNumber: "AI-156",
+      },
+      {
+        from: "DEL",
+        to: "GOI",
+        departure: "2024-01-16T02:00:00",
+        arrival: "2024-01-16T04:30:00",
+        duration: 150,
+        cabin: "Economy",
+        flightNumber: "AI-888",
+      },
+    ],
     duration: 660,
     price: 12000,
     cabin: "Economy",
@@ -183,24 +235,59 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "HD-MLE",
     airline: "Qatar Airways",
-    airlineLogo: "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=200&fit=crop&q=80",
     flightNumber: "QR-234",
-    segments: [{ from: "MOW", to: "DOH", departure: "2024-01-15T17:00:00", arrival: "2024-01-15T22:15:00", duration: 315, cabin: "Economy", flightNumber: "QR-234" },
-               { from: "DOH", to: "MLE", departure: "2024-01-16T01:00:00", arrival: "2024-01-16T07:45:00", duration: 285, cabin: "Economy", flightNumber: "QR-672" }],
+    segments: [
+      {
+        from: "MOW",
+        to: "DOH",
+        departure: "2024-01-15T17:00:00",
+        arrival: "2024-01-15T22:15:00",
+        duration: 315,
+        cabin: "Economy",
+        flightNumber: "QR-234",
+      },
+      {
+        from: "DOH",
+        to: "MLE",
+        departure: "2024-01-16T01:00:00",
+        arrival: "2024-01-16T07:45:00",
+        duration: 285,
+        cabin: "Economy",
+        flightNumber: "QR-672",
+      },
+    ],
     duration: 720,
     price: 45000,
     cabin: "Economy",
     refundable: true,
     changeable: true,
     baggage: { cabin: "7 kg", checked: "25 kg" },
-    amenities: ["WiFi", "Premium meals", "In-flight entertainment", "Lounge access"],
+    amenities: [
+      "WiFi",
+      "Premium meals",
+      "In-flight entertainment",
+      "Lounge access",
+    ],
   },
   {
     id: "FRU-DXB",
     airline: "FlyDubai",
-    airlineLogo: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
     flightNumber: "FZ-1762",
-    segments: [{ from: "FRU", to: "DXB", departure: "2024-01-20T05:30:00", arrival: "2024-01-20T08:45:00", duration: 195, cabin: "Economy", flightNumber: "FZ-1762" }],
+    segments: [
+      {
+        from: "FRU",
+        to: "DXB",
+        departure: "2024-01-20T05:30:00",
+        arrival: "2024-01-20T08:45:00",
+        duration: 195,
+        cabin: "Economy",
+        flightNumber: "FZ-1762",
+      },
+    ],
     duration: 195,
     price: 320,
     cabin: "Economy",
@@ -212,9 +299,20 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "FRU-IST",
     airline: "Pegasus",
-    airlineLogo: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=200&h=200&fit=crop&q=80",
     flightNumber: "PC-701",
-    segments: [{ from: "FRU", to: "SAW", departure: "2024-01-22T08:15:00", arrival: "2024-01-22T10:45:00", duration: 330, cabin: "Economy", flightNumber: "PC-701" }],
+    segments: [
+      {
+        from: "FRU",
+        to: "SAW",
+        departure: "2024-01-22T08:15:00",
+        arrival: "2024-01-22T10:45:00",
+        duration: 330,
+        cabin: "Economy",
+        flightNumber: "PC-701",
+      },
+    ],
     duration: 330,
     price: 180,
     cabin: "Economy",
@@ -226,9 +324,20 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "ALA-TAS",
     airline: "Air Astana",
-    airlineLogo: "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=200&fit=crop&q=80",
     flightNumber: "KC-127",
-    segments: [{ from: "ALA", to: "TAS", departure: "2024-01-25T14:20:00", arrival: "2024-01-25T15:00:00", duration: 100, cabin: "Business", flightNumber: "KC-127" }],
+    segments: [
+      {
+        from: "ALA",
+        to: "TAS",
+        departure: "2024-01-25T14:20:00",
+        arrival: "2024-01-25T15:00:00",
+        duration: 100,
+        cabin: "Business",
+        flightNumber: "KC-127",
+      },
+    ],
     duration: 100,
     price: 250,
     cabin: "Business",
@@ -240,9 +349,20 @@ export const MOCK_FLIGHTS: FlightOffer[] = [
   {
     id: "LHR-CDG",
     airline: "Air France",
-    airlineLogo: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
+    airlineLogo:
+      "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=200&h=200&fit=crop&q=80",
     flightNumber: "AF-1681",
-    segments: [{ from: "LHR", to: "CDG", departure: "2024-02-01T10:30:00", arrival: "2024-02-01T12:45:00", duration: 75, cabin: "Economy", flightNumber: "AF-1681" }],
+    segments: [
+      {
+        from: "LHR",
+        to: "CDG",
+        departure: "2024-02-01T10:30:00",
+        arrival: "2024-02-01T12:45:00",
+        duration: 75,
+        cabin: "Economy",
+        flightNumber: "AF-1681",
+      },
+    ],
     duration: 75,
     price: 125,
     cabin: "Economy",

@@ -9,7 +9,10 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { FlightOffer } from "../../types";
-import { formatCurrency, getAirportLabel } from "../../shared/mocks/data";
+import {
+  formatCurrency,
+  getAirportLabel,
+} from "../../components/shared/mocks/data";
 import { useTranslations, useLocale } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 
@@ -31,18 +34,24 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
   };
 
   const formatTime = (datetime: string) => {
-    return new Date(datetime).toLocaleTimeString(locale === "ru" ? "ru-RU" : "en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
+    return new Date(datetime).toLocaleTimeString(
+      locale === "ru" ? "ru-RU" : "en-US",
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      },
+    );
   };
 
   const formatDate = (datetime: string) => {
-    return new Date(datetime).toLocaleDateString(locale === "ru" ? "ru-RU" : "en-US", {
-      month: "short",
-      day: "numeric",
-    });
+    return new Date(datetime).toLocaleDateString(
+      locale === "ru" ? "ru-RU" : "en-US",
+      {
+        month: "short",
+        day: "numeric",
+      },
+    );
   };
 
   const getStopsText = () => {
@@ -96,7 +105,9 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
             <div className="text-2xl font-bold text-gray-900">
               {formatTime(firstSegment.departure)}
             </div>
-            <div className="text-sm text-gray-600">{getAirportLabel(firstSegment.from)}</div>
+            <div className="text-sm text-gray-600">
+              {getAirportLabel(firstSegment.from)}
+            </div>
             <div className="text-xs text-gray-500">
               {formatDate(firstSegment.departure)}
             </div>
@@ -119,7 +130,9 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
             <div className="text-2xl font-bold text-gray-900">
               {formatTime(lastSegment.arrival)}
             </div>
-            <div className="text-sm text-gray-600">{getAirportLabel(lastSegment.to)}</div>
+            <div className="text-sm text-gray-600">
+              {getAirportLabel(lastSegment.to)}
+            </div>
             <div className="text-xs text-gray-500">
               {formatDate(lastSegment.arrival)}
             </div>
@@ -133,7 +146,9 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
               <CurrencySymbol className="h-5 w-5 mr-1" />
               {formatCurrency(flight.price)}
             </div>
-            <div className="text-right text-sm text-gray-600">{t("perAdult")}</div>
+            <div className="text-right text-sm text-gray-600">
+              {t("perAdult")}
+            </div>
           </div>
           <div className="flex gap-2">
             <button
@@ -190,7 +205,8 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="font-semibold text-gray-900">
-                              {getAirportLabel(segment.from)} → {getAirportLabel(segment.to)}
+                              {getAirportLabel(segment.from)} →{" "}
+                              {getAirportLabel(segment.to)}
                             </div>
                             <div className="text-sm text-gray-600">
                               {formatTime(segment.departure)} -{" "}
@@ -205,7 +221,11 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
                         {index < flight.segments.length - 1 && (
                           <div className="flex items-center gap-2 text-sm text-gray-600">
                             <Clock className="h-4 w-4" />
-                            <span>{t("layover", { city: getAirportLabel(segment.to) })}</span>
+                            <span>
+                              {t("layover", {
+                                city: getAirportLabel(segment.to),
+                              })}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -223,11 +243,15 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
                   <div className="space-y-2 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
                       <Briefcase className="h-4 w-4" />
-                      <span>{t("cabin")}: {flight.baggage.cabin || "7 kg"}</span>
+                      <span>
+                        {t("cabin")}: {flight.baggage.cabin || "7 kg"}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <ShoppingBag className="h-4 w-4" />
-                      <span>{t("checked")}: {flight.baggage.checked || "15 kg"}</span>
+                      <span>
+                        {t("checked")}: {flight.baggage.checked || "15 kg"}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -243,7 +267,9 @@ export function FlightResultCard({ flight, onBook }: FlightResultCardProps) {
                         flight.refundable ? "text-green-600" : "text-red-600"
                       }`}
                     >
-                      {flight.refundable ? `✓ ${t("refundable")}` : `✗ ${t("nonRefundable")}`}
+                      {flight.refundable
+                        ? `✓ ${t("refundable")}`
+                        : `✗ ${t("nonRefundable")}`}
                     </div>
                     <div className="text-gray-600">
                       {flight.changeable

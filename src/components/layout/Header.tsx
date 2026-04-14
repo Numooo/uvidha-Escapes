@@ -21,7 +21,7 @@ import { SignInModal } from "./SignInModal";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname, useRouter, routing, Link } from "@/i18n/routing";
 import { useCurrency, CURRENCIES, CurrencyCode } from "@/CurrencyContext";
-import logo from "./app/logo1.png";
+import logo from "@/app/logo1.png";
 import Image from "next/image";
 
 interface NavItem {

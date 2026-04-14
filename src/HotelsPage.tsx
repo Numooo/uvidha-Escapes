@@ -17,10 +17,10 @@ import {
   Heart,
   Calendar,
 } from "lucide-react";
-import { Input } from "./shared/ui/input";
-import { Button } from "./shared/ui/button";
-import { Badge } from "./shared/ui/badge";
-import { Carousel } from "./shared/ui/carousel";
+import { Input } from "./components/shared/ui/input";
+import { Button } from "./components/shared/ui/button";
+import { Badge } from "./components/shared/ui/badge";
+import { Carousel } from "./components/shared/ui/carousel";
 import { HotelDetailPage } from "./HotelDetailPage";
 import type { Hotel } from "./types";
 import { useTranslations } from "next-intl";

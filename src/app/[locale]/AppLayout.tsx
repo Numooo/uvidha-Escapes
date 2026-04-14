@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Header } from "../../Header";
-import { Sidebar } from "../../Sidebar";
-import { Footer } from "../../Footer";
-import { ChatWidget } from "../../ChatWidget";
+import { Header } from "@/components/layout/Header";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Footer } from "@/components/layout/Footer";
+import { ChatWidget } from "@/components/layout/ChatWidget";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

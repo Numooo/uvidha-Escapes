@@ -9,7 +9,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import logo from "./app/logo1.png";
+import logo from "@/app/logo1.png";
 import Image from "next/image";
 
 const socialLinks = [

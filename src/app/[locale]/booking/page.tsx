@@ -1,6 +1,6 @@
 "use client";
 
-import { useBookingStore } from "@/shared/store/booking";
+import { useBookingStore } from "@/components/shared/store/booking";
 import { UnifiedBookingFlow } from "@/UnifiedBookingFlow";
 import { useRouter } from "@/i18n/routing";
 import { useEffect } from "react";

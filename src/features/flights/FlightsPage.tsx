@@ -6,7 +6,11 @@ import { FlightFilters } from "./FlightFilters";
 import { FlightResultCard } from "./FlightResultCard";
 import { FlightCardSkeletonList } from "./FlightCardSkeleton";
 import { FiltersSkeleton } from "./FiltersSkeleton";
-import { MOCK_FLIGHTS, formatCurrency, getAirportLabel } from "../../shared/mocks/data";
+import {
+  MOCK_FLIGHTS,
+  formatCurrency,
+  getAirportLabel,
+} from "../../components/shared/mocks/data";
 import { useTranslations } from "next-intl";
 
 interface SearchParams {
@@ -25,7 +29,12 @@ interface FlightsPageProps {
   initialDestination?: string | null;
 }
 
-export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestination }: FlightsPageProps = {}) {
+export function FlightsPage({
+  onBookFlight,
+  onBack,
+  initialOrigin,
+  initialDestination,
+}: FlightsPageProps = {}) {
   const t = useTranslations("Flights");
   const tSearch = useTranslations("Search.flights");
   const [filters, setFilters] = useState<FilterState>({
@@ -39,11 +48,13 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
   });
 
   const [sortBy, setSortBy] = useState<"price" | "duration" | "departure">(
-    "price"
+    "price",
   );
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentDestination, setCurrentDestination] = useState(initialDestination || "DXB");
+  const [currentDestination, setCurrentDestination] = useState(
+    initialDestination || "DXB",
+  );
   const [currentOrigin, setCurrentOrigin] = useState(initialOrigin || "FRU");
   const [isEditingSearch, setIsEditingSearch] = useState(false);
 
@@ -87,7 +98,7 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
     // Price filter
     filtered = filtered.filter(
       (f) =>
-        f.price >= filters.priceRange[0] && f.price <= filters.priceRange[1]
+        f.price >= filters.priceRange[0] && f.price <= filters.priceRange[1],
     );
 
     // Stops filter
@@ -105,8 +116,8 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
     if (filters.airlines.length > 0) {
       filtered = filtered.filter((f) =>
         filters.airlines.some((airline) =>
-          f.airline.toLowerCase().includes(airline.toLowerCase())
-        )
+          f.airline.toLowerCase().includes(airline.toLowerCase()),
+        ),
       );
     }
 
@@ -114,8 +125,8 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
     if (filters.cabinClass.length > 0) {
       filtered = filtered.filter((f) =>
         filters.cabinClass.some((cabin) =>
-          f.cabin.toLowerCase().includes(cabin.toLowerCase())
-        )
+          f.cabin.toLowerCase().includes(cabin.toLowerCase()),
+        ),
       );
     }
 
@@ -140,7 +151,7 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
         return sorted.sort(
           (a, b) =>
             new Date(a.segments[0].departure).getTime() -
-            new Date(b.segments[0].departure).getTime()
+            new Date(b.segments[0].departure).getTime(),
         );
       default:
         return sorted;
@@ -173,8 +184,8 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
       console.log("Booking flight:", flight);
       alert(
         `Booking flight ${flight.flightNumber} for ${formatCurrency(
-          flight.price
-        )}`
+          flight.price,
+        )}`,
       );
     }
   };
@@ -207,7 +218,7 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
                 </div>
               </div>
             </div>
-            <button 
+            <button
               onClick={() => setIsEditingSearch(true)}
               className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 cursor-pointer"
             >
@@ -266,7 +277,7 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
                   value={sortBy}
                   onChange={(e) =>
                     setSortBy(
-                      e.target.value as "price" | "duration" | "departure"
+                      e.target.value as "price" | "duration" | "departure",
                     )
                   }
                   className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
@@ -379,8 +390,10 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
               className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white p-8 shadow-2xl"
             >
               <div className="mb-6 flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">{t("editSearch")}</h3>
-                <button 
+                <h3 className="text-xl font-bold text-gray-900">
+                  {t("editSearch")}
+                </h3>
+                <button
                   onClick={() => setIsEditingSearch(false)}
                   className="rounded-full p-2 hover:bg-gray-100 transition-colors"
                 >
@@ -394,9 +407,11 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
                     {tSearch("to")}
                   </label>
                   <div className="grid grid-cols-1 gap-2 max-h-[40vh] overflow-y-auto pr-2 no-scrollbar">
-                    {MOCK_FLIGHTS.map(f => f.segments[f.segments.length-1].to)
+                    {MOCK_FLIGHTS.map(
+                      (f) => f.segments[f.segments.length - 1].to,
+                    )
                       .filter((v, i, a) => a.indexOf(v) === i)
-                      .map(code => (
+                      .map((code) => (
                         <button
                           key={code}
                           onClick={() => {
@@ -404,23 +419,33 @@ export function FlightsPage({ onBookFlight, onBack, initialOrigin, initialDestin
                             setIsEditingSearch(false);
                           }}
                           className={`flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer ${
-                            currentDestination === code 
-                              ? "border-brand-primary bg-brand-primary/5 text-brand-primary" 
+                            currentDestination === code
+                              ? "border-brand-primary bg-brand-primary/5 text-brand-primary"
                               : "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50"
                           }`}
                         >
-                          <span className="font-bold">{getAirportLabel(code)}</span>
-                          <span className="text-xs font-black opacity-50">{code}</span>
+                          <span className="font-bold">
+                            {getAirportLabel(code)}
+                          </span>
+                          <span className="text-xs font-black opacity-50">
+                            {code}
+                          </span>
                         </button>
                       ))}
                   </div>
                 </div>
-                
+
                 <button
                   onClick={() => setIsEditingSearch(false)}
                   className="w-full rounded-2xl bg-brand-primary py-4 text-white font-bold shadow-lg hover:shadow-brand-primary/25 transition-all active:scale-95 cursor-pointer"
                 >
-                  {t("showResults", { count: MOCK_FLIGHTS.filter(f => f.segments[f.segments.length-1].to === currentDestination).length })}
+                  {t("showResults", {
+                    count: MOCK_FLIGHTS.filter(
+                      (f) =>
+                        f.segments[f.segments.length - 1].to ===
+                        currentDestination,
+                    ).length,
+                  })}
                 </button>
               </div>
             </motion.div>

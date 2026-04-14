@@ -34,7 +34,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import { LocationMap } from "./LocationMap";
-import { Badge } from "./shared/ui/badge";
+import { Badge } from "./components/shared/ui/badge";
 import { ImageModal } from "./ImageModal";
 import type { Hotel, HotelRoom } from "./types";
 
@@ -47,7 +47,7 @@ interface HotelDetailPageProps {
     checkInDate?: string,
     checkOutDate?: string,
     rooms?: number,
-    guests?: number
+    guests?: number,
   ) => void;
 }
 
@@ -82,8 +82,8 @@ export function HotelDetailPage({
           Math.ceil(
             (new Date(checkOutDate).getTime() -
               new Date(checkInDate).getTime()) /
-              (1000 * 60 * 60 * 24)
-          )
+              (1000 * 60 * 60 * 24),
+          ),
         )
       : 1;
 
@@ -98,13 +98,13 @@ export function HotelDetailPage({
 
   const nextImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === hotelImages.length - 1 ? 0 : prev + 1
+      prev === hotelImages.length - 1 ? 0 : prev + 1,
     );
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === 0 ? hotelImages.length - 1 : prev - 1
+      prev === 0 ? hotelImages.length - 1 : prev - 1,
     );
   };
 
@@ -204,7 +204,10 @@ export function HotelDetailPage({
               <div className="hidden sm:block">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3 h-[300px] md:h-[480px]">
                   {/* Main Large Image */}
-                  <div className="md:col-span-3 relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(0)}>
+                  <div
+                    className="md:col-span-3 relative rounded-2xl overflow-hidden group cursor-pointer"
+                    onClick={() => openGallery(0)}
+                  >
                     {hotelImages.length > 0 ? (
                       <img
                         src={hotelImages[0]}
@@ -218,10 +221,13 @@ export function HotelDetailPage({
                     )}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                   </div>
-                  
+
                   {/* Side Stacked Images */}
                   <div className="hidden md:grid grid-rows-2 gap-3 h-full">
-                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(1 % hotelImages.length)}>
+                    <div
+                      className="relative rounded-2xl overflow-hidden group cursor-pointer"
+                      onClick={() => openGallery(1 % hotelImages.length)}
+                    >
                       <img
                         src={hotelImages[1] || hotelImages[0]}
                         alt={`${hotelData.name} 2`}
@@ -229,9 +235,17 @@ export function HotelDetailPage({
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                     </div>
-                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer" onClick={() => openGallery(2 % hotelImages.length)}>
+                    <div
+                      className="relative rounded-2xl overflow-hidden group cursor-pointer"
+                      onClick={() => openGallery(2 % hotelImages.length)}
+                    >
                       <img
-                        src={hotelImages[2] || (hotelImages.length > 1 ? hotelImages[1] : hotelImages[0])}
+                        src={
+                          hotelImages[2] ||
+                          (hotelImages.length > 1
+                            ? hotelImages[1]
+                            : hotelImages[0])
+                        }
                         alt={`${hotelData.name} 3`}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
@@ -244,10 +258,12 @@ export function HotelDetailPage({
                 {hotelImages.length > 3 && (
                   <div className="grid grid-cols-5 gap-3 mt-3">
                     {hotelImages.slice(3, 8).map((img, idx) => (
-                      <div 
-                        key={idx} 
+                      <div
+                        key={idx}
                         className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer"
-                        onClick={() => openGallery((idx + 3) % hotelImages.length)}
+                        onClick={() =>
+                          openGallery((idx + 3) % hotelImages.length)
+                        }
                       >
                         <img
                           src={img}
@@ -257,7 +273,9 @@ export function HotelDetailPage({
                         {idx === 4 && hotelImages.length > 8 && (
                           <div className="absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity group-hover:opacity-90">
                             <span className="text-white font-bold text-lg">
-                              {t("morePhotos", { count: hotelImages.length - 8 })}
+                              {t("morePhotos", {
+                                count: hotelImages.length - 8,
+                              })}
                             </span>
                           </div>
                         )}
@@ -442,7 +460,9 @@ export function HotelDetailPage({
                           </div>
                           <div className="flex items-center gap-1">
                             <Users className="h-4 w-4" />
-                            <span>{t("guestsUpTo", { count: room.maxOccupancy })}</span>
+                            <span>
+                              {t("guestsUpTo", { count: room.maxOccupancy })}
+                            </span>
                           </div>
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -453,7 +473,9 @@ export function HotelDetailPage({
                           ))}
                           {room.amenities.length > 5 && (
                             <Badge variant="default">
-                              {t("moreAmenities", { count: room.amenities.length - 5 })}
+                              {t("moreAmenities", {
+                                count: room.amenities.length - 5,
+                              })}
                             </Badge>
                           )}
                         </div>
@@ -580,7 +602,9 @@ export function HotelDetailPage({
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500">{t("perNight")} + {t("taxes")}</p>
+                  <p className="text-sm text-gray-500">
+                    {t("perNight")} + {t("taxes")}
+                  </p>
                 </div>
 
                 {/* Check-in Date */}
@@ -627,7 +651,7 @@ export function HotelDetailPage({
                         checkInDate
                           ? new Date(
                               new Date(checkInDate).getTime() +
-                                24 * 60 * 60 * 1000
+                                24 * 60 * 60 * 1000,
                             )
                               .toISOString()
                               .split("T")[0]
@@ -717,7 +741,9 @@ export function HotelDetailPage({
                         <CurrencySymbol className="h-3 w-3 mr-0.5" />
                         {hotelPrice.toLocaleString()} × {nights}{" "}
                         {nights === 1 ? t("night") : t("nights")} × {rooms}{" "}
-                        {rooms === 1 ? t("room").toLowerCase() : t("rooms").toLowerCase()}
+                        {rooms === 1
+                          ? t("room").toLowerCase()
+                          : t("rooms").toLowerCase()}
                       </span>
                       <span className="flex items-center">
                         <CurrencySymbol className="h-3.5 w-3.5 mr-1" />
@@ -751,7 +777,7 @@ export function HotelDetailPage({
                         checkInDate,
                         checkOutDate,
                         rooms,
-                        guests
+                        guests,
                       );
                     }
                   }}
@@ -787,8 +813,16 @@ export function HotelDetailPage({
         onClose={() => setIsGalleryOpen(false)}
         images={hotelImages}
         currentIndex={galleryIndex}
-        onPrev={() => setGalleryIndex((prev) => (prev === 0 ? hotelImages.length - 1 : prev - 1))}
-        onNext={() => setGalleryIndex((prev) => (prev === hotelImages.length - 1 ? 0 : prev + 1))}
+        onPrev={() =>
+          setGalleryIndex((prev) =>
+            prev === 0 ? hotelImages.length - 1 : prev - 1,
+          )
+        }
+        onNext={() =>
+          setGalleryIndex((prev) =>
+            prev === hotelImages.length - 1 ? 0 : prev + 1,
+          )
+        }
         onThumbnailClick={(idx) => setGalleryIndex(idx)}
       />
     </div>

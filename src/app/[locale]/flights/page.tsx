@@ -2,14 +2,14 @@
 
 import { useSearchParams } from "next/navigation";
 import { FlightsPage } from "@/features/flights/FlightsPage";
-import { useBookingStore } from "@/shared/store/booking";
+import { useBookingStore } from "@/components/shared/store/booking";
 import { useRouter } from "@/i18n/routing";
 
 export default function FlightsRoute() {
   const searchParams = useSearchParams();
   const origin = searchParams.get("origin");
   const destination = searchParams.get("destination");
-  
+
   const setBooking = useBookingStore((state) => state.setBooking);
   const router = useRouter();
 

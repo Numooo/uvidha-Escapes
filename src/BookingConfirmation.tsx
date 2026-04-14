@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import type { BookingData } from "./types";
-import { formatCurrency } from "./shared/mocks/data";
+import { formatCurrency } from "./components/shared/mocks/data";
 import { useCurrency } from "@/CurrencyContext";
 
 interface BookingConfirmationProps {

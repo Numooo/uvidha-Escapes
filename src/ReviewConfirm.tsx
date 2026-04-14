@@ -2,7 +2,7 @@ import React from "react";
 import { Plane, Info, ChevronRight, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import type { FlightOffer, FareBreakdown } from "./types";
-import { formatCurrency } from "./shared/mocks/data";
+import { formatCurrency } from "./components/shared/mocks/data";
 import { useCurrency } from "@/CurrencyContext";
 
 interface ReviewConfirmProps {

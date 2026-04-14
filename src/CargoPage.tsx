@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Truck, Plane, Ship, Package as PackageIcon, Search, ArrowRight, Calculator, MapPin, Weight, Box, ChevronDown } from "lucide-react";
+import {
+  Truck,
+  Plane,
+  Ship,
+  Package as PackageIcon,
+  Search,
+  ArrowRight,
+  Calculator,
+  MapPin,
+  Weight,
+  Box,
+  ChevronDown,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
-import { AIRPORTS } from "./shared/mocks/data";
+import { AIRPORTS } from "./components/shared/mocks/data";
 import { useEffect } from "react";
 
 export function CargoPage({ initialData }: { initialData?: any }) {
@@ -25,7 +37,7 @@ export function CargoPage({ initialData }: { initialData?: any }) {
       if (initialData.origin) setCalcOrigin(initialData.origin);
       if (initialData.destination) setCalcDest(initialData.destination);
       if (initialData.weight) setCalcWeight(initialData.weight);
-      
+
       // Map home cargo type to cargo page transport type
       let mappedType = "truck";
       if (initialData.type === "express") mappedType = "plane";
@@ -35,7 +47,7 @@ export function CargoPage({ initialData }: { initialData?: any }) {
       if (initialData.weight) {
         const w = parseFloat(initialData.weight);
         const mult = mappedType === "plane" ? 2.5 : 1;
-        const cost = 500 + (w * 15 * mult);
+        const cost = 500 + w * 15 * mult;
         setCalcResult(cost);
       }
     }
@@ -56,11 +68,15 @@ export function CargoPage({ initialData }: { initialData?: any }) {
     let mult = 1;
     if (calcType === "plane") mult = 2.5;
     if (calcType === "ship") mult = 0.5;
-    const cost = 500 + (w * 15 * mult) + (v * 50 * mult);
+    const cost = 500 + w * 15 * mult + v * 50 * mult;
     setCalcResult(cost);
   };
 
-  const services = t.raw("services") as Array<{ title: string; desc: string; icon: string }>;
+  const services = t.raw("services") as Array<{
+    title: string;
+    desc: string;
+    icon: string;
+  }>;
 
   const getIcon = (name: string) => {
     switch (name) {
@@ -79,13 +95,16 @@ export function CargoPage({ initialData }: { initialData?: any }) {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative py-24 bg-brand-primary overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80)" }}
+          style={{
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80)",
+          }}
         />
         <div className="absolute inset-0 bg-brand-primary/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/95 via-transparent to-transparent" />
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -94,8 +113,8 @@ export function CargoPage({ initialData }: { initialData?: any }) {
           >
             <Truck size={40} className="text-white" />
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -103,8 +122,8 @@ export function CargoPage({ initialData }: { initialData?: any }) {
           >
             {t("title")}
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -114,13 +133,16 @@ export function CargoPage({ initialData }: { initialData?: any }) {
           </motion.p>
 
           {/* Tracking Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="max-w-2xl mx-auto bg-white rounded-2xl p-4 shadow-xl"
           >
-            <form onSubmit={handleTrack} className="flex flex-col sm:flex-row gap-3">
+            <form
+              onSubmit={handleTrack}
+              className="flex flex-col sm:flex-row gap-3"
+            >
               <div className="relative flex-1">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <input
@@ -146,7 +168,7 @@ export function CargoPage({ initialData }: { initialData?: any }) {
       {/* Calculator Section */}
       <section className="py-20 bg-white border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -157,26 +179,35 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                 <Calculator className="h-7 w-7 text-brand-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">{t("calculatorTitle")}</h2>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {t("calculatorTitle")}
+                </h2>
                 <p className="text-sm text-gray-500 mt-1">{t("subtitle")}</p>
               </div>
             </div>
-            
+
             <form onSubmit={handleCalculate} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">{t("calcOrigin")}</label>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    {t("calcOrigin")}
+                  </label>
                   <div className="relative group">
                     <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
                     <select
                       value={calcOrigin}
-                      onChange={(e) => { setCalcOrigin(e.target.value); setCalcResult(null); }}
+                      onChange={(e) => {
+                        setCalcOrigin(e.target.value);
+                        setCalcResult(null);
+                      }}
                       required
                       className="w-full appearance-none rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
                     >
                       <option value="">{t("calcOrigin")}</option>
                       {AIRPORTS.map((a) => (
-                        <option key={a.code} value={a.code}>{a.city} ({a.code})</option>
+                        <option key={a.code} value={a.code}>
+                          {a.city} ({a.code})
+                        </option>
                       ))}
                     </select>
                     <ChevronDown className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -184,18 +215,25 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                 </div>
 
                 <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">{t("calcDest")}</label>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    {t("calcDest")}
+                  </label>
                   <div className="relative group">
                     <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
                     <select
                       value={calcDest}
-                      onChange={(e) => { setCalcDest(e.target.value); setCalcResult(null); }}
+                      onChange={(e) => {
+                        setCalcDest(e.target.value);
+                        setCalcResult(null);
+                      }}
                       required
                       className="w-full appearance-none rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
                     >
                       <option value="">{t("calcDest")}</option>
                       {AIRPORTS.map((a) => (
-                        <option key={a.code} value={a.code}>{a.city} ({a.code})</option>
+                        <option key={a.code} value={a.code}>
+                          {a.city} ({a.code})
+                        </option>
                       ))}
                     </select>
                     <ChevronDown className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -205,7 +243,9 @@ export function CargoPage({ initialData }: { initialData?: any }) {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">{t("calcWeight")}</label>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    {t("calcWeight")}
+                  </label>
                   <div className="relative group">
                     <Weight className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
                     <input
@@ -213,7 +253,10 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                       min="1"
                       required
                       value={calcWeight}
-                      onChange={(e) => { setCalcWeight(e.target.value); setCalcResult(null); }}
+                      onChange={(e) => {
+                        setCalcWeight(e.target.value);
+                        setCalcResult(null);
+                      }}
                       placeholder="100"
                       className="w-full rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
                     />
@@ -221,7 +264,9 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                 </div>
 
                 <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">{t("calcVol")}</label>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    {t("calcVol")}
+                  </label>
                   <div className="relative group">
                     <Box className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
                     <input
@@ -229,7 +274,10 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                       min="0"
                       step="0.1"
                       value={calcVol}
-                      onChange={(e) => { setCalcVol(e.target.value); setCalcResult(null); }}
+                      onChange={(e) => {
+                        setCalcVol(e.target.value);
+                        setCalcResult(null);
+                      }}
                       placeholder="1.5"
                       className="w-full rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
                     />
@@ -237,14 +285,23 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                 </div>
 
                 <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">{t("calcType")}</label>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    {t("calcType")}
+                  </label>
                   <div className="relative group">
-                    {calcType === "truck" ? <Truck className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" /> :
-                     calcType === "plane" ? <Plane className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" /> :
-                     <Ship className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" />}
+                    {calcType === "truck" ? (
+                      <Truck className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" />
+                    ) : calcType === "plane" ? (
+                      <Plane className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" />
+                    ) : (
+                      <Ship className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" />
+                    )}
                     <select
                       value={calcType}
-                      onChange={(e) => { setCalcType(e.target.value); setCalcResult(null); }}
+                      onChange={(e) => {
+                        setCalcType(e.target.value);
+                        setCalcResult(null);
+                      }}
                       className="w-full appearance-none rounded-xl border-2 border-gray-100 bg-white py-4 pl-12 pr-10 text-sm font-bold text-brand-primary focus:border-brand-primary focus:outline-none transition-all shadow-sm"
                     >
                       <option value="truck">{t("transportTypes.truck")}</option>
@@ -264,17 +321,21 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                   <Calculator className="h-5 w-5" />
                   {t("calcBtn")}
                 </button>
-                
+
                 {calcResult !== null && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="bg-gradient-to-r from-green-50 to-emerald-50 text-green-900 px-8 py-4 rounded-xl flex items-center gap-4 w-full md:w-auto shadow-sm border border-green-100"
                   >
-                    <span className="font-medium text-green-800">{t("calcResult")}:</span>
+                    <span className="font-medium text-green-800">
+                      {t("calcResult")}:
+                    </span>
                     <span className="text-3xl font-black flex items-center font-mono">
                       <CurrencySymbol className="h-6 w-6 mr-1" />
-                      {calcResult.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      {calcResult.toLocaleString(undefined, {
+                        maximumFractionDigits: 0,
+                      })}
                     </span>
                   </motion.div>
                 )}
@@ -283,7 +344,6 @@ export function CargoPage({ initialData }: { initialData?: any }) {
           </motion.div>
         </div>
       </section>
-
     </div>
   );
 }

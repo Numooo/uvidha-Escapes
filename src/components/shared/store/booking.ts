@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { FlightOffer, Hotel, Package, VisaRequirement } from "../../types";
+import type {
+  FlightOffer,
+  Hotel,
+  Package,
+  VisaRequirement,
+} from "../../../types";
 
 export type BookingType = "flight" | "hotel" | "package" | "visa";
 
@@ -19,7 +24,7 @@ interface BookingState {
   setBooking: (
     type: BookingType,
     item: FlightOffer | Hotel | Package | VisaRequirement,
-    metadata?: BookingMetadata
+    metadata?: BookingMetadata,
   ) => void;
   clearBooking: () => void;
 }
@@ -36,6 +41,6 @@ export const useBookingStore = create<BookingState>()(
     }),
     {
       name: "avia-booking-storage",
-    }
-  )
+    },
+  ),
 );

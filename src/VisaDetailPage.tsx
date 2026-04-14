@@ -21,8 +21,8 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
-import { Button } from "./shared/ui/button";
-import { Input } from "./shared/ui/input";
+import { Button } from "./components/shared/ui/button";
+import { Input } from "./components/shared/ui/input";
 import type { VisaRequirement } from "./types";
 
 interface VisaDetailPageProps {
@@ -40,7 +40,7 @@ export function VisaDetailPage({
   const { symbol, symbolText, CurrencyIcon, CurrencySymbol } = useCurrency();
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>(
-    "requirements"
+    "requirements",
   );
   const [enquiryData, setEnquiryData] = useState({
     name: "",
@@ -235,7 +235,7 @@ export function VisaDetailPage({
                   { label: t("fees.service"), amount: visa.price * 0.2 },
                   { label: t("fees.processing"), amount: visa.price * 0.1 },
                 ].map((item, idx) => (
-                   <div
+                  <div
                     key={idx}
                     className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
                   >
@@ -317,7 +317,7 @@ export function VisaDetailPage({
                 ].map((faq, idx) => (
                   <div key={idx} className="p-4 bg-gray-50 rounded-lg">
                     <h4 className="font-semibold text-gray-900 mb-2">
-                       {faq.q}
+                      {faq.q}
                     </h4>
                     <p className="text-gray-600 text-sm">{faq.a}</p>
                   </div>
@@ -332,7 +332,9 @@ export function VisaDetailPage({
               {/* Price Card */}
               <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
                 <div className="text-center mb-6">
-                  <p className="text-sm text-gray-600 mb-2">{t("fees.processing")}</p>
+                  <p className="text-sm text-gray-600 mb-2">
+                    {t("fees.processing")}
+                  </p>
                   <p className="text-4xl font-bold text-blue-600 flex items-center justify-center">
                     <CurrencySymbol className="h-8 w-8 mr-2" />
                     {visa.price.toLocaleString()}
@@ -380,7 +382,9 @@ export function VisaDetailPage({
 
               {/* Contact Card */}
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border border-blue-200 p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">{t("helpTitle")}</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">
+                  {t("helpTitle")}
+                </h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-3 text-gray-700">
                     <Phone className="h-4 w-4 text-blue-600" />
