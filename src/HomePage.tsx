@@ -2357,7 +2357,7 @@ function EventsBannerSlider({ onNavigate, onSearchFlights }: { onNavigate?: (p: 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-10">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 flex items-center gap-3">
-              <Trophy className="h-10 w-10 text-brand-primary" />
+              <Trophy className="h-15 w-15 text-blue-600 animate-pulse" />
               {t("Events.title")}
             </h2>
             <p className="text-lg text-gray-600">
@@ -2365,7 +2365,7 @@ function EventsBannerSlider({ onNavigate, onSearchFlights }: { onNavigate?: (p: 
             </p>
         </div>
 
-        <div className="relative h-[450px] md:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl group border border-gray-100">
+        <div className="relative h-[450px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl group border border-gray-100">
              <AnimatePresence mode="wait">
                  <motion.div
                     key={currentIndex}
