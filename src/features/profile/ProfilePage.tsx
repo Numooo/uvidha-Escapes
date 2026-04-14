@@ -109,6 +109,7 @@ export function ProfilePage() {
           fill
           className="object-cover opacity-20 mix-blend-luminosity"
           priority
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-brand-primary/90" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -392,6 +393,7 @@ export function ProfilePage() {
                                 alt={fav.title}
                                 fill
                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                sizes="(max-width: 768px) 100vw, 50vw"
                               />
                               <div className="absolute top-4 right-4 z-10">
                                 <button className="p-2 bg-white/80 backdrop-blur-md rounded-full text-red-500 shadow-sm hover:bg-white transition-colors">

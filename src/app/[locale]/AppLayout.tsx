@@ -9,6 +9,7 @@ import { useRouter, usePathname } from "@/i18n/routing";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userType, setUserType] = useState<"personal" | "corporate">("personal");
   const [isSidebarPinned, setIsSidebarPinned] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
@@ -21,8 +22,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         isSidebarPinned={isSidebarPinned}
         onToggleSidebar={() => setIsSidebarPinned(!isSidebarPinned)}
         isAuthenticated={isAuthenticated}
+        userType={userType}
         onLogout={() => setIsAuthenticated(false)}
-        onSignInSuccess={() => setIsAuthenticated(true)}
+        onSignInSuccess={(type) => {
+          setIsAuthenticated(true);
+          if (type) setUserType(type);
+        }}
         onNavigate={(page) => {
           if (page === "home") router.push("/");
           else router.push(`/${page}`);

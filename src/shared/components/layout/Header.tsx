@@ -51,13 +51,14 @@ const initialNotifications: Notification[] = [
 
 interface HeaderProps {
     onNavigate?: (
-        page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "profile"
+        page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "profile" | "corporate"
     ) => void;
     isSidebarPinned?: boolean;
     onToggleSidebar?: () => void;
     isAuthenticated?: boolean;
     onLogout?: () => void;
-    onSignInSuccess?: () => void;
+    onSignInSuccess?: (type?: "personal" | "corporate") => void;
+    userType?: "personal" | "corporate";
     currentPage?: string;
 }
 
@@ -68,6 +69,7 @@ export function Header({
                            isAuthenticated,
                            onLogout,
                            onSignInSuccess,
+                           userType,
                            currentPage: propCurrentPage
                        }: HeaderProps = {}) {
     const t = useTranslations("Header");
@@ -89,7 +91,7 @@ export function Header({
     const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
 
     const currentPage = propCurrentPage || pathname;
-    const isProfilePage = currentPage.includes("profile");
+    const isCabinetMode = currentPage.includes("profile") || currentPage.includes("corporate") || currentPage.includes("cabinet");
 
     const handleNavClick = (href: string, e: React.MouseEvent) => {
         if (onNavigate) {
@@ -101,7 +103,8 @@ export function Header({
                 | "holidays"
                 | "visa"
                 | "cargo"
-                | "profile";
+                | "profile"
+                | "corporate";
             onNavigate(page || "home");
         }
     };
@@ -130,7 +133,7 @@ export function Header({
                         {/* Left Side: Toggle & Logo */}
                         <div className="flex items-center gap-4">
                             {/* Sidebar Toggle Button (Desktop) */}
-                            {!isProfilePage && (
+                            {!isCabinetMode && (
                                 <button
                                     onClick={onToggleSidebar}
                                     className="hidden lg:flex items-center justify-center w-10 h-10 rounded-xl border border-white/20 bg-white/5 text-white hover:bg-white/10 transition-all shadow-sm"
@@ -337,35 +340,39 @@ export function Header({
                                                 exit={{opacity: 0, y: -10}}
                                                 className="absolute right-0 mt-2 w-64 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden py-1"
                                             >
-                                                <button
-                                                    onClick={() => {
-                                                        if (onNavigate) {
-                                                            onNavigate("profile");
-                                                        } else {
-                                                            router.push("/profile");
-                                                        }
-                                                        setUserDropdownOpen(false);
-                                                    }}
-                                                    className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                                                >
-                                                    <User size={16} className="text-gray-400"/>
-                                                    <span>{t("myCabinet")}</span>
-                                                </button>
+                                                {(userType === "personal" || !userType) && (
+                                                    <button
+                                                        onClick={() => {
+                                                            if (onNavigate) {
+                                                                onNavigate("profile");
+                                                            } else {
+                                                                router.push("/profile");
+                                                            }
+                                                            setUserDropdownOpen(false);
+                                                        }}
+                                                        className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                                                    >
+                                                        <User size={16} className="text-gray-400"/>
+                                                        <span>{t("myCabinet")}</span>
+                                                    </button>
+                                                )}
 
-                                                <button
-                                                    onClick={() => {
-                                                        if (onNavigate) {
-                                                            onNavigate("corporate");
-                                                        } else {
-                                                            router.push("/corporate");
-                                                        }
-                                                        setUserDropdownOpen(false);
-                                                    }}
-                                                    className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                                                >
-                                                    <Building2 size={16} className="text-gray-400"/>
-                                                    <span>{tCorp("title")}</span>
-                                                </button>
+                                                {userType === "corporate" && (
+                                                    <button
+                                                        onClick={() => {
+                                                            if (onNavigate) {
+                                                                onNavigate("corporate");
+                                                            } else {
+                                                                router.push("/corporate");
+                                                            }
+                                                            setUserDropdownOpen(false);
+                                                        }}
+                                                        className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                                                    >
+                                                        <Building2 size={16} className="text-gray-400"/>
+                                                        <span>{tCorp("title")}</span>
+                                                    </button>
+                                                )}
 
                                                 <div className="h-px bg-gray-100 my-1"/>
 
@@ -423,7 +430,7 @@ export function Header({
                             )}
 
                             {/* Mobile Menu Button */}
-                            {!isProfilePage && (
+                            {!isCabinetMode && (
                                 <button
                                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                                     className="lg:hidden rounded-lg p-2 text-white hover:bg-white/10 transition-colors"
@@ -440,7 +447,7 @@ export function Header({
 
                     {/* Mobile Menu (Оставлен без изменений) */}
                     <AnimatePresence>
-                        {mobileMenuOpen && !isProfilePage && (
+                        {mobileMenuOpen && !isCabinetMode && (
                             <motion.div
                                 initial={{height: 0, opacity: 0}}
                                 animate={{height: "auto", opacity: 1}}

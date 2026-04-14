@@ -36,7 +36,6 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
     { id: "trains", icon: Train, label: t("Search.tabs.trains") },
     { id: "cargo", icon: Truck, label: t("Search.tabs.cargo") },
     { id: "status", icon: Activity, label: t("Search.tabs.status") },
-    { id: "corporate", icon: Building2, label: t("Corporate.title") },
   ];
 
   const bottomItems = [

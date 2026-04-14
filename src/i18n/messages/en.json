@@ -815,6 +815,12 @@
     "enquiryDesc": "Get expert guidance for your visa application",
     "itemsCount": "{count} items",
     "day": "Day {count}",
+    "bookNow": "Apply Now",
+    "labels": {
+      "perApplicant": "per applicant",
+      "workingHours": "Mon-Fri: 09:00 - 18:00"
+    },
+    "helpTitle": "Need Help?",
     "fees": {
       "embassy": "Embassy Fee",
       "service": "Service Charge",
@@ -827,7 +833,39 @@
       "phone": "Phone Number",
       "travelDate": "Travel Date",
       "message": "Message",
-      "submit": "Send Enquiry"
+      "submit": "Send Enquiry",
+      "cancel": "Cancel"
+    },
+    "timeline": {
+      "step1": { "title": "Application Submission", "desc": "Submit your application with all required documents" },
+      "step2": { "title": "Document Verification", "desc": "Our team verifies all documents for completeness" },
+      "step3": { "title": "Embassy Submission", "desc": "Application forwarded to embassy/consulate" },
+      "step4": { "title": "Processing", "desc": "Embassy processes your visa application" },
+      "step5": { "title": "Visa Issuance", "desc": "Approved visa sent to your email" }
+    },
+    "info": {
+      "approval": { "title": "Visa Approval", "desc": "Visa approval is at the discretion of the embassy. We assist with documentation but cannot guarantee approval." },
+      "validity": { "title": "Passport Validity", "desc": "Your passport must be valid for at least 6 months beyond your intended stay." },
+      "format": { "title": "Document Format", "desc": "All documents should be clear scanned copies in PDF format, not exceeding 2MB per file." },
+      "delivery": { "title": "Visa Delivery", "desc": "Approved visa will be sent to your registered email address. Physical stamps may require passport submission." }
+    },
+    "trust": {
+      "expertAssistance": "Expert visa assistance",
+      "verification": "Document verification",
+      "tracking": "24/7 application tracking",
+      "secure": "Secure payment",
+      "secureTitle": "Secure & Trusted",
+      "stats": "10,000+ visas processed successfully"
+    },
+    "faqsList": [
+      { "q": "Can I track my visa application?", "a": "Yes, once submitted, you'll receive a tracking ID to monitor your application status in real-time." },
+      { "q": "What if my visa gets rejected?", "a": "Embassy fees are non-refundable, but our service charges can be used towards a reapplication within 6 months." },
+      { "q": "Do I need to visit the embassy in person?", "a": "For most countries, biometrics or an interview may be required. We'll guide you through the process." },
+      { "q": "Can I expedite my visa processing?", "a": "Yes, expedited processing is available for select countries at additional cost. Contact us for details." }
+    ],
+    "labels": {
+      "perApplicant": "per applicant",
+      "workingHours": "Mon-Sat: 9:00 AM - 6:00 PM"
     }
   },
   "Airports": {
@@ -1452,6 +1490,17 @@
       "savings": "Quarterly Savings",
       "expenditureByDept": "Expenditure by Dept"
     },
+    "accountType": "Business Account",
+    "wallet": "Company Wallet",
+    "reports": {
+      "download": "Download Report",
+      "q2": "Q2 Report"
+    },
+    "efficiency": {
+      "title": "Efficiency Rating",
+      "savingsText": "Your company saved {amount} in Q2 by using Corporate Fare optimizations.",
+      "viewDetails": "View Savings Details"
+    },
     "employees": {
       "add": "Add Employee",
       "search": "Search employees...",
@@ -1471,8 +1520,26 @@
       "amount": "Amount",
       "status": "Status",
       "download": "Download PDF",
+      "downloadStatement": "Download Statement",
       "paid": "Paid",
-      "pending": "Pending"
+      "pending": "Pending",
+      "creditLine": "Credit Line",
+      "currentLimit": "Current Monthly Limit",
+      "limitUsage": "You have used {percent}% of your monthly credit line. Contact account manager to increase.",
+      "requestIncrease": "Request Increase"
+    },
+    "settings": {
+      "companyName": "Company Name",
+      "address": "Business Address",
+      "subscription": "Subscription Details",
+      "tier": "Tier",
+      "nextBilling": "Next Billing",
+      "manage": "Manage Subscription"
+    },
+    "bookings": {
+      "title": "Corporate Booking History",
+      "emptyState": "Detailed employee travel history and upcoming bookings will appear here.",
+      "searchNew": "Search New Corporate Trip"
     }
   }
 }

@@ -164,36 +164,11 @@ export function VisaDetailPage({
             >
               <div className="space-y-6">
                 {[
-                  {
-                    step: 1,
-                    title: "Application Submission",
-                    desc: "Submit your application with all required documents",
-                    duration: "Day 1",
-                  },
-                  {
-                    step: 2,
-                    title: "Document Verification",
-                    desc: "Our team verifies all documents for completeness",
-                    duration: "Day 1-2",
-                  },
-                  {
-                    step: 3,
-                    title: "Embassy Submission",
-                    desc: "Application forwarded to embassy/consulate",
-                    duration: "Day 3",
-                  },
-                  {
-                    step: 4,
-                    title: "Processing",
-                    desc: "Embassy processes your visa application",
-                    duration: `Day 4-${visa.processingTime.split("-")[0]}`,
-                  },
-                  {
-                    step: 5,
-                    title: "Visa Issuance",
-                    desc: "Approved visa sent to your email",
-                    duration: visa.processingTime,
-                  },
+                  { step: 1, duration: "Day 1" },
+                  { step: 2, duration: "Day 1-2" },
+                  { step: 3, duration: "Day 3" },
+                  { step: 4, duration: `Day 4-${visa.processingTime.split("-")[0]}` },
+                  { step: 5, duration: visa.processingTime },
                 ].map((item, idx) => (
                   <div key={idx} className="flex gap-4">
                     <div className="flex flex-col items-center">
@@ -268,23 +243,23 @@ export function VisaDetailPage({
               <div className="space-y-4">
                 <InfoItem
                   icon={Shield}
-                  title="Visa Approval"
-                  description="Visa approval is at the discretion of the embassy. We assist with documentation but cannot guarantee approval."
+                  title={t("info.approval.title")}
+                  description={t("info.approval.desc")}
                 />
                 <InfoItem
                   icon={Calendar}
-                  title="Passport Validity"
-                  description="Your passport must be valid for at least 6 months beyond your intended stay."
+                  title={t("info.validity.title")}
+                  description={t("info.validity.desc")}
                 />
                 <InfoItem
                   icon={Upload}
-                  title="Document Format"
-                  description="All documents should be clear scanned copies in PDF format, not exceeding 2MB per file."
+                  title={t("info.format.title")}
+                  description={t("info.format.desc")}
                 />
                 <InfoItem
                   icon={Download}
-                  title="Visa Delivery"
-                  description="Approved visa will be sent to your registered email address. Physical stamps may require passport submission."
+                  title={t("info.delivery.title")}
+                  description={t("info.delivery.desc")}
                 />
               </div>
             </CollapsibleSection>
@@ -297,24 +272,7 @@ export function VisaDetailPage({
               onToggle={() => toggleSection("faq")}
             >
               <div className="space-y-4">
-                {[
-                  {
-                    q: "Can I track my visa application?",
-                    a: "Yes, once submitted, you'll receive a tracking ID to monitor your application status in real-time.",
-                  },
-                  {
-                    q: "What if my visa gets rejected?",
-                    a: "Embassy fees are non-refundable, but our service charges can be used towards a reapplication within 6 months.",
-                  },
-                  {
-                    q: "Do I need to visit the embassy in person?",
-                    a: "For most countries, biometrics or an interview may be required. We'll guide you through the process.",
-                  },
-                  {
-                    q: "Can I expedite my visa processing?",
-                    a: "Yes, expedited processing is available for select countries at additional cost. Contact us for details.",
-                  },
-                ].map((faq, idx) => (
+                {(t.raw("faqsList") as any[]).map((faq, idx) => (
                   <div key={idx} className="p-4 bg-gray-50 rounded-lg">
                     <h4 className="font-semibold text-gray-900 mb-2">
                       {faq.q}
@@ -339,7 +297,7 @@ export function VisaDetailPage({
                     <CurrencySymbol className="h-8 w-8 mr-2" />
                     {visa.price.toLocaleString()}
                   </p>
-                  <p className="text-sm text-gray-500 mt-1">per applicant</p>
+                  <p className="text-sm text-gray-500 mt-1">{t("labels.perApplicant")}</p>
                 </div>
 
                 <div className="space-y-3 mb-6">
@@ -363,19 +321,19 @@ export function VisaDetailPage({
                 <div className="space-y-3 pt-6 border-t border-gray-200">
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-                    <span>Expert visa assistance</span>
+                    <span>{t("trust.expertAssistance")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-                    <span>Document verification</span>
+                    <span>{t("trust.verification")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-                    <span>24/7 application tracking</span>
+                    <span>{t("trust.tracking")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-gray-600">
                     <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-                    <span>Secure payment</span>
+                    <span>{t("trust.secure")}</span>
                   </div>
                 </div>
               </div>
@@ -396,7 +354,7 @@ export function VisaDetailPage({
                   </div>
                   <div className="flex items-start gap-3 text-gray-700">
                     <MapPin className="h-4 w-4 text-blue-600 mt-0.5" />
-                    <span>Mon-Sat: 9:00 AM - 6:00 PM</span>
+                    <span>{t("labels.workingHours")}</span>
                   </div>
                 </div>
               </div>
@@ -405,10 +363,10 @@ export function VisaDetailPage({
               <div className="bg-white rounded-2xl border border-gray-200 p-6 text-center">
                 <Shield className="h-12 w-12 text-green-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-gray-900 mb-2">
-                  Secure & Trusted
+                  {t("trust.secureTitle")}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  10,000+ visas processed successfully
+                  {t("trust.stats")}
                 </p>
               </div>
             </div>

@@ -414,7 +414,7 @@ export function HomePage({
             className="relative z-20 rounded-3xl bg-white/95 backdrop-blur-lg p-8 shadow-2xl border border-white/20"
           >
             {/* Tabs */}
-            <div className="mb-8 flex gap-2 border-b border-gray-200">
+            <div className="mb-8 flex w-full border-b border-gray-200 overflow-x-auto no-scrollbar">
               {[
                 {
                   id: "flights" as TabType,
@@ -457,18 +457,18 @@ export function HomePage({
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`relative flex items-center gap-2 px-6 py-4 text-sm font-semibold transition-all rounded-t-lg ${
+                    className={`relative flex-1 min-w-fit flex items-center justify-center gap-3 px-8 py-5 text-sm font-bold transition-all ${
                       activeTab === tab.id
                         ? "text-brand-primary bg-brand-primary/5"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        : "text-gray-500 hover:text-brand-primary hover:bg-brand-primary/5"
                     }`}
                   >
-                    <Icon className="h-5 w-5" />
-                    <span>{tab.label}</span>
+                    <Icon className={`h-5 w-5 transition-transform duration-300 ${activeTab === tab.id ? "scale-110" : "group-hover:scale-110"}`} />
+                    <span className="whitespace-nowrap">{tab.label}</span>
                     {activeTab === tab.id && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-1 bg-brand-primary rounded-t"
+                        className="absolute bottom-0 left-0 right-0 h-1 bg-brand-primary"
                         transition={{
                           type: "spring",
                           stiffness: 500,
@@ -2263,7 +2263,7 @@ function FeaturedPackagesSection({ onNavigate }: FeaturedPackagesSectionProps) {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               className="group cursor-pointer h-full"
-              onClick={() => onNavigate?.("holidays")}
+              onClick={() => onNavigate?.(`/holidays/${pkg.id}`)}
             >
               <div className="relative h-full flex flex-col rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100">
                 {/* Image */}

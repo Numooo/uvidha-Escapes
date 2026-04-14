@@ -2,16 +2,18 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { X, Mail, Lock, Eye, EyeOff, User, Phone } from "lucide-react";
+import { useRouter } from "@/i18n/routing";
 
 interface SignInModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSignInSuccess?: () => void;
+  onSignInSuccess?: (type?: "personal" | "corporate") => void;
 }
 
 export function SignInModal({ isOpen, onClose, onSignInSuccess }: SignInModalProps) {
   const t = useTranslations("SignIn");
   const commonT = useTranslations("Common");
+  const router = useRouter();
   
   const [userType, setUserType] = useState<"personal" | "corporate">("personal");
   const [isSignUp, setIsSignUp] = useState(false);
@@ -28,8 +30,16 @@ export function SignInModal({ isOpen, onClose, onSignInSuccess }: SignInModalPro
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    onSignInSuccess?.();
+    onSignInSuccess?.(userType);
     onClose();
+    
+    // Navigate to the respective cabinet
+    if (userType === "corporate") {
+      router.push("/corporate");
+    } else {
+      router.push("/cabinet");
+    }
+    
     setFormData({ name: "", email: "", phone: "", password: "", corporateId: "", companyName: "" });
   };
 

@@ -21,7 +21,7 @@ import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Carousel } from "@/shared/ui/carousel";
-import { HotelDetailPage } from "./components/HotelDetailPage";
+import { useRouter } from "@/i18n/routing";
 import type { Hotel } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
@@ -55,10 +55,10 @@ interface HotelsPageProps {
 
 export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
   const t = useTranslations("Hotels");
+  const router = useRouter();
   const { symbol, symbolText, CurrencySymbol } = useCurrency();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [hotels] = useState<Hotel[]>(t.raw("mockData"));
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 25000]);
@@ -68,30 +68,6 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
   );
 
   // Show detail page if a hotel is selected
-  if (selectedHotel) {
-    return (
-      <HotelDetailPage
-        hotelData={selectedHotel}
-        onBack={() => setSelectedHotel(null)}
-        onBook={(
-          hotelId: string,
-          roomId?: string,
-          checkInDate?: string,
-          checkOutDate?: string,
-          rooms?: number,
-          guests?: number,
-        ) => {
-          // Trigger unified booking flow
-          onHotelSelect?.(selectedHotel, {
-            checkInDate,
-            checkOutDate,
-            rooms,
-            guests,
-          });
-        }}
-      />
-    );
-  }
 
   const handleSearch = () => {
     // Filter logic would go here
@@ -350,7 +326,7 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
                   hotel={hotel}
                   viewMode={viewMode}
                   index={index}
-                  onSelect={() => setSelectedHotel(hotel)}
+                  onSelect={() => router.push(`/hotels/${hotel.id}`)}
                 />
               ))}
             </div>
@@ -378,10 +354,9 @@ function HotelCard({ hotel, viewMode, index, onSelect }: HotelCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className={`bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all cursor-pointer group ${
+      className={`bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all group ${
         viewMode === "list" ? "grid grid-cols-12 gap-0" : ""
       }`}
-      onClick={() => onSelect?.()}
     >
       {/* Image Gallery */}
       <div className={viewMode === "list" ? "col-span-4" : ""}>
@@ -392,6 +367,7 @@ function HotelCard({ hotel, viewMode, index, onSelect }: HotelCardProps) {
           />
           <button
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               setIsFavorite(!isFavorite);
             }}
@@ -412,7 +388,10 @@ function HotelCard({ hotel, viewMode, index, onSelect }: HotelCardProps) {
       </div>
 
       {/* Content */}
-      <div className={`p-6 ${viewMode === "list" ? "col-span-8" : ""}`}>
+      <div
+        className={`p-6 cursor-pointer ${viewMode === "list" ? "col-span-8" : ""}`}
+        onClick={() => onSelect?.()}
+      >
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">

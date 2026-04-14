@@ -11,13 +11,17 @@ interface CarouselProps {
 export function Carousel({ images, alt = 'Carousel image', className = '' }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const goToPrevious = () => {
+  const goToPrevious = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
-  const goToNext = () => {
+  const goToNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
@@ -35,6 +39,7 @@ export function Carousel({ images, alt = 'Carousel image', className = '' }: Car
           alt={`${alt} ${currentIndex + 1}`}
           fill
           className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
 
@@ -63,7 +68,11 @@ export function Carousel({ images, alt = 'Carousel image', className = '' }: Car
             {images.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentIndex(index)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrentIndex(index);
+                }}
                 className={`w-2 h-2 rounded-full transition-all duration-200 ${
                   index === currentIndex
                     ? 'bg-white w-6'

@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
-import { VisaDetailPage } from "./components/VisaDetailPage";
+import { useRouter } from "@/i18n/routing";
 import type { VisaRequirement } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
@@ -28,12 +28,10 @@ interface VisaPageProps {
 
 export function VisaPage({ onVisaSelect }: VisaPageProps) {
   const t = useTranslations("Visa");
+  const router = useRouter();
   const { symbol, CurrencyIcon } = useCurrency();
   const [visas] = useState<VisaRequirement[]>(t.raw("mockData"));
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedVisa, setSelectedVisa] = useState<VisaRequirement | null>(
-    null,
-  );
 
   const filteredVisas = searchQuery
     ? visas.filter((visa) =>
@@ -42,21 +40,9 @@ export function VisaPage({ onVisaSelect }: VisaPageProps) {
     : visas;
 
   const handleApply = (visa: VisaRequirement) => {
-    setSelectedVisa(visa);
+    router.push(`/visa/${visa.id}`);
   };
 
-  // Show detail page if a visa is selected
-  if (selectedVisa) {
-    return (
-      <VisaDetailPage
-        visa={selectedVisa}
-        onBack={() => setSelectedVisa(null)}
-        onStartApplication={(visa) => {
-          onVisaSelect?.(visa);
-        }}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">

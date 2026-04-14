@@ -12,7 +12,7 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { Badge } from "@/shared/ui/badge";
-import { PackageDetailPage } from "./components/PackageDetailPage";
+import { useRouter } from "@/i18n/routing";
 import type { Package } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
@@ -49,10 +49,10 @@ interface HolidaysPageProps {
 
 export function HolidaysPage({ onPackageSelect }: HolidaysPageProps) {
   const t = useTranslations("Holidays");
+  const router = useRouter();
   const { symbol, CurrencyIcon } = useCurrency();
   const [packages] = useState<Package[]>(t.raw("mockData"));
   const [activeTheme, setActiveTheme] = useState("All");
-  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
 
   // Filter packages by theme
   const filteredPackages =
@@ -60,20 +60,6 @@ export function HolidaysPage({ onPackageSelect }: HolidaysPageProps) {
       ? packages
       : packages.filter((pkg) => pkg.theme?.includes(activeTheme));
 
-  // Show detail page if a package is selected
-  if (selectedPackage) {
-    return (
-      <PackageDetailPage
-        packageData={selectedPackage}
-        onBack={() => setSelectedPackage(null)}
-        onBook={() => {
-          if (onPackageSelect) {
-            onPackageSelect(selectedPackage, { guests: 2 }); // Default 2 guests, can be made dynamic
-          }
-        }}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -143,7 +129,7 @@ export function HolidaysPage({ onPackageSelect }: HolidaysPageProps) {
               key={pkg.id}
               package={pkg}
               index={index}
-              onSelect={() => setSelectedPackage(pkg)}
+              onSelect={() => router.push(`/holidays/${pkg.id}`)}
             />
           ))}
         </div>

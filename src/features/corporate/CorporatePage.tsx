@@ -98,6 +98,7 @@ export default function CorporatePage() {
           fill
           className="object-cover opacity-10 mix-blend-luminosity"
           priority
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-brand-primary/80 to-brand-primary" />
         
@@ -117,10 +118,7 @@ export default function CorporatePage() {
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
                 <span className="px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-black uppercase tracking-widest border border-white/20 backdrop-blur-sm">
-                  Business Account
-                </span>
-                <span className="px-3 py-1 rounded-full bg-brand-accent/20 text-brand-accent text-[10px] font-black uppercase tracking-widest border border-brand-accent/30">
-                  Premium Tier
+                  {t("accountType")}
                 </span>
               </div>
               <h1 className="text-4xl font-black text-white mb-2">Uvidha Tech Solutions</h1>
@@ -131,7 +129,7 @@ export default function CorporatePage() {
 
             <div className="md:ml-auto flex gap-4">
               <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl text-white">
-                <div className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">Company Wallet</div>
+                <div className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">{t("wallet")}</div>
                 <div className="text-2xl font-black flex items-center gap-1">
                    <CurrencySymbol className="h-5 w-5" /> 12,850.00
                 </div>
@@ -190,7 +188,7 @@ export default function CorporatePage() {
                       <div className="flex items-center justify-between">
                         <h2 className="text-2xl font-black text-gray-900">{t("tabs.dashboard")}</h2>
                         <button className="flex items-center gap-2 text-sm font-bold text-brand-primary bg-brand-primary/5 px-4 py-2 rounded-xl">
-                          <Download size={16} /> Q2 Report
+                          <Download size={16} /> {t("reports.q2")}
                         </button>
                       </div>
 
@@ -251,10 +249,10 @@ export default function CorporatePage() {
                           <div className="w-20 h-20 bg-brand-accent/20 rounded-full flex items-center justify-center mb-6">
                              <TrendingUp size={40} className="text-brand-primary" />
                           </div>
-                          <h3 className="text-xl font-black text-gray-900 mb-2">Efficiency Rating: 94%</h3>
-                          <p className="text-sm text-gray-500 max-w-xs">Your company saved 3.4k in Q2 by using Corporate Fare optimizations.</p>
+                          <h3 className="text-xl font-black text-gray-900 mb-2">{t("efficiency.title")}: 94%</h3>
+                          <p className="text-sm text-gray-500 max-w-xs">{t("efficiency.savingsText", { amount: "3.4k" })}</p>
                           <button className="mt-6 px-6 py-2.5 bg-brand-primary text-white font-bold rounded-xl text-sm shadow-lg shadow-brand-primary/20">
-                            View Savings Details
+                            {t("efficiency.viewDetails")}
                           </button>
                         </div>
                       </div>
@@ -341,7 +339,7 @@ export default function CorporatePage() {
                         <div className="flex items-center justify-between">
                           <h2 className="text-2xl font-black text-gray-900">{t("tabs.billing")}</h2>
                           <button className="px-6 py-2.5 bg-brand-primary/5 text-brand-primary font-bold rounded-xl text-sm border border-brand-primary/10 transition-all hover:bg-brand-primary/10">
-                            Download Statement
+                            {t("billing.downloadStatement")}
                           </button>
                         </div>
 
@@ -372,20 +370,20 @@ export default function CorporatePage() {
                              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16" />
                              <div className="relative z-10 space-y-6">
                                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] opacity-60">
-                                 <Plus className="h-3 w-3" /> Credit Line
+                                 <Plus className="h-3 w-3" /> {t("billing.creditLine")}
                                </div>
                                <div>
                                  <div className="text-3xl font-black mb-1 flex items-center gap-1">
                                    <CurrencySymbol className="h-6 w-6" /> 50,000
                                  </div>
-                                 <div className="text-xs text-white/50">Current Monthly Limit</div>
+                                 <div className="text-xs text-white/50">{t("billing.currentLimit")}</div>
                                </div>
                                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                                  <div className="h-full w-3/4 bg-brand-accent rounded-full shadow-[0_0_12px_rgba(255,188,0,0.4)]" />
                                </div>
-                               <p className="text-xs text-white/60 leading-relaxed font-medium">You have used 72% of your monthly credit line. Contact account manager to increase.</p>
+                               <p className="text-xs text-white/60 leading-relaxed font-medium">{t("billing.limitUsage", { percent: 72 })}</p>
                                <button className="w-full py-3 bg-white text-brand-primary font-bold rounded-xl text-sm hover:bg-brand-accent transition-all">
-                                 Request Increase
+                                 {t("billing.requestIncrease")}
                                </button>
                              </div>
                           </div>
@@ -400,31 +398,31 @@ export default function CorporatePage() {
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                           <div className="space-y-6">
                              <div>
-                               <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Company Name</label>
+                               <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">{t("settings.companyName")}</label>
                                <input type="text" value="Uvidha Tech Solutions" disabled className="w-full bg-gray-50 border border-gray-100 p-3 rounded-xl text-sm font-bold text-gray-900" />
                              </div>
                              <div>
-                               <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Business Address</label>
+                               <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">{t("settings.address")}</label>
                                <textarea disabled defaultValue={"123 Business Ave, Tech Park B4\nBishkek, 720000\nKyrgyzstan"} className="w-full bg-gray-50 border border-gray-100 p-3 rounded-xl text-sm font-medium text-gray-900 h-24" />
                              </div>
                           </div>
                           <div className="space-y-6">
                              <div className="bg-blue-50/50 p-6 rounded-3xl border border-blue-100">
                                <h4 className="text-sm font-black text-blue-900 mb-4 flex items-center gap-2">
-                                 <Users size={16} /> Subscription Details
+                                 <Users size={16} /> {t("settings.subscription")}
                                </h4>
                                <div className="space-y-3">
                                  <div className="flex justify-between text-xs font-bold">
-                                   <span className="text-blue-700/60">Tier:</span>
+                                   <span className="text-blue-700/60">{t("settings.tier")}:</span>
                                    <span className="text-blue-900">Corporate Premium</span>
                                  </div>
                                  <div className="flex justify-between text-xs font-bold">
-                                   <span className="text-blue-700/60">Next Billing:</span>
+                                   <span className="text-blue-700/60">{t("settings.nextBilling")}:</span>
                                    <span className="text-blue-900">May 15, 2026</span>
                                  </div>
                                </div>
                                <button className="w-full mt-6 py-2.5 bg-blue-600 text-white font-bold rounded-xl text-xs">
-                                 Manage Subscription
+                                 {t("settings.manage")}
                                </button>
                              </div>
                           </div>
@@ -438,10 +436,10 @@ export default function CorporatePage() {
                       <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
                         <Briefcase size={40} className="text-gray-300" />
                       </div>
-                      <h3 className="text-xl font-black text-gray-900 mb-2">Corporate Booking History</h3>
-                      <p className="text-sm text-gray-500 max-w-sm">Detailed employee travel history and upcoming bookings will appear here.</p>
+                      <h3 className="text-xl font-black text-gray-900 mb-2">{t("bookings.title")}</h3>
+                      <p className="text-sm text-gray-500 max-w-sm">{t("bookings.emptyState")}</p>
                       <button className="mt-8 px-8 py-3 bg-brand-primary text-white font-bold rounded-xl text-sm shadow-xl shadow-brand-primary/20">
-                        Search New Corporate Trip
+                        {t("bookings.searchNew")}
                       </button>
                     </div>
                   )}

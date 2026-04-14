@@ -24,12 +24,20 @@ export function LocationMap({
   const mapInstanceRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
+    let isMounted = true;
 
-    // Dynamic import to avoid SSR issues
     const initMap = async () => {
+      if (!mapRef.current) return;
+
       const L = (await import("leaflet")).default;
+      if (!isMounted) return;
+
       await import("leaflet/dist/leaflet.css");
+      if (!isMounted) return;
+
+      // Check if map is already initialized on this container
+      const container = mapRef.current;
+      if (!container || (container as any)._leaflet_id) return;
 
       // Fix default icon paths broken by webpack
       delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -41,7 +49,7 @@ export function LocationMap({
           "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
       });
 
-      const map = L.map(mapRef.current!, {
+      const map = L.map(container, {
         scrollWheelZoom: false,
         zoomControl: true,
         attributionControl: true,
@@ -95,12 +103,17 @@ export function LocationMap({
       mapInstanceRef.current = map;
 
       // Force resize after mount
-      setTimeout(() => map.invalidateSize(), 100);
+      setTimeout(() => {
+        if (isMounted && mapInstanceRef.current) {
+          mapInstanceRef.current.invalidateSize();
+        }
+      }, 100);
     };
 
     initMap();
 
     return () => {
+      isMounted = false;
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
