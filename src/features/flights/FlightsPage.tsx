@@ -10,7 +10,7 @@ import {
   MOCK_FLIGHTS,
   formatCurrency,
   getAirportLabel,
-} from "../../components/shared/mocks/data";
+} from "@/shared/mocks/data";
 import { useTranslations } from "next-intl";
 
 interface SearchParams {

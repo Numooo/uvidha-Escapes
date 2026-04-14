@@ -12,7 +12,7 @@ import type { FlightOffer } from "../../types";
 import {
   formatCurrency,
   getAirportLabel,
-} from "../../components/shared/mocks/data";
+} from "@/shared/mocks/data";
 import { useTranslations, useLocale } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 

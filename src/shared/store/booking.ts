@@ -5,7 +5,7 @@ import type {
   Hotel,
   Package,
   VisaRequirement,
-} from "../../../types";
+} from "@/types";
 
 export type BookingType = "flight" | "hotel" | "package" | "visa";
 

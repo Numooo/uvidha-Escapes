@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { FlightsPage } from "@/features/flights/FlightsPage";
-import { useBookingStore } from "@/components/shared/store/booking";
+import { useBookingStore } from "@/shared/store/booking";
 import { useRouter } from "@/i18n/routing";
 
 export default function FlightsRoute() {
