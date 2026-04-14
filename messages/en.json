@@ -1346,6 +1346,40 @@
     ],
     "viewAll": "More hot deals"
   },
+  "Events": {
+    "title": "Upcoming World Events",
+    "subtitle": "Book your tickets and hotels for the most exciting events around the globe",
+    "bookNow": "Book Now",
+    "items": [
+      {
+        "id": "wc2026",
+        "title": "FIFA World Cup Final 2026",
+        "location": "New York, USA",
+        "date": "July 19, 2026",
+        "description": "Experience the pinnacle of world football. Book your flight and hotel now to secure your spot!",
+        "image": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80",
+        "category": "Sport"
+      },
+      {
+        "id": "f1dubai",
+        "title": "Abu Dhabi Grand Prix",
+        "location": "Yas Marina Circuit, UAE",
+        "date": "December 6, 2026",
+        "description": "The season finale of Formula 1. Witness the speed and glamour in Abu Dhabi.",
+        "image": "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=1200&q=80",
+        "category": "Racing"
+      },
+      {
+        "id": "ucl",
+        "title": "Champions League Final",
+        "location": "Munich, Germany",
+        "date": "May 30, 2026",
+        "description": "The biggest night in European club football. Don't miss the chance to be there.",
+        "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&q=80",
+        "category": "Sport"
+      }
+    ]
+  },
   "Profile": {
     "title": "Personal Cabinet",
     "welcome": "Welcome",
