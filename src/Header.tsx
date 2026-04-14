@@ -1,5 +1,4 @@
 import React, { useState, useTransition } from "react";
-import Link from "next/link";
 import {
   Menu,
   X,
@@ -20,7 +19,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AITripPlanner } from "./AITripPlanner";
 import { SignInModal } from "./SignInModal";
 import { useTranslations, useLocale } from "next-intl";
-import { usePathname, useRouter, routing } from "@/i18n/routing";
+import { usePathname, useRouter, routing, Link } from "@/i18n/routing";
 import { useCurrency, CURRENCIES, CurrencyCode } from "@/CurrencyContext";
 import logo from "./app/logo1.png";
 import Image from "next/image";
@@ -34,25 +33,19 @@ interface NavItem {
 const currencies: CurrencyCode[] = ["KGS", "RUB", "USD", "EUR"];
 
 interface HeaderProps {
-  onNavigate?: (
-    page: "home" | "flights" | "hotels" | "holidays" | "visa" | "cargo" | "profile"
-  ) => void;
   isSidebarPinned?: boolean;
   onToggleSidebar?: () => void;
   isAuthenticated?: boolean;
   onLogout?: () => void;
   onSignInSuccess?: () => void;
-  currentPage?: string;
 }
 
 export function Header({ 
-  onNavigate, 
   isSidebarPinned, 
   onToggleSidebar,
   isAuthenticated,
   onLogout,
-  onSignInSuccess,
-  currentPage: propCurrentPage
+  onSignInSuccess
 }: HeaderProps = {}) {
   const t = useTranslations("Header");
   const locale = useLocale();
@@ -68,23 +61,7 @@ export function Header({
   const [signInOpen, setSignInOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  const currentPage = propCurrentPage || pathname;
-  const isProfilePage = currentPage.includes("profile");
-
-  const handleNavClick = (href: string, e: React.MouseEvent) => {
-    if (onNavigate) {
-      e.preventDefault();
-      const page = href.replace("/", "") as
-        | "home"
-        | "flights"
-        | "hotels"
-        | "holidays"
-        | "visa"
-        | "cargo"
-        | "profile";
-      onNavigate(page || "home");
-    }
-  };
+  const isProfilePage = pathname.includes("profile");
 
   const onLanguageChange = (nextLocale: string) => {
     startTransition(() => {
@@ -112,7 +89,6 @@ export function Header({
 
               <Link
                 href="/"
-                onClick={(e) => handleNavClick("/", e)}
                 className="flex items-center gap-2.5 group"
               >
                 <div className="relative flex h-12 min-w-[180px] items-center justify-start transition-all group-hover:scale-105">
@@ -271,7 +247,7 @@ export function Header({
                       >
                         <button
                           onClick={() => {
-                            onNavigate?.("profile");
+                            router.push('/profile');
                             setUserDropdownOpen(false);
                           }}
                           className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -333,17 +309,15 @@ export function Header({
                 <div className="space-y-1 pb-4 pt-2 border-t border-gray-100">
                   {/* For mobile, we might still want the links since the sidebar is hidden on small screens */}
                   {["flights", "hotels", "holidays", "visa", "cargo"].map((id) => (
-                    <button
-                      key={id}
-                      onClick={(e) => {
-                        onNavigate?.(id as any);
-                        setMobileMenuOpen(false);
-                      }}
-                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-base font-medium text-white/90 hover:bg-white/10 transition-colors"
-                    >
-                      <span className="text-white/40 uppercase font-bold text-xs">{id}</span>
-                      {t(id as any)}
-                    </button>
+                      <Link
+                        href={`/${id}`}
+                        key={id}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-base font-medium text-white/90 hover:bg-white/10 transition-colors"
+                      >
+                        <span className="text-white/40 uppercase font-bold text-xs">{id}</span>
+                        {t(id as any)}
+                      </Link>
                   ))}
 
                   {/* Mobile AI Trip Planner */}

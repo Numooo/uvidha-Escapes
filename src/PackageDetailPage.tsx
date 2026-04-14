@@ -25,7 +25,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import { LocationMap } from "./LocationMap";
-import { Badge } from "./primitives/badge";
+import { Badge } from "./shared/ui/badge";
 import { ImageModal } from "./ImageModal";
 import type { Package } from "./types";
 

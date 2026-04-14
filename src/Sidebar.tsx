@@ -13,15 +13,15 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { usePathname, Link } from "@/i18n/routing";
 
 interface SidebarProps {
-  activePage: string;
-  onNavigate: (page: any) => void;
   isPinned?: boolean;
 }
 
-export function Sidebar({ activePage, onNavigate, isPinned = true }: SidebarProps) {
+export function Sidebar({ isPinned = true }: SidebarProps) {
   const t = useTranslations();
+  const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
   
   const isExpanded = isPinned || isHovered;
@@ -54,11 +54,12 @@ export function Sidebar({ activePage, onNavigate, isPinned = true }: SidebarProp
       <div className="flex-1 py-8 overflow-y-auto no-scrollbar">
         <div className="px-4 space-y-2">
           {menuItems.map((item) => {
-            const isActive = activePage === item.id;
+            const path = item.id === "home" ? "/" : `/${item.id}`;
+            const isActive = pathname === path || (path !== "/" && pathname.startsWith(path));
             return (
-              <button
+              <Link
+                href={path}
                 key={item.id}
-                onClick={() => onNavigate(item.id)}
                 className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all group relative ${
                   isActive
                     ? "bg-brand-primary text-white shadow-[0_8px_16px_-4px_rgba(10,87,161,0.25)]"
@@ -101,7 +102,7 @@ export function Sidebar({ activePage, onNavigate, isPinned = true }: SidebarProp
                 )}
 
 
-              </button>
+              </Link>
             );
           })}
         </div>

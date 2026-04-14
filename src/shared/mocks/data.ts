@@ -1,5 +1,5 @@
 // Mock Data for Avia Travel Club
-import type { Airport, FlightOffer, Hotel, Package } from "./types";
+import type { Airport, FlightOffer, Hotel, Package } from "../../types";
 
 export const AIRPORTS: Airport[] = [
   { code: "FRU", city: "Bishkek", name: "Manas Intl" },

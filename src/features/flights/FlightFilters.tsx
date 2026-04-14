@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
-import type { FilterState } from "./types";
+import type { FilterState } from "../../types";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 

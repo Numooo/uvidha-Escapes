@@ -30,8 +30,8 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
-import { AIRPORTS } from "./data";
-import { Badge } from "./primitives/badge";
+import { AIRPORTS } from "./shared/mocks/data";
+import { Badge } from "./shared/ui/badge";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import type { Package } from "./types";

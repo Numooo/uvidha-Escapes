@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Truck, Plane, Ship, Package as PackageIcon, Search, ArrowRight, Calculator, MapPin, Weight, Box, ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
-import { AIRPORTS } from "./data";
+import { AIRPORTS } from "./shared/mocks/data";
 import { useEffect } from "react";
 
 export function CargoPage({ initialData }: { initialData?: any }) {

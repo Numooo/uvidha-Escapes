@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, SlidersHorizontal, X } from "lucide-react";
-import type { FlightOffer, FilterState } from "./types";
+import type { FlightOffer, FilterState } from "../../types";
 import { FlightFilters } from "./FlightFilters";
 import { FlightResultCard } from "./FlightResultCard";
 import { FlightCardSkeletonList } from "./FlightCardSkeleton";
 import { FiltersSkeleton } from "./FiltersSkeleton";
-import { MOCK_FLIGHTS, formatCurrency, getAirportLabel } from "./data";
+import { MOCK_FLIGHTS, formatCurrency, getAirportLabel } from "../../shared/mocks/data";
 import { useTranslations } from "next-intl";
 
 interface SearchParams {
