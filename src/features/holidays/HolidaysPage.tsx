@@ -78,14 +78,16 @@ export function HolidaysPage({ onPackageSelect }: HolidaysPageProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div
-        className="relative h-96 bg-cover bg-center flex items-center justify-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600')",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60" />
+      <div className="relative h-96 flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1660')",
+          }}
+        />
+        <div className="absolute inset-0 bg-brand-primary/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-primary/20" />
         <div className="relative z-10 text-center text-white px-6">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}

@@ -17,6 +17,7 @@ import {
     Instagram,
     Facebook,
     Bell,
+    Building2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AITripPlanner } from "./AITripPlanner";
@@ -70,6 +71,7 @@ export function Header({
                            currentPage: propCurrentPage
                        }: HeaderProps = {}) {
     const t = useTranslations("Header");
+    const tCorp = useTranslations("Corporate");
     const locale = useLocale();
     const pathname = usePathname();
     const router = useRouter();
@@ -337,13 +339,32 @@ export function Header({
                                             >
                                                 <button
                                                     onClick={() => {
-                                                        onNavigate?.("profile");
+                                                        if (onNavigate) {
+                                                            onNavigate("profile");
+                                                        } else {
+                                                            router.push("/profile");
+                                                        }
                                                         setUserDropdownOpen(false);
                                                     }}
                                                     className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                                                 >
                                                     <User size={16} className="text-gray-400"/>
                                                     <span>{t("myCabinet")}</span>
+                                                </button>
+
+                                                <button
+                                                    onClick={() => {
+                                                        if (onNavigate) {
+                                                            onNavigate("corporate");
+                                                        } else {
+                                                            router.push("/corporate");
+                                                        }
+                                                        setUserDropdownOpen(false);
+                                                    }}
+                                                    className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                                                >
+                                                    <Building2 size={16} className="text-gray-400"/>
+                                                    <span>{tCorp("title")}</span>
                                                 </button>
 
                                                 <div className="h-px bg-gray-100 my-1"/>

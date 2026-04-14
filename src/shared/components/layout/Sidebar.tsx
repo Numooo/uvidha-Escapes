@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Settings,
   HelpCircle,
+  Building2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -24,7 +25,7 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
   const t = useTranslations();
   const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const isExpanded = isPinned || isHovered;
 
   const menuItems = [
@@ -35,6 +36,7 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
     { id: "trains", icon: Train, label: t("Search.tabs.trains") },
     { id: "cargo", icon: Truck, label: t("Search.tabs.cargo") },
     { id: "status", icon: Activity, label: t("Search.tabs.status") },
+    { id: "corporate", icon: Building2, label: t("Corporate.title") },
   ];
 
   const bottomItems = [
@@ -45,7 +47,7 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
   return (
     <motion.div
       initial={false}
-      animate={{ 
+      animate={{
         width: isExpanded ? "260px" : "80px",
         backgroundColor: "rgba(255, 255, 255, 0.95)"
       }}
@@ -62,17 +64,15 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
               <Link
                 href={path}
                 key={item.id}
-                className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all group relative ${
-                  isActive
+                className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all group relative ${isActive
                     ? "bg-brand-primary text-white shadow-[0_8px_16px_-4px_rgba(10,87,161,0.25)]"
                     : "text-gray-500 hover:bg-brand-primary/5 hover:text-brand-primary"
-                }`}
+                  }`}
               >
                 <div className="relative flex items-center justify-center w-6 min-w-[24px]">
-                  <item.icon className={`h-5 w-5 flex-shrink-0 transition-all duration-300 ${
-                    isActive ? "text-white scale-110" : "text-gray-400 group-hover:text-brand-primary group-hover:scale-110"
-                  }`} />
-                  
+                  <item.icon className={`h-5 w-5 flex-shrink-0 transition-all duration-300 ${isActive ? "text-white scale-110" : "text-gray-400 group-hover:text-brand-primary group-hover:scale-110"
+                    }`} />
+
                   {isActive && (
                     <motion.div
                       layoutId="glow"
@@ -82,7 +82,7 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
                     />
                   )}
                 </div>
-                
+
                 <AnimatePresence mode="wait">
                   {isExpanded && (
                     <motion.span
@@ -96,7 +96,7 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
                     </motion.span>
                   )}
                 </AnimatePresence>
-                
+
                 {!isExpanded && (
                   <div className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-[11px] font-bold rounded-xl opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all pointer-events-none whitespace-nowrap z-50 shadow-xl border border-white/10 uppercase tracking-widest">
                     {item.label}

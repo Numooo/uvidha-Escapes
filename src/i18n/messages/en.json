@@ -1140,9 +1140,9 @@
       }
     },
     "durationOptions": {
+      "7": "1 week",
       "3-4": "3-4 days",
       "5-7": "5-7 days",
-      "7": "1 week",
       "10-14": "10-14 days"
     },
     "budgetOptions": {
@@ -1434,5 +1434,45 @@
       "activityChart": "Activity Chart"
     },
     "logout": "Logout"
+  },
+  "Corporate": {
+    "title": "Corporate Cabinet",
+    "welcome": "Welcome",
+    "tabs": {
+      "dashboard": "Dashboard",
+      "employees": "Employees",
+      "bookings": "Bookings",
+      "billing": "Billing & Invoices",
+      "settings": "Company Settings"
+    },
+    "stats": {
+      "totalSpent": "Total Spent",
+      "activeTravelers": "Active Travelers",
+      "monthlyBudget": "Monthly Budget",
+      "savings": "Quarterly Savings",
+      "expenditureByDept": "Expenditure by Dept"
+    },
+    "employees": {
+      "add": "Add Employee",
+      "search": "Search employees...",
+      "name": "Full Name",
+      "role": "Role",
+      "dept": "Dept",
+      "spent": "Spent",
+      "trips": "Trips",
+      "status": "Status",
+      "active": "Active",
+      "onTrip": "On Trip",
+      "inactive": "Inactive"
+    },
+    "billing": {
+      "invoiceId": "Invoice #",
+      "date": "Date",
+      "amount": "Amount",
+      "status": "Status",
+      "download": "Download PDF",
+      "paid": "Paid",
+      "pending": "Pending"
+    }
   }
 }
