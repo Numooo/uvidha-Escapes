@@ -13,8 +13,8 @@ import {
   CreditCard,
   IndianRupee,
 } from "lucide-react";
-import { Input } from "./primitives/input";
-import { Button } from "./primitives/button";
+import { Input } from "./shared/ui/input";
+import { Button } from "./shared/ui/button";
 import { VisaDetailPage } from "./VisaDetailPage";
 import type { VisaRequirement } from "./types";
 import { useTranslations } from "next-intl";
@@ -86,7 +86,7 @@ export function VisaPage({ onVisaSelect }: VisaPageProps) {
                 <Input
                   placeholder={t("searchPlaceholder")}
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e: any) => setSearchQuery(e.target.value)}
                   className="pl-12 h-14 text-lg bg-white"
                 />
               </div>
@@ -296,7 +296,7 @@ function VisaCard({ visa, index, onApply }: VisaCardProps) {
             </p>
           </div>
           <Button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               e.stopPropagation();
               onApply(visa);

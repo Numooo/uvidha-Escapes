@@ -17,8 +17,8 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
-import { Button } from "./primitives/button";
-import { Input } from "./primitives/input";
+import { Button } from "./shared/ui/button";
+import { Input } from "./shared/ui/input";
 import type { FlightOffer, Hotel, Package } from "./types";
 
 type BookingType = "flight" | "hotel" | "package";
@@ -363,7 +363,7 @@ export function UnifiedBookingFlow({
                           <Input
                             required
                             value={guestDetails.firstName}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setGuestDetails({
                                 ...guestDetails,
                                 firstName: e.target.value,
@@ -380,7 +380,7 @@ export function UnifiedBookingFlow({
                           <Input
                             required
                             value={guestDetails.lastName}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setGuestDetails({
                                 ...guestDetails,
                                 lastName: e.target.value,
@@ -401,7 +401,7 @@ export function UnifiedBookingFlow({
                             type="email"
                             required
                             value={guestDetails.email}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setGuestDetails({
                                 ...guestDetails,
                                 email: e.target.value,
@@ -419,7 +419,7 @@ export function UnifiedBookingFlow({
                             type="tel"
                             required
                             value={guestDetails.phone}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setGuestDetails({
                                 ...guestDetails,
                                 phone: e.target.value,
@@ -438,7 +438,7 @@ export function UnifiedBookingFlow({
                         <Input
                           required
                           value={guestDetails.address}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setGuestDetails({
                               ...guestDetails,
                               address: e.target.value,
@@ -457,7 +457,7 @@ export function UnifiedBookingFlow({
                           <Input
                             required
                             value={guestDetails.city}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setGuestDetails({
                                 ...guestDetails,
                                 city: e.target.value,
@@ -474,7 +474,7 @@ export function UnifiedBookingFlow({
                           <Input
                             required
                             value={guestDetails.zipCode}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setGuestDetails({
                                 ...guestDetails,
                                 zipCode: e.target.value,

@@ -21,8 +21,8 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
-import { Button } from "./primitives/button";
-import { Input } from "./primitives/input";
+import { Button } from "./shared/ui/button";
+import { Input } from "./shared/ui/input";
 import type { VisaRequirement } from "./types";
 
 interface VisaDetailPageProps {
@@ -456,7 +456,7 @@ export function VisaDetailPage({
                     <Input
                       required
                       value={enquiryData.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEnquiryData({ ...enquiryData, name: e.target.value })
                       }
                       placeholder="John Doe"
@@ -472,7 +472,7 @@ export function VisaDetailPage({
                       type="email"
                       required
                       value={enquiryData.email}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEnquiryData({
                           ...enquiryData,
                           email: e.target.value,
@@ -491,7 +491,7 @@ export function VisaDetailPage({
                       type="tel"
                       required
                       value={enquiryData.phone}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEnquiryData({
                           ...enquiryData,
                           phone: e.target.value,
@@ -509,7 +509,7 @@ export function VisaDetailPage({
                     <Input
                       type="date"
                       value={enquiryData.travelDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEnquiryData({
                           ...enquiryData,
                           travelDate: e.target.value,

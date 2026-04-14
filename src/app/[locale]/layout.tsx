@@ -19,6 +19,7 @@ const geistMono = Geist_Mono({
 
 import { getTranslations } from "next-intl/server";
 import logo from "../logo.png";
+import { AppLayout } from "./AppLayout";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = await params;
@@ -58,7 +59,7 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <CurrencyProvider>
-            {children}
+            <AppLayout>{children}</AppLayout>
           </CurrencyProvider>
         </NextIntlClientProvider>
       </body>

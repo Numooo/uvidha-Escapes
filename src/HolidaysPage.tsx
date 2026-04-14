@@ -11,7 +11,7 @@ import {
   Car,
   UtensilsCrossed,
 } from "lucide-react";
-import { Badge } from "./primitives/badge";
+import { Badge } from "./shared/ui/badge";
 import { PackageDetailPage } from "./PackageDetailPage";
 import type { Package } from "./types";
 import { useTranslations } from "next-intl";

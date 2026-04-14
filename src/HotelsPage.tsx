@@ -17,10 +17,10 @@ import {
   Heart,
   Calendar,
 } from "lucide-react";
-import { Input } from "./primitives/input";
-import { Button } from "./primitives/button";
-import { Badge } from "./primitives/badge";
-import { Carousel } from "./primitives/carousel";
+import { Input } from "./shared/ui/input";
+import { Button } from "./shared/ui/button";
+import { Badge } from "./shared/ui/badge";
+import { Carousel } from "./shared/ui/carousel";
 import { HotelDetailPage } from "./HotelDetailPage";
 import type { Hotel } from "./types";
 import { useTranslations } from "next-intl";
@@ -139,7 +139,7 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
                 <Input
                   placeholder={t("destinationPlaceholder")}
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e: any) => setSearchQuery(e.target.value)}
                   className="pl-10"
                 />
               </div>
@@ -521,7 +521,7 @@ function HotelCard({ hotel, viewMode, index, onSelect }: HotelCardProps) {
             <Button
               size="sm"
               className="gap-2 flex-1 sm:flex-initial"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 onSelect?.();
               }}

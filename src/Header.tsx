@@ -1,5 +1,4 @@
-import React, {useState, useTransition} from "react";
-import Link from "next/link";
+import React, { useState, useTransition } from "react";
 import {
     Menu,
     X,
@@ -19,12 +18,12 @@ import {
     Facebook,
     Bell,
 } from "lucide-react";
-import {motion, AnimatePresence} from "framer-motion";
-import {AITripPlanner} from "./AITripPlanner";
-import {SignInModal} from "./SignInModal";
-import {useTranslations, useLocale} from "next-intl";
-import {usePathname, useRouter, routing} from "@/i18n/routing";
-import {useCurrency, CURRENCIES, CurrencyCode} from "@/CurrencyContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { AITripPlanner } from "./AITripPlanner";
+import { SignInModal } from "./SignInModal";
+import { useTranslations, useLocale } from "next-intl";
+import { usePathname, useRouter, routing, Link } from "@/i18n/routing";
+import { useCurrency, CURRENCIES, CurrencyCode } from "@/CurrencyContext";
 import logo from "./app/logo1.png";
 import Image from "next/image";
 
@@ -279,14 +278,14 @@ export function Header({
                                                                 className={`h-4 w-4 ${code === selectedCurrency ? "text-brand-primary" : "text-gray-400"}`}/>
                                                             <span>{code}</span>
                                                             <span className="text-gray-400 text-xs flex items-center">
-                                (
-                                                                {typeof info.symbol === "string" ? (
-                                                                    info.symbol
-                                                                ) : (
-                                                                    <info.symbol className="h-2.5 w-2.5"/>
-                                                                )}
-                                                                )
-                              </span>
+                                 (
+                                                                 {typeof info.symbol === "string" ? (
+                                                                     info.symbol
+                                                                 ) : (
+                                                                     <info.symbol className="h-2.5 w-2.5"/>
+                                                                 )}
+                                                                 )
+                               </span>
                                                         </div>
                                                         {code === selectedCurrency && (
                                                             <div
