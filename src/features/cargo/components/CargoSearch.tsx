@@ -128,7 +128,7 @@ export function CargoSearch({ onSearch }: CargoSearchProps) {
       </div>
       <button
         onClick={handleSearch}
-        className="w-full rounded-xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+        className="w-full rounded-2xl bg-brand-primary py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-brand-secondary hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2"
       >
         <Truck className="h-5 w-5" />
         {t("Search.cargo.calculate")}

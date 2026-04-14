@@ -75,7 +75,7 @@ export function HotelSearch({ onSearch }: HotelSearchProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="relative">
           <label className="mb-1 block text-sm font-medium text-gray-700">
             {t("Search.hotels.guests")}
@@ -117,16 +117,15 @@ export function HotelSearch({ onSearch }: HotelSearchProps) {
             <ChevronDown className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>
         </div>
-
-        {/* Search Button */}
-        <button
-          onClick={handleSearch}
-          className="w-full rounded-xl bg-brand-primary py-4 text-white font-bold shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary transition-all flex items-center justify-center gap-3"
-        >
-          <Hotel className="h-5 w-5" />
-          {t("Search.hotels.search")}
-        </button>
       </div>
+
+      <button
+        onClick={handleSearch}
+        className="w-full rounded-2xl bg-brand-primary py-4 text-white font-bold shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary transition-all flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99]"
+      >
+        <Hotel className="h-5 w-5" />
+        {t("Search.hotels.search")}
+      </button>
     </div>
   );
 }

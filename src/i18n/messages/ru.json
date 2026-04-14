@@ -70,6 +70,8 @@
       "return": "Обратно",
       "date": "Дата",
       "travelers": "Пассажиры",
+      "passengers": "Пассажиры",
+      "passenger": "Пассажир",
       "search": "Найти поезда"
     },
     "hotels": {
@@ -94,11 +96,19 @@
       },
       "travelStart": "Начало поездки",
       "travelEnd": "Конец поездки",
+      "departure": "Начало поездки",
+      "budgets": {
+        "economy": "Бюджетный",
+        "medium": "Средний",
+        "luxury": "Люкс"
+      },
       "travelers": "Путешественники",
       "traveler": "Путешественник",
       "search": "Найти туры"
     },
     "visa": {
+      "country": "Страна назначения",
+      "countryPlaceholder": "Введите страну...",
       "destination": "Страна назначения",
       "selectCountry": "Выберите страну",
       "visaType": "Тип визы",
@@ -132,22 +142,29 @@
       "type": "Тип груза",
       "types": {
         "standard": "Стандартный",
+        "express": "Экспресс-доставка",
+        "perishable": "Скоропортящийся",
         "fragile": "Хрупкий",
         "hazardous": "Опасный",
         "refrigerated": "С темп. режимом"
       },
+      "calculate": "Рассчитать стоимость",
       "search": "Найти транспорт"
     },
     "status": {
       "searchByFlightNumber": "По номеру",
       "searchByRoute": "По маршруту",
+      "searchByDate": "По дате",
       "flightNumber": "Номер рейса",
       "flightNumberPlaceholder": "Напр., SU 123",
       "date": "Дата вылета",
       "checkStatus": "Проверить статус",
+      "search": "Найти рейс",
       "origin": "Откуда",
       "destination": "Куда",
-      "statusLabels": {
+      "departure": "Вылет",
+      "arrival": "Прилет",
+      "states": {
         "ontime": "По расписанию",
         "delayed": "Задержан",
         "cancelled": "Отменен",
@@ -162,7 +179,9 @@
       "depLabel": "Вылет",
       "arrLabel": "Прилёт",
       "fact": "факт.",
-      "searchByDate": "Все рейсы по дате",
+      "safety": "Безопасность",
+      "allFlightsTitle": "Все рейсы",
+      "flightsFound": "рейсов найдено",
       "airport": "Аэропорт",
       "flightListTitle": "Рейсы на",
       "tableHeaders": {
@@ -1043,6 +1062,22 @@
       "Необходимо удостоверение личности для всех участников",
       "Цены могут меняться в пик сезона"
     ]
+  },
+  "VisaDetail": {
+    "back": "Назад",
+    "bookNow": "Оформить сейчас",
+    "enquiryTitle": "Задать вопрос",
+    "helpTitle": "Нужна помощь?",
+    "thankYou": "Спасибо за ваш запрос! Мы свяжемся с вами в ближайшее время.",
+    "trust": {
+      "expertAssistance": "Помощь экспертов",
+      "verification": "Проверка документов",
+      "tracking": "Отслеживание статуса",
+      "secure": "Безопасная оплата"
+    },
+    "labels": {
+      "perApplicant": "за одного заявителя"
+    }
   },
   "AITripPlanner": {
     "title": "AI Планировщик туров",

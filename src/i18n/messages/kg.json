@@ -70,6 +70,8 @@
       "return": "Кайтуу",
       "date": "Күнү",
       "travelers": "Жүргүнчүлөр",
+      "passengers": "Жүргүнчүлөр",
+      "passenger": "Жүргүнчү",
       "search": "Поезд издөө"
     },
     "hotels": {
@@ -94,11 +96,19 @@
       },
       "travelStart": "Саякаттын башталышы",
       "travelEnd": "Саякаттын аягы",
+      "departure": "Саякаттын башталышы",
+      "budgets": {
+        "economy": "Үнөмдүү",
+        "medium": "Орточо",
+        "luxury": "Люкс"
+      },
       "travelers": "Саякатчылар",
       "traveler": "Саякатчы",
       "search": "Турларды издөө"
     },
     "visa": {
+      "country": "Бара турган өлкө",
+      "countryPlaceholder": "Өлкөнүн атын жазыңыз...",
       "destination": "Бара турган өлкө",
       "selectCountry": "Өлкөнү тандаңыз",
       "visaType": "Визанын түрү",
@@ -132,49 +142,41 @@
       "type": "Жүктүн түрү",
       "types": {
         "standard": "Стандарттык",
+        "express": "Экспресс-жеткирүү",
+        "perishable": "Тез бузулуучу",
         "fragile": "Морт (назик)",
         "hazardous": "Кооптуу",
         "refrigerated": "Темп. режими менен"
       },
+      "calculate": "Баасын эсептөө",
       "search": "Транспорт издөө"
     },
     "status": {
       "searchByFlightNumber": "Номери боюнча",
       "searchByRoute": "Маршрут боюнча",
+      "searchByDate": "Күнү боюнча",
       "flightNumber": "Рейстин номери",
       "flightNumberPlaceholder": "Мис., SU 123",
       "date": "Учуу күнү",
       "checkStatus": "Статусту текшерүү",
+      "search": "Рейсти издөө",
       "origin": "Кайдан",
       "destination": "Кайда",
-      "statusLabels": {
+      "departure": "Учуу",
+      "arrival": "Келүү",
+      "terminal": "Терминал",
+      "gate": "Чыгуу (Гейт)",
+      "baggage": "Жүктү берүү",
+      "safety": "Коопсуздук",
+      "allFlightsTitle": "Бардык каттамдар",
+      "flightsFound": "рейс табылды",
+      "states": {
         "ontime": "Өз убагында",
         "delayed": "Кечигүүдө",
         "cancelled": "Токтотулду",
         "enroute": "Абада",
         "landed": "Конду"
-      },
-      "terminal": "Терминал",
-      "gate": "Гейт",
-      "scheduled": "План боюнча",
-      "estimated": "Күтүлүүдө",
-      "baggage": "Жүктү берүү",
-      "depLabel": "Учуу",
-      "arrLabel": "Конду",
-      "fact": "факт.",
-      "searchByDate": "Күн боюнча бардык рейстер",
-      "airport": "Аэропорт",
-      "flightListTitle": "Рейстер:",
-      "tableHeaders": {
-        "flight": "Рейс",
-        "route": "Маршрут",
-        "departure": "Учуу",
-        "arrival": "Конду",
-        "status": "Статус"
-      },
-      "prev": "Артка",
-      "next": "Алга",
-      "showing": "{total} рейстин ичинен {from}-{to} көрсөтүлдү"
+      }
     }
   },
   "Featured": {
@@ -1043,6 +1045,22 @@
       "Бардык катышуучулар үчүн инсандыкты тастыктаган документ керек",
       "Баалар сезондун кызуу учурунда өзгөрүшү мүмкүн"
     ]
+  },
+  "VisaDetail": {
+    "back": "Артка",
+    "bookNow": "Азыр тапшыруу",
+    "enquiryTitle": "Суроо берүү",
+    "helpTitle": "Жардам керекпи?",
+    "thankYou": "Сурооңуз үчүн рахмат! Биз сиз менен жакында байланышабыз.",
+    "trust": {
+      "expertAssistance": "Эксперттик жардам",
+      "verification": "Документтерди текшерүү",
+      "tracking": "Статусту көзөмөлдөө",
+      "secure": "Коопсуз төлөм"
+    },
+    "labels": {
+      "perApplicant": "бир өтүнмө ээси үчүн"
+    }
   },
   "AITripPlanner": {
     "title": "AI Тур планировщиги",

@@ -70,6 +70,8 @@
       "return": "Return",
       "date": "Date",
       "travelers": "Travelers",
+      "passengers": "Passengers",
+      "passenger": "Passenger",
       "search": "Search Trains"
     },
     "hotels": {
@@ -94,11 +96,19 @@
       },
       "travelStart": "Travel Start",
       "travelEnd": "Travel End",
+      "departure": "Departure",
+      "budgets": {
+        "economy": "Budget",
+        "medium": "Mid-Range",
+        "luxury": "Luxury"
+      },
       "travelers": "Travelers",
       "traveler": "Traveler",
       "search": "Search Holiday Packages"
     },
     "visa": {
+      "country": "Destination Country",
+      "countryPlaceholder": "Enter country name...",
       "destination": "Destination Country",
       "selectCountry": "Select Country",
       "visaType": "Visa Type",
@@ -132,52 +142,44 @@
       "type": "Cargo Type",
       "types": {
         "standard": "Standard",
+        "express": "Express Shipping",
+        "perishable": "Perishable",
         "fragile": "Fragile",
         "hazardous": "Hazardous",
         "refrigerated": "Refrigerated"
       },
+      "calculate": "Calculate Price",
       "search": "Find Transport"
     },
     "status": {
       "searchByFlightNumber": "By Flight Number",
       "searchByRoute": "By Route",
+      "searchByDate": "By Date",
       "flightNumber": "Flight Number",
       "flightNumberPlaceholder": "e.g., SU 123",
       "date": "Departure Date",
       "checkStatus": "Check Status",
+      "search": "Search Flight",
       "origin": "Origin",
       "destination": "Destination",
-      "statusLabels": {
+      "departure": "Departure",
+      "arrival": "Arrival",
+      "terminal": "Terminal",
+      "gate": "Gate",
+      "baggage": "Baggage",
+      "safety": "Safety",
+      "allFlightsTitle": "All Flights",
+      "flightsFound": "flights found",
+      "states": {
         "ontime": "On Time",
         "delayed": "Delayed",
         "cancelled": "Cancelled",
         "enroute": "En Route",
         "landed": "Landed"
-      },
-      "terminal": "Terminal",
-      "gate": "Gate",
-      "scheduled": "Scheduled",
-      "estimated": "Estimated",
-      "baggage": "Baggage Claim",
-      "depLabel": "Departure",
-      "arrLabel": "Arrival",
-      "fact": "actual",
-      "searchByDate": "All Flights by Date",
-      "airport": "Airport",
-      "flightListTitle": "Flights on",
-      "tableHeaders": {
-        "flight": "Flight",
-        "route": "Route",
-        "departure": "Departure",
-        "arrival": "Arrival",
-        "status": "Status"
-      },
-      "prev": "Prev",
-      "next": "Next",
-      "showing": "Showing {from}-{to} of {total} flights"
     }
-  },
-  "Featured": {
+  }
+},
+"Featured": {
     "badge": "Trending Now",
     "title": "Featured Holiday Packages",
     "subtitle": "Handpicked destinations for your next unforgettable vacation",
@@ -1043,6 +1045,22 @@
       "Valid government ID required for all travelers",
       "Package prices may vary during peak season"
     ]
+  },
+  "VisaDetail": {
+    "back": "Back",
+    "bookNow": "Book Now",
+    "enquiryTitle": "Enquiry Now",
+    "helpTitle": "Need Help?",
+    "thankYou": "Thank you for your enquiry! We will get back to you soon.",
+    "trust": {
+      "expertAssistance": "Expert Assistance",
+      "verification": "Document Verification",
+      "tracking": "Application Tracking",
+      "secure": "Secure Payment"
+    },
+    "labels": {
+      "perApplicant": "per applicant"
+    }
   },
   "AITripPlanner": {
     "title": "AI Trip Planner",

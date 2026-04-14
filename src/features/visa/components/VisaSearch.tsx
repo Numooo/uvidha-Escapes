@@ -107,7 +107,7 @@ export function VisaSearch({ onSearch }: VisaSearchProps) {
       {/* Check Button */}
       <button
         onClick={handleSearch}
-        className="w-full rounded-xl bg-brand-primary py-4 text-white font-bold shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary transition-all flex items-center justify-center gap-3"
+        className="w-full rounded-2xl bg-brand-primary py-4 text-white font-bold shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary transition-all flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99]"
       >
         <FileText className="h-5 w-5" />
         {t("Search.visa.check")}
