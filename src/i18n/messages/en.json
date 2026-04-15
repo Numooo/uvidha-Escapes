@@ -1,5 +1,8 @@
 {
   "MockData": {
+    "allCities": "All Cities",
+    "allDirections": "All Directions",
+    "train": "Rail transport",
     "airports": [
       {
         "code": "FRU",
@@ -1917,7 +1920,13 @@
       "tours": "Tours",
       "cargo": "Cargo",
       "analytics": "Analytics",
-      "favorites": "Favorites"
+      "history": "History",
+      "favorites": "Favorites",
+      "trains": "Train Tickets"
+    },
+    "favorites": {
+      "bookNow": "Book Now",
+      "empty": "Your favorites list is currently empty"
     },
     "cards": {
       "addCard": "Add Card",
@@ -1936,7 +1945,9 @@
       "bookingId": "Booking ID",
       "cargoWeight": "Weight",
       "flightTo": "Destination",
-      "hotelLocation": "Location"
+      "flightFrom": "Origin",
+      "hotelLocation": "Location",
+      "emptyState": "No history found in this category"
     },
     "analytics": {
       "totalTrips": "Total Trips",

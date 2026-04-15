@@ -48,7 +48,7 @@ export function FlightsPage({
   const formatCurrency = (amount: number) =>
     amount.toLocaleString("ru-RU"); // Simplified for now, could be improved
   const [filters, setFilters] = useState<FilterState>({
-    priceRange: [0, 50000],
+    priceRange: [0, 100000],
     stops: [],
     airlines: [],
     departureTime: [],
@@ -478,9 +478,6 @@ export function FlightsPage({
                           <div className="flex flex-col text-left">
                             <span className="font-bold">
                               {airport?.city}
-                            </span>
-                            <span className="text-[10px] font-medium opacity-60">
-                              {airport?.name}
                             </span>
                           </div>
                           <span className="text-xs font-black opacity-30 uppercase">

@@ -22,7 +22,12 @@ import {
   LogOut,
   Building2,
   DollarSign,
-  PieChart as PieChartIcon
+  PieChart as PieChartIcon,
+  Clock,
+  Train,
+  Truck,
+  Palmtree,
+  Sparkles
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
@@ -52,16 +57,36 @@ const MOCK_INVOICES = [
   { id: "INV-2026-003", date: "2026-05-01", amount: 12400, status: "pending" },
 ];
 
+interface BookingItem {
+  id: string;
+  type: "flight" | "hotel" | "package" | "cargo" | "train";
+  title: string;
+  subtitle: string;
+  date: string;
+  price: number;
+  status: "upcoming" | "completed" | "in-transit" | "delivered";
+}
+
+const MOCK_BOOKINGS: BookingItem[] = [
+  { id: "FL-501", type: "flight", title: "Bishkek → Almaty", subtitle: "Air Astana • Business", date: "2024-05-10", price: 180, status: "upcoming" },
+  { id: "HT-202", type: "hotel", title: "Ritz-Carlton Almaty", subtitle: "Deluxe Room", date: "2024-05-10", price: 450, status: "upcoming" },
+  { id: "TR-303", type: "train", title: "Bishkek → Tashkent", subtitle: "Soft Sleeper", date: "2024-04-12", price: 85, status: "completed" },
+  { id: "CR-404", type: "cargo", title: "Office Equipment", subtitle: "450kg • Almaty → Bishkek", date: "2024-03-20", price: 1200, status: "delivered" },
+];
+
 export default function CorporatePage() {
   const t = useTranslations("Corporate");
+  const tProfile = useTranslations("Profile");
+  const tMock = useTranslations("MockData");
   const { CurrencySymbol } = useCurrency();
-  const [activeTab, setActiveTab] = useState<"dashboard" | "employees" | "bookings" | "billing" | "settings">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "employees" | "history" | "billing" | "settings">("dashboard");
+  const [historyCategory, setHistoryCategory] = useState<"flight" | "hotel" | "package" | "cargo" | "train">("flight");
   const [searchQuery, setSearchQuery] = useState("");
 
   const tabs = [
     { id: "dashboard", label: t("tabs.dashboard"), icon: BarChart3 },
     { id: "employees", label: t("tabs.employees"), icon: Users },
-    { id: "bookings", label: t("tabs.bookings"), icon: Briefcase },
+    { id: "history", label: tProfile("tabs.history"), icon: Clock },
     { id: "billing", label: t("tabs.billing"), icon: FileText },
     { id: "settings", label: t("tabs.settings"), icon: Settings },
   ];
@@ -85,6 +110,26 @@ export default function CorporatePage() {
       case "paid": return t("billing.paid");
       case "pending": return t("billing.pending");
       default: return status;
+    }
+  };
+
+  const getBookingStatusLabel = (status: string) => {
+    switch (status) {
+      case "upcoming": return tProfile("booking.upcoming");
+      case "completed": return tProfile("booking.completed");
+      case "in-transit": return tProfile("booking.inTransit");
+      case "delivered": return tProfile("booking.delivered");
+      default: return status;
+    }
+  };
+
+  const getBookingStatusColor = (status: string) => {
+    switch (status) {
+      case "upcoming": return "bg-blue-100 text-blue-700";
+      case "completed": return "bg-green-100 text-green-700";
+      case "in-transit": return "bg-orange-100 text-orange-700";
+      case "delivered": return "bg-purple-100 text-purple-700";
+      default: return "bg-gray-100 text-gray-700";
     }
   };
 
@@ -431,16 +476,128 @@ export default function CorporatePage() {
                   )}
 
                   {/* Other tabs omitted for brevity, can be expanded as needed */}
-                  {(activeTab === "bookings") && (
-                    <div className="flex flex-col items-center justify-center py-20 text-center">
-                      <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                        <Briefcase size={40} className="text-gray-300" />
+                  {/* History Tab */}
+                  {activeTab === "history" && (
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-2xl font-black text-gray-900">{tProfile("tabs.history")}</h2>
                       </div>
-                      <h3 className="text-xl font-black text-gray-900 mb-2">{t("bookings.title")}</h3>
-                      <p className="text-sm text-gray-500 max-w-sm">{t("bookings.emptyState")}</p>
-                      <button className="mt-8 px-8 py-3 bg-brand-primary text-white font-bold rounded-xl text-sm shadow-xl shadow-brand-primary/20">
-                        {t("bookings.searchNew")}
-                      </button>
+
+                      {/* History Category Switcher */}
+                      <div className="flex p-1 bg-gray-100 rounded-2xl mb-8 overflow-x-auto no-scrollbar">
+                        {[
+                          { id: "flight", label: tProfile("tabs.flights"), icon: Plane },
+                          { id: "hotel", label: tProfile("tabs.hotels"), icon: Hotel },
+                          { id: "package", label: tProfile("tabs.tours"), icon: Palmtree },
+                          { id: "cargo", label: tProfile("tabs.cargo"), icon: Truck },
+                          { id: "train", label: tProfile("tabs.trains"), icon: Train },
+                        ].map((cat) => (
+                          <button
+                            key={cat.id}
+                            onClick={() => setHistoryCategory(cat.id as any)}
+                            className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                              historyCategory === cat.id
+                                ? "bg-white text-brand-primary shadow-sm"
+                                : "text-gray-500 hover:text-gray-700"
+                            }`}
+                          >
+                            <cat.icon size={14} />
+                            {cat.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="space-y-6">
+                        {MOCK_BOOKINGS.filter(b => b.type === historyCategory).length > 0 ? (
+                          MOCK_BOOKINGS.filter(b => b.type === historyCategory).map((booking) => (
+                            <div key={booking.id} className="group relative bg-white rounded-3xl border border-gray-100 p-1 transition-all hover:border-brand-primary/20 hover:shadow-2xl hover:shadow-brand-primary/5">
+                              <div className={`p-6 rounded-[calc(1.5rem-2px)] bg-gray-50/50 group-hover:bg-white transition-colors flex flex-col md:flex-row gap-8`}>
+                                
+                                {/* Left Side: Type Icon + ID */}
+                                <div className="flex md:flex-col items-center md:items-start justify-between md:justify-center gap-4 min-w-[120px]">
+                                  <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                                    {booking.type === "flight" ? <Plane size={32} /> : 
+                                     booking.type === "hotel" ? <Hotel size={32} /> : 
+                                     booking.type === "package" ? <Palmtree size={32} /> : 
+                                     booking.type === "cargo" ? <Truck size={32} /> : <Train size={32} />}
+                                  </div>
+                                  <div>
+                                    <div className="text-[10px] text-gray-400 font-black uppercase tracking-widest">{tProfile("booking.bookingId")}</div>
+                                    <div className="text-xs font-bold text-gray-900">{booking.id}</div>
+                                  </div>
+                                </div>
+
+                                {/* Main Info */}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex flex-wrap items-center gap-3 mb-3">
+                                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm ${getBookingStatusColor(booking.status)}`}>
+                                    {getBookingStatusLabel(booking.status)}
+                                  </span>
+                                    <span className="flex items-center gap-1.5 text-xs font-bold text-gray-400">
+                                      <Calendar size={14} className="text-gray-300" />
+                                      {booking.date}
+                                    </span>
+                                  </div>
+
+                                  {booking.type === "flight" ? (
+                                    <div className="space-y-4">
+                                      <div className="flex items-center gap-6">
+                                        <div className="flex-1">
+                                          <div className="text-xs text-brand-primary font-bold uppercase mb-1">{tProfile("booking.flightFrom")}</div>
+                                          <div className="text-xl font-black text-gray-900">{booking.title.split("→")[0].trim()}</div>
+                                        </div>
+                                        <div className="flex flex-col items-center px-4">
+                                          <div className="w-12 h-px bg-gray-200 relative">
+                                            <motion.div 
+                                              initial={{ left: 0 }}
+                                              animate={{ left: "100%" }}
+                                              transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                                              className="absolute -top-1 w-2 h-2 rounded-full bg-brand-primary/20"
+                                            />
+                                          </div>
+                                          <Plane size={14} className="text-gray-300 my-1" />
+                                        </div>
+                                        <div className="flex-1 text-right">
+                                          <div className="text-xs text-brand-primary font-bold uppercase mb-1">{tProfile("booking.flightTo")}</div>
+                                          <div className="text-xl font-black text-gray-900">{booking.title.split("→")[1]?.trim()}</div>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-center gap-3 bg-white/50 p-2 rounded-xl border border-gray-100 text-xs font-medium text-gray-500">
+                                        <Sparkles size={14} className="text-brand-accent" />
+                                        {booking.subtitle}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      <h3 className="text-xl font-black text-gray-900 mb-2 leading-tight">{booking.title}</h3>
+                                      <p className="text-sm text-gray-500 flex items-center gap-2 group-hover:text-gray-700 transition-colors">
+                                        <MapPin size={14} className="text-brand-primary/50" />
+                                        {booking.subtitle}
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Price */}
+                                <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-10 min-w-[140px]">
+                                  <div className="text-center md:text-right">
+                                    <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">{tProfile("booking.price")}</div>
+                                    <div className="text-2xl font-black text-brand-primary flex items-center justify-center md:justify-end">
+                                      <CurrencySymbol className="h-5 w-5 mr-1" />
+                                      {booking.price.toLocaleString()}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                            <Clock size={48} className="text-gray-300 mb-4" />
+                            <p className="text-gray-500 font-medium">{tProfile("booking.emptyState" as any)}</p>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                 </motion.div>

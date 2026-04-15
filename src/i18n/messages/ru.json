@@ -1,5 +1,8 @@
 {
   "MockData": {
+    "allCities": "Все города",
+    "allDirections": "Все направления",
+    "train": "ЖД перевозка",
     "airports": [
       {
         "code": "FRU",
@@ -1918,7 +1921,13 @@
       "tours": "Туры",
       "cargo": "Грузоперевозки",
       "analytics": "Аналитика",
-      "favorites": "Избранное"
+      "history": "История",
+      "favorites": "Избранное",
+      "trains": "ЖД билеты"
+    },
+    "favorites": {
+      "bookNow": "Забронировать",
+      "empty": "В списке избранного пока ничего нет"
     },
     "cards": {
       "addCard": "Добавить карту",
@@ -1937,7 +1946,9 @@
       "bookingId": "Бронь",
       "cargoWeight": "Вес",
       "flightTo": "Куда",
-      "hotelLocation": "Место"
+      "flightFrom": "Откуда",
+      "hotelLocation": "Место",
+      "emptyState": "История в этой категории пока пуста"
     },
     "analytics": {
       "totalTrips": "Всего поездок",

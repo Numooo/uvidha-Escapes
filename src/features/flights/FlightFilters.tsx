@@ -62,7 +62,7 @@ export function FlightFilters({
     filters.arrivalTime.length > 0 ||
     filters.cabinClass.length > 0 ||
     filters.priceRange[0] > 0 ||
-    filters.priceRange[1] < 50000;
+    filters.priceRange[1] < 100000;
 
   return (
     <div
@@ -108,7 +108,7 @@ export function FlightFilters({
             <input
               type="range"
               min="0"
-              max="50000"
+              max="100000"
               step="1000"
               value={filters.priceRange[1]}
               onChange={(e) =>

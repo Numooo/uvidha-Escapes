@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, MapPin, Search, Train, Users, CreditCard, ChevronRigh
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import type { Airport } from "@/types";
+import { DatePicker } from "@/shared/ui/DatePicker";
 
 interface TrainResult {
   id: string;
@@ -45,9 +46,9 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [isEditingSearch, setIsEditingSearch] = useState(false);
   const [editTab, setEditTab] = useState<"from" | "to">("from");
-  const [currentOrigin, setCurrentOrigin] = useState(initialOrigin || "FRU");
-  const [currentDestination, setCurrentDestination] = useState(initialDestination || "DXB");
-  const [currentDate, setCurrentDate] = useState("2024-01-15");
+  const [currentOrigin, setCurrentOrigin] = useState(initialOrigin || "");
+  const [currentDestination, setCurrentDestination] = useState(initialDestination || "");
+  const [currentDate, setCurrentDate] = useState(new Date().toISOString().split("T")[0]);
   const [currentPassengers, setCurrentPassengers] = useState(1);
   const { CurrencySymbol } = useCurrency();
 
@@ -82,9 +83,9 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
             </button>
             <div className="flex flex-col">
               <div className="flex items-center gap-2 text-lg font-bold text-gray-900">
-                <span>{getAirportLabel(currentOrigin)}</span>
+                <span>{currentOrigin ? getAirportLabel(currentOrigin) : tMock("allCities" as any)}</span>
                 <span className="text-gray-400">→</span>
-                <span>{getAirportLabel(currentDestination)}</span>
+                <span>{currentDestination ? getAirportLabel(currentDestination) : tMock("allCities" as any)}</span>
               </div>
               <div className="text-sm text-gray-600">
                 {currentDate} • {currentPassengers}{" "}
@@ -296,7 +297,7 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                       : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
-                  {t("from")}
+                  <span className="capitalize">{t("from")}</span>
                 </button>
                 <button
                   onClick={() => setEditTab("to")}
@@ -306,7 +307,7 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                       : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
-                  {t("to")}
+                  <span className="capitalize">{t("to")}</span>
                 </button>
               </div>
 
@@ -335,10 +336,12 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                               : "border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50"
                           }`}
                         >
-                          <span className="font-bold">
-                            {airport.city}
-                          </span>
-                          <span className="text-xs font-black opacity-50 uppercase">
+                          <div className="flex flex-col text-left">
+                            <span className="font-bold">
+                              {airport.city}
+                            </span>
+                          </div>
+                          <span className="text-xs font-black opacity-30 uppercase">
                             {airport.code}
                           </span>
                         </button>
@@ -351,23 +354,18 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
                   {/* Date Input */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-black uppercase text-gray-400 tracking-wider">
-                      {t("departure")}
-                    </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <input
-                        type="date"
-                        value={currentDate}
-                        onChange={(e) => setCurrentDate(e.target.value)}
-                        className="w-full bg-gray-50 border-none rounded-2xl py-3 pl-11 pr-4 text-sm font-bold text-gray-900 focus:ring-2 focus:ring-brand-primary/20 outline-none"
-                      />
-                    </div>
+                    <DatePicker
+                      label={t("departure")}
+                      value={currentDate}
+                      onChange={setCurrentDate}
+                      minDate={new Date()}
+                      position="top"
+                    />
                   </div>
 
                   {/* Passengers */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-black uppercase text-gray-400 tracking-wider">
+                    <label className="mb-1.5 block text-xs font-semibold text-gray-500 capitalize px-1">
                       {t("travelers")}
                     </label>
                     <div className="flex items-center justify-between bg-gray-50 rounded-2xl p-1.5 h-[46px]">

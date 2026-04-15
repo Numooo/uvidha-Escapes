@@ -52,28 +52,40 @@ export function CustomSelect({ label, value, onChange, options, icon }: CustomSe
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.98 }}
-            className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl"
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            className="absolute z-50 mt-2 w-full overflow-hidden rounded-2xl border border-gray-100 bg-white/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] py-2"
           >
-            <div className="py-1 max-h-60 overflow-y-auto no-scrollbar">
-              {options.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => {
-                    onChange(option.value);
-                    setIsOpen(false);
-                  }}
-                  className={`flex w-full items-center px-4 py-2.5 text-sm text-left transition-colors ${
-                    option.value === value
-                      ? "bg-brand-primary/10 text-brand-primary font-bold"
-                      : "text-gray-700 hover:bg-gray-50"
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
+            <div className="max-h-64 overflow-y-auto no-scrollbar px-1.5">
+              {options.map((option) => {
+                const isSelected = option.value === value;
+                return (
+                  <button
+                    key={option.value}
+                    onClick={() => {
+                      onChange(option.value);
+                      setIsOpen(false);
+                    }}
+                    className={`group flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm transition-all duration-200 ${
+                      isSelected
+                        ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20"
+                        : "text-gray-700 hover:bg-brand-primary/5 hover:text-brand-primary"
+                    }`}
+                  >
+                    <span className={`font-semibold ${isSelected ? "text-white" : "text-gray-700"}`}>
+                      {option.label}
+                    </span>
+                    {isSelected && (
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="h-2 w-2 rounded-full bg-white"
+                      />
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </motion.div>
         )}

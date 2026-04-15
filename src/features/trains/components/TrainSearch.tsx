@@ -16,9 +16,9 @@ import { AirportAutocomplete } from "@/shared/ui/AirportAutocomplete";
 export function TrainSearch({ onSearch }: TrainSearchProps) {
   const t = useTranslations();
   const [tripType, setTripType] = useState<"oneway" | "roundtrip">("oneway");
-  const [origin, setOrigin] = useState("FRU");
-  const [destination, setDestination] = useState("MOW");
-  const [date, setDate] = useState(format(new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), "yyyy-MM-dd"));
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
   const [passengers, setPassengers] = useState(1);
 
   const handleSearch = () => {

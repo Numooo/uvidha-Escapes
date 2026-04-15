@@ -4,6 +4,7 @@ import {
   Truck,
   Plane,
   Ship,
+  Train,
   Package as PackageIcon,
   Search,
   ArrowRight,
@@ -16,6 +17,8 @@ import {
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import type { Airport } from "@/types";
+import { AirportAutocomplete } from "@/shared/ui/AirportAutocomplete";
+import { CustomSelect } from "@/shared/ui/CustomSelect";
 
 export function CargoPage({ initialData }: { initialData?: any }) {
   const t = useTranslations("Cargo");
@@ -68,7 +71,7 @@ export function CargoPage({ initialData }: { initialData?: any }) {
     const v = parseFloat(calcVol) || 0;
     let mult = 1;
     if (calcType === "plane") mult = 2.5;
-    if (calcType === "ship") mult = 0.5;
+    if (calcType === "train") mult = 0.8;
     const cost = 500 + w * 15 * mult + v * 50 * mult;
     setCalcResult(cost);
   };
@@ -85,8 +88,8 @@ export function CargoPage({ initialData }: { initialData?: any }) {
         return <Truck className="h-8 w-8 text-brand-primary" />;
       case "plane":
         return <Plane className="h-8 w-8 text-brand-primary" />;
-      case "ship":
-        return <Ship className="h-8 w-8 text-brand-primary" />;
+      case "train":
+        return <Train className="h-8 w-8 text-brand-primary" />;
       default:
         return <PackageIcon className="h-8 w-8 text-brand-primary" />;
     }
@@ -189,66 +192,34 @@ export function CargoPage({ initialData }: { initialData?: any }) {
 
             <form onSubmit={handleCalculate} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">
-                    {t("calcOrigin")}
-                  </label>
-                  <div className="relative group">
-                    <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
-                    <select
-                      value={calcOrigin}
-                      onChange={(e) => {
-                        setCalcOrigin(e.target.value);
-                        setCalcResult(null);
-                      }}
-                      required
-                      className="w-full appearance-none rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
-                    >
-                      <option value="">{t("calcOrigin")}</option>
-                      {AIRPORTS.map((a) => (
-                        <option key={a.code} value={a.code}>
-                          {a.city} ({a.code})
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                  </div>
-                </div>
+                <AirportAutocomplete
+                  label={t("calcOrigin")}
+                  value={calcOrigin}
+                  onChange={(val) => {
+                    setCalcOrigin(val);
+                    setCalcResult(null);
+                  }}
+                  placeholder={t("calcOrigin")}
+                />
 
-                <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">
-                    {t("calcDest")}
-                  </label>
-                  <div className="relative group">
-                    <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
-                    <select
-                      value={calcDest}
-                      onChange={(e) => {
-                        setCalcDest(e.target.value);
-                        setCalcResult(null);
-                      }}
-                      required
-                      className="w-full appearance-none rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-10 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
-                    >
-                      <option value="">{t("calcDest")}</option>
-                      {AIRPORTS.map((a) => (
-                        <option key={a.code} value={a.code}>
-                          {a.city} ({a.code})
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                  </div>
-                </div>
+                <AirportAutocomplete
+                  label={t("calcDest")}
+                  value={calcDest}
+                  onChange={(val) => {
+                    setCalcDest(val);
+                    setCalcResult(null);
+                  }}
+                  placeholder={t("calcDest")}
+                />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                  <label className="mb-1.5 block text-xs font-semibold text-gray-500 capitalize px-1">
                     {t("calcWeight")}
                   </label>
                   <div className="relative group">
-                    <Weight className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
+                    <Weight className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-primary transition-colors z-10" />
                     <input
                       type="number"
                       min="1"
@@ -259,17 +230,17 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                         setCalcResult(null);
                       }}
                       placeholder="100"
-                      className="w-full rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
+                      className="w-full appearance-none rounded-2xl border-none bg-gray-50 py-3.5 pl-11 pr-4 text-sm font-bold text-gray-900 focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-gray-400"
                     />
                   </div>
                 </div>
 
                 <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                  <label className="mb-1.5 block text-xs font-semibold text-gray-500 capitalize px-1">
                     {t("calcVol")}
                   </label>
                   <div className="relative group">
-                    <Box className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-brand-primary transition-colors" />
+                    <Box className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-primary transition-colors z-10" />
                     <input
                       type="number"
                       min="0"
@@ -280,38 +251,33 @@ export function CargoPage({ initialData }: { initialData?: any }) {
                         setCalcResult(null);
                       }}
                       placeholder="1.5"
-                      className="w-full rounded-xl border-2 border-gray-100 bg-gray-50 py-4 pl-12 pr-4 text-sm font-medium text-gray-900 focus:border-brand-primary focus:bg-white focus:outline-none transition-all hover:border-gray-200"
+                      className="w-full appearance-none rounded-2xl border-none bg-gray-50 py-3.5 pl-11 pr-4 text-sm font-bold text-gray-900 focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-gray-400"
                     />
                   </div>
                 </div>
 
-                <div className="relative">
-                  <label className="mb-2 block text-sm font-semibold text-gray-700">
-                    {t("calcType")}
-                  </label>
-                  <div className="relative group">
-                    {calcType === "truck" ? (
-                      <Truck className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" />
+                <CustomSelect
+                  label={t("calcType")}
+                  value={calcType}
+                  onChange={(val) => {
+                    setCalcType(val);
+                    setCalcResult(null);
+                  }}
+                  icon={
+                    calcType === "truck" ? (
+                      <Truck className="h-5 w-5" />
                     ) : calcType === "plane" ? (
-                      <Plane className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" />
+                      <Plane className="h-5 w-5" />
                     ) : (
-                      <Ship className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-primary" />
-                    )}
-                    <select
-                      value={calcType}
-                      onChange={(e) => {
-                        setCalcType(e.target.value);
-                        setCalcResult(null);
-                      }}
-                      className="w-full appearance-none rounded-xl border-2 border-gray-100 bg-white py-4 pl-12 pr-10 text-sm font-bold text-brand-primary focus:border-brand-primary focus:outline-none transition-all shadow-sm"
-                    >
-                      <option value="truck">{t("transportTypes.truck")}</option>
-                      <option value="plane">{t("transportTypes.plane")}</option>
-                      <option value="ship">{t("transportTypes.ship")}</option>
-                    </select>
-                    <ChevronDown className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                  </div>
-                </div>
+                      <Train className="h-5 w-5" />
+                    )
+                  }
+                  options={[
+                    { value: "truck", label: t("transportTypes.truck") },
+                    { value: "plane", label: t("transportTypes.plane") },
+                    { value: "train", label: tMock("train" as any) },
+                  ]}
+                />
               </div>
 
               <div className="pt-8 mt-2 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-gray-100">

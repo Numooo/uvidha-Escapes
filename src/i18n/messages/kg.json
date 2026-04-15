@@ -1,5 +1,8 @@
 {
   "MockData": {
+    "allCities": "Бардык шаарлар",
+    "allDirections": "Бардык багыттар",
+    "train": "ЖД ташуу",
     "airports": [
       {
         "code": "FRU",
@@ -1885,9 +1888,15 @@
       "flights": "Авиабилеттер",
       "hotels": "Мейманканалар",
       "tours": "Турлар",
-      "cargo": "Жүк ташуулар",
+      "cargo": "Жүк ташуу",
       "analytics": "Аналитика",
-      "favorites": "Тандалган"
+      "history": "Тарых",
+      "favorites": "Тандалгандар",
+      "trains": "ЖД билеттер"
+    },
+    "favorites": {
+      "bookNow": "Ээлеп коюу",
+      "empty": "Тандалгандар тизмеси азырынча бош"
     },
     "cards": {
       "addCard": "Картаны кошуу",
@@ -1906,7 +1915,9 @@
       "bookingId": "Брондоо",
       "cargoWeight": "Салмагы",
       "flightTo": "Кайда",
-      "hotelLocation": "Жайгашкан жери"
+      "flightFrom": "Каяктан",
+      "hotelLocation": "Жайгашкан жери",
+      "emptyState": "Бул категорияда азырынча тарых жок"
     },
     "analytics": {
       "totalTrips": "Жалпы саякаттар",
