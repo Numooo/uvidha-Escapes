@@ -88,10 +88,10 @@ export function FaqPage() {
             className="text-center"
           >
             <HelpCircle className="h-16 w-16 mx-auto mb-6 opacity-90 text-white" />
-            <h1 className="text-5xl md:text-6xl font-black mb-6 drop-shadow-xl tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-xl tracking-tight">
               {t("title")}
             </h1>
-            <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto font-medium">
+            <p className="text-xl text-white/85 max-w-2xl mx-auto mb-10">
               {t("subtitle")}
             </p>
 
