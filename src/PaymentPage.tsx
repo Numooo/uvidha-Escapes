@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { FareBreakdown } from "./types";
-import { formatCurrency } from "@/shared/mocks/data";
+import { formatCurrency } from "@/shared/utils/currency";
 import { useCurrency } from "@/CurrencyContext";
 
 interface PaymentPageProps {
