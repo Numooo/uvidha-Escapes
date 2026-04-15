@@ -82,6 +82,7 @@ interface TrainsPageProps {
 
 export function TrainsPage({ onBack, initialOrigin, initialDestination }: TrainsPageProps) {
   const t = useTranslations("Search.trains");
+  const tTrains = useTranslations("Trains");
   const tCommon = useTranslations("Flights");
   const [isLoading, setIsLoading] = useState(true);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 20000]);
@@ -132,8 +133,8 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
               <div className="text-sm text-gray-600">
                 {currentDate} • {currentPassengers}{" "}
                 {currentPassengers === 1
-                  ? "Пассажир"
-                  : "Пассажира"}
+                  ? t("passenger")
+                  : t("passengers")}
               </div>
             </div>
           </div>
@@ -153,7 +154,7 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
             <div className="bg-white rounded-lg border border-gray-200 sticky top-24">
               {/* Header */}
               <div className="flex items-center justify-between border-b border-gray-200 p-4">
-                <h2 className="text-lg font-semibold text-gray-900">Фильтры</h2>
+                <h2 className="text-lg font-semibold text-gray-900">{tTrains("filters")}</h2>
                 {(priceRange[1] < 20000 || selectedTypes.length > 0) && (
                   <button
                     onClick={() => {
@@ -162,7 +163,7 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                     }}
                     className="text-sm font-medium text-brand-primary hover:text-brand-secondary"
                   >
-                    Очистить
+                    {tTrains("clearAll")}
                   </button>
                 )}
               </div>
@@ -172,7 +173,7 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                 {/* Price Range */}
                 <div>
                   <h3 className="mb-3 text-sm font-semibold text-gray-900">
-                    Диапазон цен
+                    {tTrains("priceRange")}
                   </h3>
                   <div className="space-y-3">
                     <input
@@ -200,18 +201,23 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                 {/* Carriage Type */}
                 <div>
                   <h3 className="mb-3 text-sm font-semibold text-gray-900">
-                    Тип вагона
+                    {tTrains("wagonType")}
                   </h3>
                   <div className="space-y-2">
-                    {["Стандарт", "Плацкарт", "Купе", "СВ"].map((type) => (
-                      <label key={type} className="flex items-center gap-2 cursor-pointer group">
+                    {[
+                      { key: "standard", label: tTrains("wagonTypes.standard") },
+                      { key: "reservedSeat", label: tTrains("wagonTypes.reservedSeat") },
+                      { key: "compartment", label: tTrains("wagonTypes.compartment") },
+                      { key: "soft", label: tTrains("wagonTypes.soft") }
+                    ].map((type) => (
+                      <label key={type.key} className="flex items-center gap-2 cursor-pointer group">
                         <input
                           type="checkbox"
-                          checked={selectedTypes.includes(type)}
-                          onChange={() => toggleType(type)}
+                          checked={selectedTypes.includes(type.label)}
+                          onChange={() => toggleType(type.label)}
                           className="h-4 w-4 rounded border-gray-300 text-brand-primary focus:ring-brand-primary"
                         />
-                        <span className="text-sm text-gray-700 group-hover:text-gray-900">{type}</span>
+                        <span className="text-sm text-gray-700 group-hover:text-gray-900">{type.label}</span>
                       </label>
                     ))}
                   </div>
@@ -231,8 +237,8 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                 <div className="text-gray-400 mb-4 flex justify-center">
                   <Train className="h-12 w-12 opacity-20" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Поезда не найдены</h3>
-                <p className="text-gray-500 text-sm">Попробуйте изменить параметры фильтрации</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{tTrains("noTrainsFound")}</h3>
+                <p className="text-gray-500 text-sm">{tTrains("adjustFilters")}</p>
               </div>
             ) : (
               filteredTrains.map((train) => (
@@ -278,13 +284,13 @@ export function TrainsPage({ onBack, initialOrigin, initialDestination }: Trains
                     {/* Price & Book */}
                     <div className="flex flex-col items-end gap-3 w-40">
                       <div className="text-right">
-                        <div className="text-xs text-gray-500 uppercase tracking-widest font-bold">от</div>
-                        <div className="text-2xl font-black text-brand-primary">
-                          {train.price.toLocaleString()} KGS
+                        <div className="text-xs text-gray-500 uppercase tracking-widest font-bold">{tTrains("fromPrice")}</div>
+                        <div className="text-2xl font-black text-brand-primary flex items-baseline gap-1">
+                          {train.price.toLocaleString()} <CurrencySymbol className="h-4 w-4" />
                         </div>
                       </div>
-                      <button className="w-full bg-gray-900 text-white py-3 rounded-2xl font-bold text-sm group-hover:bg-brand-primary transition-all shadow-lg shadow-gray-900/10 active:scale-95">
-                        Выбрать место
+                      <button className="w-full bg-brand-primary text-white py-3 rounded-2xl font-bold text-sm group-hover:bg-brand-secondary transition-all shadow-lg shadow-gray-900/10 active:scale-95">
+                        {tTrains("selectSeat")}
                       </button>
                     </div>
                   </div>

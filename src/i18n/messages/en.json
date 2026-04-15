@@ -170,15 +170,32 @@
       "safety": "Safety",
       "allFlightsTitle": "All Flights",
       "flightsFound": "flights found",
+      "airport": "Airport",
+      "flightListTitle": "Flights for",
+      "tableHeaders": {
+        "flight": "Flight",
+        "route": "Route",
+        "departure": "Departure",
+        "arrival": "Arrival",
+        "status": "Status"
+      },
+      "prev": "Prev",
+      "next": "Next",
+      "showing": "Showing {from}-{to} of {total} flights",
       "states": {
         "ontime": "On Time",
         "delayed": "Delayed",
         "cancelled": "Cancelled",
         "enroute": "En Route",
         "landed": "Landed"
+      },
+      "scheduled": "Scheduled",
+      "estimated": "Estimated",
+      "depLabel": "Dep.",
+      "arrLabel": "Arr.",
+      "fact": "fact."
     }
-  }
-},
+  },
 "Featured": {
     "badge": "Trending Now",
     "title": "Featured Holiday Packages",
@@ -335,6 +352,22 @@
       "h": "h",
       "m": "m"
     }
+  },
+  "Trains": {
+    "filters": "Filters",
+    "clearAll": "Clear",
+    "priceRange": "Price Range",
+    "wagonType": "Wagon Type",
+    "wagonTypes": {
+      "standard": "Standard",
+      "reservedSeat": "Reserved Seat",
+      "compartment": "Compartment",
+      "soft": "Soft/SV"
+    },
+    "noTrainsFound": "No trains found",
+    "adjustFilters": "Try adjusting your search filters",
+    "fromPrice": "from",
+    "selectSeat": "Select Seat"
   },
   "Hotels": {
     "destination": "DESTINATION",
@@ -548,6 +581,186 @@
         "price": 5000,
         "availableRooms": 15,
         "description": "Boutique hotel with panoramic views of the Queen's Necklace"
+      },
+      {
+        "id": "7",
+        "name": "Atlantis, The Palm",
+        "location": "Palm Jumeirah, Dubai",
+        "distance": "15 km from center",
+        "coordinates": {
+          "lat": 25.1304,
+          "lng": 55.1171
+        },
+        "images": [
+          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800",
+          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800"
+        ],
+        "rating": 4.9,
+        "reviewCount": 5420,
+        "reviewScore": "Superb",
+        "stars": 5,
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Waterpark",
+          "Spa",
+          "Restaurant",
+          "Gym",
+          "Bar"
+        ],
+        "price": 45000,
+        "availableRooms": 10,
+        "description": "Luxury resort on the crescent of the Palm Jumeirah island"
+      },
+      {
+        "id": "8",
+        "name": "Burj Al Arab Jumeirah",
+        "location": "Umm Suqeim, Dubai",
+        "distance": "12 km from center",
+        "coordinates": {
+          "lat": 25.1412,
+          "lng": 55.1852
+        },
+        "images": [
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+          "https://images.unsplash.com/photo-1544161515-4ae6ce6ca606?w=800",
+          "https://images.unsplash.com/photo-1517840901100-8179e982acb7?w=800"
+        ],
+        "rating": 5.0,
+        "reviewCount": 1240,
+        "reviewScore": "Exceptional",
+        "stars": 5,
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Spa",
+          "Restaurant",
+          "Gym",
+          "Airport Shuttle",
+          "Helipad"
+        ],
+        "price": 120000,
+        "availableRooms": 2,
+        "description": "The world's most luxurious hotel"
+      },
+      {
+        "id": "9",
+        "name": "The Plaza Hotel",
+        "location": "Fifth Avenue, New York",
+        "distance": "0.1 km from Central Park",
+        "coordinates": {
+          "lat": 40.7644,
+          "lng": -73.9744
+        },
+        "images": [
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
+          "https://images.unsplash.com/photo-1455587734955-081b22074882?w=800",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800"
+        ],
+        "rating": 4.7,
+        "reviewCount": 3210,
+        "reviewScore": "Excellent",
+        "stars": 5,
+        "amenities": [
+          "WiFi",
+          "Restaurant",
+          "Spa",
+          "Gym",
+          "Concierge Service",
+          "Bar"
+        ],
+        "price": 65000,
+        "availableRooms": 4,
+        "description": "Legendary hotel on Manhattan"
+      },
+      {
+        "id": "10",
+        "name": "W Abu Dhabi - Yas Island",
+        "location": "Yas Marina, Abu Dhabi",
+        "distance": "0.5 km from F1 track",
+        "coordinates": {
+          "lat": 24.4671,
+          "lng": 54.6064
+        },
+        "images": [
+          "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=800",
+          "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800",
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+        ],
+        "rating": 4.8,
+        "reviewCount": 2150,
+        "reviewScore": "Excellent",
+        "stars": 5,
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Track view",
+          "Spa",
+          "Restaurant",
+          "Bar"
+        ],
+        "price": 25000,
+        "availableRooms": 7,
+        "description": "Unique design and Yas Marina circuit views"
+      },
+      {
+        "id": "11",
+        "name": "Karven Four Seasons",
+        "location": "Sary-Oi, Issyk-Kul",
+        "distance": "12 km from Cholpon-Ata",
+        "coordinates": {
+          "lat": 42.6167,
+          "lng": 77.0833
+        },
+        "images": [
+          "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800",
+          "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=800",
+          "https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=800"
+        ],
+        "rating": 4.6,
+        "reviewCount": 850,
+        "reviewScore": "Very Good",
+        "stars": 5,
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Private Beach",
+          "Tennis Court",
+          "Restaurant"
+        ],
+        "price": 12000,
+        "availableRooms": 15,
+        "description": "One of the best resorts on Issyk-Kul"
+      },
+      {
+        "id": "12",
+        "name": "Kapriz Issyk-Kul",
+        "location": "Baktuu-Dolonotu, Issyk-Kul",
+        "distance": "5 km from Cholpon-Ata",
+        "coordinates": {
+          "lat": 42.65,
+          "lng": 77.1667
+        },
+        "images": [
+          "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800",
+          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800",
+          "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800"
+        ],
+        "rating": 4.5,
+        "reviewCount": 620,
+        "reviewScore": "Good",
+        "stars": 4,
+        "amenities": [
+          "WiFi",
+          "Pool",
+          "Private Beach",
+          "Playground",
+          "Restaurant"
+        ],
+        "price": 8500,
+        "availableRooms": 20,
+        "description": "Comfortable vacation for the whole family"
       }
     ]
   },
@@ -928,6 +1141,110 @@
         "description": "Your data is protected with industry-standard encryption and security."
       }
     }
+  },
+  "Faq": {
+    "title": "Questions and Answers",
+    "subtitle": "Everything you need to know about traveling with Avia Travel Club — in one place",
+    "searchPlaceholder": "Search by questions (e.g., refund, baggage, children)...",
+    "categoriesLabel": "Categories",
+    "contactTitle": "Need help?",
+    "contactDesc": "Our experts are available 24/7 and ready to answer any of your questions",
+    "contactButton": "Contact us",
+    "noResults": "Nothing found",
+    "noResultsDesc": "Try changing your search query or selecting a different category",
+    "trustBar": {
+      "support": { "title": "24/7 Support", "desc": "We are always available to help you" },
+      "reliability": { "title": "Reliability", "desc": "15 years of impeccable work in the market" },
+      "destinations": { "title": "Any destinations", "desc": "Tickets to all points of the world at best prices" }
+    },
+    "categories": [
+      {
+        "id": "general",
+        "title": "General Questions",
+        "description": "Basic information about flight tickets and travel",
+        "items": [
+          {
+            "q": "What is an air ticket?",
+            "a": "An air ticket is a contract of carriage between an airline and a passenger, granting the right to passenger aviation transportation services, in the form of a personal document of an established sample. The ticket is a means of control and is subject to mandatory registration before departure; after registration, the passenger receives a boarding pass. The ticket is issued on the Avia Travel Club website."
+          },
+          {
+            "q": "What is a transfer?",
+            "a": "A transfer is a point or points of change on the way to the final destination, the duration of which should not exceed 24 hours. For example, you are flying to London with a change in Budapest. You arrive in Budapest at 16:50 and fly further to London at 18:10. Budapest in this case is a transfer point."
+          },
+          {
+            "q": "What is a stopover?",
+            "a": "A stopover is a stop at an intermediate point on your route, the duration of which is more than 24 hours. For example, you fly to Paris through Prague. If you plan to spend 2 days in Prague and then fly to Paris, Prague, in this case, will be a stopover point."
+          }
+        ]
+      },
+      {
+        "id": "classes",
+        "title": "Service Classes",
+        "description": "Differences between Economy, Business, and First Class",
+        "items": [
+          {
+            "q": "What is the difference between first, business, and economy service classes?",
+            "a": "There are three service classes: first class, business, and economy. They differ in comfort and service during the flight. In economy class, the airline provides seats at the lowest prices. In the business class cabin, seats of improved layout are provided, as well as a large selection of food and services on board. First class differs even more in comfort and is used mainly on long-haul flights. Seats in first class recline almost 180 degrees. In this class, you can order any menu, movie, music, etc."
+          },
+          {
+            "q": "What is the difference between booking classes?",
+            "a": "Booking classes depend on service classes and the cost of the ticket. Booking classes are determined by the carrier and hide a specific ticket price."
+          }
+        ]
+      },
+      {
+        "id": "cheaper",
+        "title": "Savings and Benefits",
+        "description": "How to buy tickets at the lowest prices",
+        "items": [
+          {
+            "q": "How to buy a flight ticket cheaper?",
+            "a": "If your trip is not tied to a specific date, you have the opportunity to buy a ticket at the lowest price. For this, you just need to follow offers, promotions, and seasonal discounts on flight tickets (you can find all this on our website Avia Travel Club). Buy a ticket round trip immediately. Use one carrier airline for both ways. Choose flights with transfers. Follow the Sunday rule. Fix the departure dates. Buy in advance (3 to 21 days)."
+          }
+        ]
+      },
+      {
+        "id": "children",
+        "title": "Children in Flight",
+        "description": "Rules for transporting minor passengers",
+        "items": [
+          {
+            "q": "Is it possible to send a child on a journey alone?",
+            "a": "A child traveling alone is a young passenger. Each airline has its own rules for transporting unaccompanied children. If the transportation of unaccompanied children is permitted on the booked segment, the agent must enter information into the booking that the child is flying alone. A notarized consent from both parents for transportation is also required. Then at the airport, an act is drawn up in 3 copies, describing who is seeing the child off and who is meeting them. The 1st copy is given to the person seeing off, the 2nd to the airline employee, and the 3rd to the person meeting upon arrival."
+          }
+        ]
+      },
+      {
+        "id": "refunds",
+        "title": "Returns and Exchange",
+        "description": "Instructions for changing or canceling a booking",
+        "items": [
+          {
+            "q": "How to make a ticket refund and what is necessary for this?",
+            "a": "You can process a ticket refund both before departure and after (you need to clarify the rules and conditions of refund when issuing the ticket; tickets may not be refundable depending on the booking class). Ticket refunds are made in the personal account on the Avia Travel Club website."
+          },
+          {
+            "q": "What to do with the ticket if the flight was canceled?",
+            "a": "If you learned about the flight cancellation directly at the airport, the carrier's representative can offer you an alternative. If this does not suit you, you should make a mark in the ticket about the flight cancellation and return it through the personal account on the Avia Travel Club website, attaching a scan copy of the ticket with the representative's mark. If you learned about the flight cancellation at least 1 day before departure, you need to contact our agency employee to agree on possible alternatives. In case of disagreement, you can receive the full amount for the purchased ticket without losses."
+          },
+          {
+            "q": "Within what time can a ticket be refunded?",
+            "a": "A refund of a ticket due to the passenger's fault can be made within the validity period of the ticket, which you can find out when purchasing it. Clarify the rules for refund/exchange when buying a ticket, as tickets may be non-refundable and not subject to exchange."
+          }
+        ]
+      },
+      {
+        "id": "account",
+        "title": "Account and Access",
+        "description": "Registration, passwords, and personal account",
+        "items": [
+          {
+            "q": "How to register on the site?",
+            "a": "The system automatically registers you after the first booking. The password is sent to your specified email. A login and password are not required for viewing ticket costs if you are not yet registered."
+          }
+        ]
+      }
+    ]
   },
   "Footer": {
     "description": "aviatrevel.kg — your trusted partner for unforgettable journeys. We offer the best deals on flights, hotels, and holiday packages from Kyrgyzstan to the world.",
@@ -1424,6 +1741,7 @@
         "id": "wc2026",
         "title": "FIFA World Cup Final 2026",
         "location": "New York, USA",
+        "destinationCode": "JFK",
         "date": "July 19, 2026",
         "description": "Experience the pinnacle of world football. Book your flight and hotel now to secure your spot!",
         "image": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80",
@@ -1433,6 +1751,7 @@
         "id": "f1dubai",
         "title": "Abu Dhabi Grand Prix",
         "location": "Yas Marina Circuit, UAE",
+        "destinationCode": "DXB",
         "date": "December 6, 2026",
         "description": "The season finale of Formula 1. Witness the speed and glamour in Abu Dhabi.",
         "image": "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=1200&q=80",
@@ -1442,6 +1761,7 @@
         "id": "wng2026",
         "title": "World Nomad Games",
         "location": "Issyk-Kul, Kyrgyzstan",
+        "destinationCode": "FRU",
         "date": "September 8-14, 2026",
         "description": "Experience the thrill of nomadic sports and the beauty of Central Asian traditions. Book your stay at Issyk-Kul now!",
         "image": "https://kappa.lol/9ApZh8",

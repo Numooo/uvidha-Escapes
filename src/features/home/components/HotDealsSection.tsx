@@ -8,7 +8,7 @@ import { useCurrency } from "@/CurrencyContext";
 
 interface HotDealsSectionProps {
   onNavigate?: (page: string) => void;
-  onSearchFlights?: (destination?: string) => void;
+  onSearchFlights?: (from?: string, to?: string) => void;
 }
 
 export function HotDealsSection({
@@ -80,7 +80,7 @@ export function HotDealsSection({
               className="snap-start shrink-0 cursor-pointer group"
               onClick={() => {
                 if (onSearchFlights) {
-                  onSearchFlights(card.id.toUpperCase());
+                  onSearchFlights(undefined, card.id.toUpperCase());
                 } else if (onNavigate) {
                   onNavigate("flights");
                 }

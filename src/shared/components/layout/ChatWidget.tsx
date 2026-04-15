@@ -302,6 +302,15 @@ export function ChatWidget({
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const handleOpenChat = () => {
+      setIsOpen(true);
+      setView("chat");
+    };
+    window.addEventListener("open-chat", handleOpenChat);
+    return () => window.removeEventListener("open-chat", handleOpenChat);
+  }, []);
+
+  useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setIsOpen(false);

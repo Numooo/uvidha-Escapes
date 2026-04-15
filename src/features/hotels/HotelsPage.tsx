@@ -59,7 +59,7 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
   const { symbol, symbolText, CurrencySymbol } = useCurrency();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [hotels] = useState<Hotel[]>(t.raw("mockData"));
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("Dubai");
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 25000]);
   const [selectedStars, setSelectedStars] = useState<number[]>([]);
@@ -88,7 +88,11 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
         hotelPrice >= priceRange[0] && hotelPrice <= priceRange[1];
       const matchesStars =
         selectedStars.length === 0 || selectedStars.includes(hotel.stars || 0);
-      return matchesPrice && matchesStars;
+      const matchesSearch = searchQuery === "" || 
+        hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        hotel.location.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      return matchesPrice && matchesStars && matchesSearch;
     })
     .sort((a, b) => {
       if (sortBy === "price") {
@@ -153,11 +157,11 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
             <h1 className="text-2xl font-bold text-gray-900">
               {t("hotelsFound", {
                 count: filteredHotels.length,
-                location: "Mumbai",
+                location: searchQuery || "Dubai",
               })}
             </h1>
             <p className="text-sm text-gray-600 mt-1">
-              {t("savingsSubtitle", { location: "Mumbai" })}
+              {t("savingsSubtitle", { location: searchQuery || "Dubai" })}
             </p>
           </div>
 

@@ -9,6 +9,7 @@ interface EventItem {
   id: string;
   title: string;
   location: string;
+  destinationCode?: string;
   date: string;
   description: string;
   image: string;
