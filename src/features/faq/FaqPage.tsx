@@ -127,14 +127,14 @@ export function FaqPage() {
                     <button
                       key={cat.id}
                       onClick={() => setActiveCategory(cat.id)}
-                      className={`w-full flex items-start gap-4 px-4 py-4 rounded-2xl transition-all duration-300 ${
+                      className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 ${
                         activeCategory === cat.id 
                           ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/30"
                           : "text-gray-600 hover:bg-gray-50 group"
                       }`}
                     >
-                      <div className={`p-2 rounded-xl shrink-0 transition-colors ${
-                        activeCategory === cat.id ? "bg-white/20" : "bg-brand-primary/10 text-brand-primary group-hover:bg-brand-primary group-hover:text-white"
+                      <div className={`rounded-xl shrink-0 transition-colors ${
+                        activeCategory === cat.id ? "" : "text-brand-primary"
                       }`}>
                         <Icon className="h-5 w-5" />
                       </div>
@@ -155,7 +155,7 @@ export function FaqPage() {
                 <p className="text-sm text-blue-50/80 mb-6">{t("contactDesc")}</p>
                 <button 
                   onClick={() => window.dispatchEvent(new CustomEvent("open-chat"))}
-                  className="w-full bg-white text-blue-600 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-white text-blue-600 py-3 z-10 relative rounded-xl font-bold text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   {t("contactButton")}
                   <ArrowRight className="h-4 w-4" />
