@@ -1055,6 +1055,13 @@
         "enroute": "В полете",
         "landed": "Приземлился"
       },
+      "statusLabels": {
+        "ontime": "По расписанию",
+        "delayed": "Задержан",
+        "cancelled": "Отменен",
+        "enroute": "В полете",
+        "landed": "Приземлился"
+      },
       "terminal": "Терминал",
       "gate": "Гейт",
       "scheduled": "По плану",
@@ -1281,13 +1288,14 @@
     "viewDetails": "Подробнее",
     "bookNow": "Забронировать",
     "starCount": "{count} звезд",
-    "more": "+ еще {count}"
+    "more": "+ еще {count}",
+    "noHotelsFound": "Отели не найдены"
   },
   "Holidays": {
     "title": "Турпакеты",
     "subtitle": "Отобранные впечатления для каждого путешественника",
     "packagesAvailable": "Доступно пакетов: {count}",
-    "discoverSubtitle": "Откройте для себя лучшие турпакеты по всей Индии",
+    "discoverSubtitle": "Откройте для себя лучшие турпакеты по всему миру",
     "daysCount": "{count} дн.",
     "nightsCount": "{count} нч.",
     "fromPrice": "От {symbol}{price}",

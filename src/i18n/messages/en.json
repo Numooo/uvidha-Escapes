@@ -1076,6 +1076,13 @@
         "enroute": "En Route",
         "landed": "Landed"
       },
+      "statusLabels": {
+        "ontime": "On Time",
+        "delayed": "Delayed",
+        "cancelled": "Cancelled",
+        "enroute": "En Route",
+        "landed": "Landed"
+      },
       "scheduled": "Scheduled",
       "estimated": "Estimated",
       "depLabel": "Dep.",
@@ -1284,13 +1291,14 @@
     "viewDetails": "View Details",
     "bookNow": "Book Now",
     "starCount": "{count} star",
-    "more": "+{count} more"
+    "more": "+{count} more",
+    "noHotelsFound": "No hotels found"
   },
   "Holidays": {
     "title": "Holiday Packages",
     "subtitle": "Curated experiences for every traveler",
     "packagesAvailable": "{count} Packages Available",
-    "discoverSubtitle": "Discover handpicked holiday packages across India",
+    "discoverSubtitle": "Discover handpicked holiday packages around the world",
     "daysCount": "{count}D",
     "nightsCount": "{count}N",
     "fromPrice": "From {symbol}{price}",

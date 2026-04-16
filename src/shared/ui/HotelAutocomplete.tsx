@@ -36,15 +36,15 @@ export function HotelAutocomplete({
   const suggestions = useMemo(() => {
     const query = search.toLowerCase().trim();
     
-    if (!query) return MOCK_HOTELS;
-
-    return MOCK_HOTELS.filter(
+    const filtered = MOCK_HOTELS.filter(
       (h) =>
         h.name.toLowerCase().includes(query) ||
         (h.city && h.city.toLowerCase().includes(query)) ||
         (h.country && h.country.toLowerCase().includes(query))
     );
-  }, [search]);
+
+    return filtered.slice(0, 5);
+  }, [search, MOCK_HOTELS]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -123,7 +123,7 @@ export function HotelAutocomplete({
                 ) : (
                   <div className="px-4 py-8 text-center">
                     <Search className="mx-auto h-8 w-8 text-gray-300 mb-2" />
-                    <p className="text-sm font-bold text-gray-500">No hotels found</p>
+                    <p className="text-sm font-bold text-gray-500">{t("Hotels.noHotelsFound")}</p>
                   </div>
                 )}
               </div>

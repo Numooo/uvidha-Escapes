@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
+import { format } from "date-fns";
 import {
   Search,
   SlidersHorizontal,
@@ -26,6 +27,8 @@ import { useRouter } from "@/i18n/routing";
 import type { Hotel } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
+import { HotelAutocomplete } from "@/shared/ui/HotelAutocomplete";
+import { DatePicker } from "@/shared/ui/DatePicker";
 
 // Amenity icons mapping
 
@@ -64,8 +67,10 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [hotels] = useState<Hotel[]>(tMock.raw("hotels"));
   const [searchQuery, setSearchQuery] = useState("");
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkOutDate, setCheckOutDate] = useState("");
+  const [checkInDate, setCheckInDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [checkOutDate, setCheckOutDate] = useState(
+    format(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), "yyyy-MM-dd"),
+  );
 
   useEffect(() => {
     const search = searchParams.get("search");
@@ -132,53 +137,37 @@ export function HotelsPage({ onHotelSelect }: HotelsPageProps) {
       {/* Search Bar */}
       <div className="bg-white border-b border-gray-200 sticky top-16 z-30 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex gap-3 items-end">
+          <div className="flex gap-4 items-end">
             <div className="flex-1">
-              <label className="text-xs font-medium text-gray-700 mb-1.5 block">
-                {t("destination")}
-              </label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <Input
-                  placeholder={t("destinationPlaceholder")}
-                  value={searchQuery}
-                  onChange={(e: any) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
+              <HotelAutocomplete
+                label={t("destination")}
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder={t("destinationPlaceholder")}
+              />
             </div>
-            <div className="w-48">
-              <label className="text-xs font-medium text-gray-700 mb-1.5 block">
-                {t("checkIn")}
-              </label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <Input 
-                  type="date" 
-                  className="pl-10" 
-                  value={checkInDate}
-                  onChange={(e: any) => setCheckInDate(e.target.value)}
-                />
-              </div>
+            <div className="w-56 pb-0.5">
+              <DatePicker
+                label={t("checkIn")}
+                value={checkInDate}
+                onChange={setCheckInDate}
+                minDate={new Date()}
+              />
             </div>
-            <div className="w-48">
-              <label className="text-xs font-medium text-gray-700 mb-1.5 block">
-                {t("checkOut")}
-              </label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <Input 
-                  type="date" 
-                  className="pl-10" 
-                  value={checkOutDate}
-                  onChange={(e: any) => setCheckOutDate(e.target.value)}
-                />
-              </div>
+            <div className="w-56 pb-0.5">
+              <DatePicker
+                label={t("checkOut")}
+                value={checkOutDate}
+                onChange={setCheckOutDate}
+                minDate={checkInDate ? new Date(checkInDate) : new Date()}
+              />
             </div>
-            <Button onClick={handleSearch} className="h-11">
-              <Search className="h-5 w-5 mr-2" />
-              {t("search")}
-            </Button>
+            <div className="pb-1">
+              <Button onClick={handleSearch} className="h-[46px] px-8 rounded-2xl shadow-lg shadow-blue-600/20">
+                <Search className="h-5 w-5 mr-2" />
+                {t("search")}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

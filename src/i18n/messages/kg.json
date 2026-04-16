@@ -1042,6 +1042,13 @@
         "enroute": "Абада",
         "landed": "Конду"
       },
+      "statusLabels": {
+        "ontime": "Өз убагында",
+        "delayed": "Кечигүүдө",
+        "cancelled": "Токтотулду",
+        "enroute": "Абада",
+        "landed": "Конду"
+      },
       "scheduled": "Пландалган",
       "estimated": "Күтүлүүдө",
       "depLabel": "Учуу",
@@ -1250,13 +1257,14 @@
     "viewDetails": "Кененирээк",
     "bookNow": "Брондоо",
     "starCount": "{count} жылдыз",
-    "more": "+ дагы {count}"
+    "more": "+ дагы {count}",
+    "noHotelsFound": "Мейманканалар табылган жок"
   },
   "Holidays": {
     "title": "Турпакеттер",
     "subtitle": "Ар бир саякатчы үчүн тандалган таасирлер",
     "packagesAvailable": "Жеткиликтүү пакеттер: {count}",
-    "discoverSubtitle": "Индия боюнча эң мыкты турпакеттерди табыңыз",
+    "discoverSubtitle": "Дүйнө жүзү боюнча эң мыкты турпакеттерди табыңыз",
     "daysCount": "{count} к.",
     "nightsCount": "{count} т.",
     "fromPrice": "{symbol}{price} баштап",
