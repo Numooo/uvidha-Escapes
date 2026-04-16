@@ -1406,6 +1406,17 @@
   "Holidays": {
     "title": "Турпакеты",
     "subtitle": "Отобранные впечатления для каждого путешественника",
+    "themes": {
+      "all": "Все",
+      "beach": "Пляж",
+      "adventure": "Приключения",
+      "heritage": "Наследие",
+      "wellness": "Оздоровление",
+      "mountains": "Горы",
+      "wildlife": "Дикая природа",
+      "honeymoon": "Медовый месяц",
+      "family": "Семейный отдых"
+    },
     "packagesAvailable": "Доступно пакетов: {count}",
     "discoverSubtitle": "Откройте для себя лучшие турпакеты по всему миру",
     "daysCount": "{count} дн.",

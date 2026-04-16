@@ -1409,6 +1409,17 @@
   "Holidays": {
     "title": "Holiday Packages",
     "subtitle": "Curated experiences for every traveler",
+    "themes": {
+      "all": "All",
+      "beach": "Beach",
+      "adventure": "Adventure",
+      "heritage": "Heritage",
+      "wellness": "Wellness",
+      "mountains": "Mountains",
+      "wildlife": "Wildlife",
+      "honeymoon": "Honeymoon",
+      "family": "Family"
+    },
     "packagesAvailable": "{count} Packages Available",
     "discoverSubtitle": "Discover handpicked holiday packages around the world",
     "daysCount": "{count}D",

@@ -1375,6 +1375,17 @@
   "Holidays": {
     "title": "Турпакеттер",
     "subtitle": "Ар бир саякатчы үчүн тандалган таасирлер",
+    "themes": {
+      "all": "Баары",
+      "beach": "Пляж",
+      "adventure": "Укмуштуу окуялар",
+      "heritage": "Тарых",
+      "wellness": "Ден соолук",
+      "mountains": "Тоолор",
+      "wildlife": "Жаратылыш",
+      "honeymoon": "Бал айы",
+      "family": "Үй-бүлө"
+    },
     "packagesAvailable": "Жеткиликтүү пакеттер: {count}",
     "discoverSubtitle": "Дүйнө жүзү боюнча эң мыкты турпакеттерди табыңыз",
     "daysCount": "{count} к.",
