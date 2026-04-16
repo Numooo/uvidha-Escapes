@@ -541,10 +541,26 @@
           "Nature"
         ],
         "itinerary": [
-          { "day": 1, "title": "Arrival", "desc": "Meet and greet at airport and transfer to hotel." },
-          { "day": 2, "title": "Cruise", "desc": "Full day houseboat cruise in the backwaters." },
-          { "day": 3, "title": "Munnar", "desc": "Visit tea plantations and scenic points." },
-          { "day": 4, "title": "Departure", "desc": "Free time and transfer to airport." }
+          {
+            "day": 1,
+            "title": "Arrival",
+            "desc": "Meet and greet at airport and transfer to hotel."
+          },
+          {
+            "day": 2,
+            "title": "Cruise",
+            "desc": "Full day houseboat cruise in the backwaters."
+          },
+          {
+            "day": 3,
+            "title": "Munnar",
+            "desc": "Visit tea plantations and scenic points."
+          },
+          {
+            "day": 4,
+            "title": "Departure",
+            "desc": "Free time and transfer to airport."
+          }
         ]
       },
       {
@@ -576,13 +592,41 @@
           "Culture"
         ],
         "itinerary": [
-          { "day": 1, "title": "Jaipur", "desc": "Arrival and evening walk." },
-          { "day": 2, "title": "Forts", "desc": "Amer Fort exploration." },
-          { "day": 3, "title": "Travel", "desc": "Drive to Udaipur." },
-          { "day": 4, "title": "Lakes", "desc": "Boat ride on Lake Pichola." },
-          { "day": 5, "title": "Palaces", "desc": "Visit City Palace." },
-          { "day": 6, "title": "Temples", "desc": "Tour of ancient temples." },
-          { "day": 7, "title": "Final", "desc": "Transfer to airport." }
+          {
+            "day": 1,
+            "title": "Jaipur",
+            "desc": "Arrival and evening walk."
+          },
+          {
+            "day": 2,
+            "title": "Forts",
+            "desc": "Amer Fort exploration."
+          },
+          {
+            "day": 3,
+            "title": "Travel",
+            "desc": "Drive to Udaipur."
+          },
+          {
+            "day": 4,
+            "title": "Lakes",
+            "desc": "Boat ride on Lake Pichola."
+          },
+          {
+            "day": 5,
+            "title": "Palaces",
+            "desc": "Visit City Palace."
+          },
+          {
+            "day": 6,
+            "title": "Temples",
+            "desc": "Tour of ancient temples."
+          },
+          {
+            "day": 7,
+            "title": "Final",
+            "desc": "Transfer to airport."
+          }
         ]
       },
       {
@@ -614,11 +658,31 @@
           "Adventure"
         ],
         "itinerary": [
-          { "day": 1, "title": "Arrival", "desc": "Arrive at Port Blair." },
-          { "day": 2, "title": "Havelock", "desc": "Crossing to Havelock Island." },
-          { "day": 3, "title": "Beach", "desc": "Relax at Radhanagar Beach." },
-          { "day": 4, "title": "Diving", "desc": "Scuba diving and corals." },
-          { "day": 5, "title": "Return", "desc": "Heading back home." }
+          {
+            "day": 1,
+            "title": "Arrival",
+            "desc": "Arrive at Port Blair."
+          },
+          {
+            "day": 2,
+            "title": "Havelock",
+            "desc": "Crossing to Havelock Island."
+          },
+          {
+            "day": 3,
+            "title": "Beach",
+            "desc": "Relax at Radhanagar Beach."
+          },
+          {
+            "day": 4,
+            "title": "Diving",
+            "desc": "Scuba diving and corals."
+          },
+          {
+            "day": 5,
+            "title": "Return",
+            "desc": "Heading back home."
+          }
         ]
       },
       {
@@ -650,14 +714,46 @@
           "Mountains"
         ],
         "itinerary": [
-          { "day": 1, "title": "Acclimatization", "desc": "Rest in Leh to get used to altitude." },
-          { "day": 2, "title": "Monasteries", "desc": "Tour of ancient monasteries." },
-          { "day": 3, "title": "Khardung La", "desc": "Drive through the highest pass." },
-          { "day": 4, "title": "Nubra", "desc": "Camel ride in the valley." },
-          { "day": 5, "title": "Pangong", "desc": "Trip to the famous blue lake." },
-          { "day": 6, "title": "Shore", "desc": "Stay at a camp by the lake." },
-          { "day": 7, "title": "Return", "desc": "Drive back to Leh." },
-          { "day": 8, "title": "Departure", "desc": "Transfer to airport." }
+          {
+            "day": 1,
+            "title": "Acclimatization",
+            "desc": "Rest in Leh to get used to altitude."
+          },
+          {
+            "day": 2,
+            "title": "Monasteries",
+            "desc": "Tour of ancient monasteries."
+          },
+          {
+            "day": 3,
+            "title": "Khardung La",
+            "desc": "Drive through the highest pass."
+          },
+          {
+            "day": 4,
+            "title": "Nubra",
+            "desc": "Camel ride in the valley."
+          },
+          {
+            "day": 5,
+            "title": "Pangong",
+            "desc": "Trip to the famous blue lake."
+          },
+          {
+            "day": 6,
+            "title": "Shore",
+            "desc": "Stay at a camp by the lake."
+          },
+          {
+            "day": 7,
+            "title": "Return",
+            "desc": "Drive back to Leh."
+          },
+          {
+            "day": 8,
+            "title": "Departure",
+            "desc": "Transfer to airport."
+          }
         ]
       }
     ],
@@ -896,7 +992,15 @@
     "cargo": "Cargo",
     "myCabinet": "My Cabinet",
     "logout": "Sign Out",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "notificationsList": {
+      "flight": "Your flight to Istanbul is confirmed",
+      "offer": "New special offer: -20% on hotels in Dubai",
+      "welcome": "Welcome to Uvidha Escapes!",
+      "time2h": "2h ago",
+      "time5h": "5h ago",
+      "time1d": "1d ago"
+    }
   },
   "Sidebar": {
     "expand": "Expand",
@@ -907,6 +1011,8 @@
     "subtitle": "Book flights, hotels, and holiday packages at the best prices"
   },
   "Search": {
+    "noResults": "We couldn't find any airports",
+    "searchTip": "Try searching for a different city or code",
     "tabs": {
       "flights": "Flights",
       "hotels": "Hotels",
@@ -932,6 +1038,12 @@
       "age12Plus": "12+ years",
       "age2To11": "2-11 years",
       "maxPassengers": "Maximum 9 passengers allowed per booking",
+      "animals": "Animals",
+      "animalsSubtitle": "In cabin or baggage",
+      "animalsCommentLabel": "Pet comment",
+      "animalsPlaceholder": "Provide details (breed, weight)...",
+      "animalsNote": "Animal transport may be charged separately.",
+      "animalCount": "{count} {count, plural, one {animal} other {animals}}",
       "cabinClass": "Cabin Class",
       "economy": "Economy",
       "premiumEconomy": "Premium Economy",
@@ -1352,18 +1464,98 @@
   },
   "VisaDetail": {
     "back": "Back",
-    "bookNow": "Book Now",
-    "enquiryTitle": "Enquiry Now",
+    "notFound": "Visa requirement not found",
+    "backToServices": "Back to Visa Services",
+    "thankYou": "Thank you! Your enquiry has been received. We will contact you shortly.",
+    "documentRequirements": "Document Requirements",
+    "itemsCount": "{count} items",
+    "processingTimeline": "Processing Timeline",
+    "feesBreakdown": "Fees Breakdown",
+    "importantInformation": "Important Information",
+    "faqs": "Frequently Asked Questions",
+    "bookNow": "Apply Now",
+    "enquiryTitle": "Enquire Now",
     "helpTitle": "Need Help?",
-    "thankYou": "Thank you for your enquiry! We will get back to you soon.",
+    "timeline": {
+      "step1": {
+        "title": "Consultation",
+        "desc": "Initial document check and visa type selection"
+      },
+      "step2": {
+        "title": "Preparation",
+        "desc": "Form filling and document translation"
+      },
+      "step3": {
+        "title": "Submission",
+        "desc": "Booking appointment and consulate submission"
+      },
+      "step4": {
+        "title": "Processing",
+        "desc": "Waiting for decision from the consulate"
+      },
+      "step5": {
+        "title": "Delivery",
+        "desc": "Collection of visa and returned documents"
+      }
+    },
+    "fees": {
+      "embassy": "Embassy Fee",
+      "service": "Service Center Fee",
+      "processing": "Agency Processing Fee",
+      "total": "Total Amount"
+    },
+    "info": {
+      "approval": {
+        "title": "Submission Guarantee",
+        "desc": "We ensure all documents are correctly prepared for submission"
+      },
+      "validity": {
+        "title": "Validity Period",
+        "desc": "Visa validity is determined by the consulate"
+      },
+      "format": {
+        "title": "Photo Requirements",
+        "desc": "Photo must be on light background, without glasses or hats"
+      },
+      "delivery": {
+        "title": "Delivery",
+        "desc": "We will deliver your documents via courier after collection"
+      }
+    },
+    "faqsList": [
+      {
+        "q": "Is personal presence required?",
+        "a": "Depends on the country. Most countries require biometrics (fingerprinting)."
+      },
+      {
+        "q": "What are the chances of approval?",
+        "a": "The decision is always with the consul, but we minimize rejection risks."
+      },
+      {
+        "q": "Is a refund possible if rejected?",
+        "a": "Embassy and service fees are non-refundable; agency fees depend on the tariff."
+      }
+    ],
     "trust": {
-      "expertAssistance": "Expert Assistance",
-      "verification": "Document Verification",
-      "tracking": "Application Tracking",
-      "secure": "Secure Payment"
+      "expertAssistance": "24/7 Expert Assistance",
+      "verification": "Document Verification by Experts",
+      "tracking": "Application Status Tracking",
+      "secure": "Secure Data Handling",
+      "secureTitle": "Trusted Partner",
+      "stats": "Over 10,000 successfully issued visas annually"
     },
     "labels": {
-      "perApplicant": "per applicant"
+      "perApplicant": "per applicant",
+      "workingHours": "Mon-Fri: 09:00 - 18:00, Sat: 10:00 - 14:00"
+    },
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "travelDate": "Planned Travel Date",
+      "message": "Your Message",
+      "cancel": "Cancel",
+      "submit": "Submit Enquiry"
     }
   },
   "Airports": {
@@ -2026,7 +2218,15 @@
     "next": "Next",
     "loading": "Loading...",
     "error": "Something went wrong",
-    "success": "Operation successful"
+    "success": "Operation successful",
+    "select": "Select...",
+    "datePicker": {
+      "today": "Today",
+      "close": "Close",
+      "placeholder": "Select date",
+      "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    }
   },
   "HotDeals": {
     "title": "Hot Deals",

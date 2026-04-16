@@ -163,10 +163,10 @@ export function AirportAutocomplete({
                       <Search className="h-8 w-8" />
                     </div>
                     <p className="text-sm font-bold text-gray-500">
-                      We couldn't find any airports
+                      {t("Search.noResults")}
                     </p>
                     <p className="text-xs text-gray-400 mt-1 uppercase tracking-tighter">
-                      Try searching for a different city or code
+                      {t("Search.searchTip")}
                     </p>
                   </div>
                 )}

@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface Option {
   value: string | number;
@@ -21,6 +22,7 @@ export function CustomSelect({ label, value, onChange, options, icon }: CustomSe
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const t = useTranslations("Common");
   const selectedOption = options.find((o) => o.value === value);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export function CustomSelect({ label, value, onChange, options, icon }: CustomSe
       >
         <div className="flex items-center gap-3 overflow-hidden">
           {icon && <div className="text-gray-400 opacity-70 flex-shrink-0">{icon}</div>}
-          <span className="truncate">{selectedOption?.label || "Select..."}</span>
+          <span className="truncate">{selectedOption?.label || t("select")}</span>
         </div>
         <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 flex-shrink-0 ${isOpen ? "rotate-180" : ""}`} />
       </button>

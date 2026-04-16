@@ -1,4 +1,4 @@
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useMemo } from "react";
 import {
     Menu,
     X,
@@ -74,6 +74,21 @@ export function Header({
                        }: HeaderProps = {}) {
     const t = useTranslations("Header");
     const tCorp = useTranslations("Corporate");
+
+    // 1. Localize notifications
+    const notifications = useMemo(() => [
+        { id: 1, text: t("notificationsList.flight"), unread: true, time: t("notificationsList.time2h") },
+        { id: 2, text: t("notificationsList.offer"), unread: true, time: t("notificationsList.time5h") },
+        { id: 3, text: t("notificationsList.welcome"), unread: false, time: t("notificationsList.time1d") },
+    ], [t]);
+
+    const [notifState, setNotifState] = useState<Notification[]>(notifications);
+
+    // Sync state when notifications change (e.g. locale changes)
+    React.useEffect(() => {
+        setNotifState(notifications);
+    }, [notifications]);
+
     const locale = useLocale();
     const pathname = usePathname();
     const router = useRouter();
@@ -86,9 +101,6 @@ export function Header({
     const [aiPlannerOpen, setAiPlannerOpen] = useState(false);
     const [signInOpen, setSignInOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-
-    // 1. Добавляем стейт для уведомлений
-    const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
 
     const currentPage = propCurrentPage || pathname;
     const isCabinetMode = currentPage.includes("profile") || currentPage.includes("corporate") || currentPage.includes("cabinet");
@@ -118,7 +130,7 @@ export function Header({
 
     // 2. Функция для отметки уведомления как прочитанного
     const markAsRead = (id: number) => {
-        setNotifications((prev) =>
+        setNotifState((prev) =>
             prev.map((notif) =>
                 notif.id === id ? {...notif, unread: false} : notif
             )
@@ -317,7 +329,7 @@ export function Header({
                                                 JD
                                             </div>
                                             {/* 3. Проверяем наличие непрочитанных по стейту notifications */}
-                                            {notifications.some(n => n.unread) && (
+                                            {notifState.some(n => n.unread) && (
                                                 <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                           <span
                               className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
@@ -384,7 +396,7 @@ export function Header({
 
                                                 <div className="max-h-48 overflow-y-auto">
                                                     {/* 4. Мапим стейт notifications, а не начальный массив */}
-                                                    {notifications.map((n) => (
+                                                    {notifState.map((n) => (
                                                         <div
                                                             key={n.id}
                                                             // 5. Вызываем функцию при клике

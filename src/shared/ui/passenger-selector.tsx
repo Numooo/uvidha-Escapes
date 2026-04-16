@@ -74,7 +74,7 @@ export function PassengerSelector({
             )}
             {animals > 0 && (
               <span className="text-brand-primary ml-1 font-bold">
-                + {animals} {animals === 1 ? "животное" : "животных"}
+                + {t("Search.flights.animalCount", { count: animals })}
               </span>
             )}
           </span>
@@ -119,7 +119,7 @@ export function PassengerSelector({
                       canRemoveAdult
                         ? "border-blue-600 text-blue-600 hover:bg-blue-50 active:scale-95"
                         : "border-gray-200 text-gray-300 cursor-not-allowed"
-                    }`}
+                     }`}
                   >
                     <Minus className="h-4 w-4" />
                   </button>
@@ -195,10 +195,10 @@ export function PassengerSelector({
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-900">
-                      Животные
+                      {t("Search.flights.animals")}
                     </div>
                     <div className="text-xs text-gray-500">
-                      В салоне или багаже
+                      {t("Search.flights.animalsSubtitle")}
                     </div>
                   </div>
                 </div>
@@ -244,12 +244,12 @@ export function PassengerSelector({
                   >
                     <div className="flex items-center gap-2 text-xs font-bold text-gray-500 capitalize tracking-wider">
                       <MessageSquare size={14} />
-                      Комментарий к детали животного
+                      {t("Search.flights.animalsCommentLabel")}
                     </div>
                     <textarea
                       value={animalsComment}
                       onChange={(e) => onAnimalsCommentChange(e.target.value)}
-                      placeholder="Напишите детали (порода, вес, тип перевозки)..."
+                      placeholder={t("Search.flights.animalsPlaceholder")}
                       className="w-full min-h-[80px] p-3 rounded-xl bg-gray-50 border-none text-sm text-gray-900 focus:ring-2 focus:ring-brand-primary/20 outline-none resize-none transition-all"
                     />
                   </motion.div>
@@ -259,7 +259,7 @@ export function PassengerSelector({
               {/* Info Note */}
               <div className="pt-3 border-t border-gray-100">
                 <p className="text-[10px] text-gray-500 leading-relaxed">
-                  {t("Search.flights.maxPassengers")}. Перевозка животных может оплачиваться отдельно.
+                  {t("Search.flights.maxPassengers")}. {t("Search.flights.animalsNote")}
                 </p>
               </div>
             </div>

@@ -18,12 +18,14 @@ import {
   ChevronDown,
   ChevronUp,
   Globe,
+  Check,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrency } from "@/CurrencyContext";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import type { VisaRequirement } from "@/types";
+import { DatePicker } from "@/shared/ui/DatePicker";
 
 interface VisaDetailPageProps {
   visa: VisaRequirement;
@@ -37,8 +39,10 @@ export function VisaDetailPage({
   onStartApplication,
 }: VisaDetailPageProps) {
   const t = useTranslations("VisaDetail");
+  const tFooter = useTranslations("Footer");
   const { symbol, symbolText, CurrencyIcon, CurrencySymbol } = useCurrency();
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>(
     "requirements",
   );
@@ -56,17 +60,22 @@ export function VisaDetailPage({
 
   const handleEnquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle enquiry submission
+    // Simulate API call
     console.log("Enquiry submitted:", enquiryData);
-    alert(t("thankYou"));
-    setShowEnquiryForm(false);
-    setEnquiryData({
-      name: "",
-      email: "",
-      phone: "",
-      travelDate: "",
-      message: "",
-    });
+    setIsSubmitted(true);
+    
+    // Auto-close after 3 seconds
+    setTimeout(() => {
+      setShowEnquiryForm(false);
+      setIsSubmitted(false);
+      setEnquiryData({
+        name: "",
+        email: "",
+        phone: "",
+        travelDate: "",
+        message: "",
+      });
+    }, 3000);
   };
 
   const handleBookNow = () => {
@@ -346,11 +355,11 @@ export function VisaDetailPage({
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-3 text-gray-700">
                     <Phone className="h-4 w-4 text-blue-600" />
-                    <span>+996 (555) 123-456</span>
+                    <span>{tFooter("contact.phone")}</span>
                   </div>
                   <div className="flex items-center gap-3 text-gray-700">
                     <Mail className="h-4 w-4 text-blue-600" />
-                    <span>visa@aviatrevel.kg</span>
+                    <span>{tFooter("contact.email")}</span>
                   </div>
                   <div className="flex items-start gap-3 text-gray-700">
                     <MapPin className="h-4 w-4 text-blue-600 mt-0.5" />
@@ -410,109 +419,118 @@ export function VisaDetailPage({
                   </button>
                 </div>
 
-                <form onSubmit={handleEnquirySubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t("form.name")} *
-                    </label>
-                    <Input
-                      required
-                      value={enquiryData.name}
-                      onChange={(e: any) =>
-                        setEnquiryData({ ...enquiryData, name: e.target.value })
-                      }
-                      placeholder="John Doe"
-                      className="h-12"
-                    />
-                  </div>
+                {isSubmitted ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="py-12 flex flex-col items-center justify-center text-center"
+                  >
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                      <Check className="h-8 w-8 text-green-600" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      {t("thankYou")}
+                    </h3>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleEnquirySubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t("form.name")} *
+                      </label>
+                      <Input
+                        required
+                        value={enquiryData.name}
+                        onChange={(e: any) =>
+                          setEnquiryData({ ...enquiryData, name: e.target.value })
+                        }
+                        placeholder="John Doe"
+                        className="h-12"
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t("form.email")} *
-                    </label>
-                    <Input
-                      type="email"
-                      required
-                      value={enquiryData.email}
-                      onChange={(e: any) =>
-                        setEnquiryData({
-                          ...enquiryData,
-                          email: e.target.value,
-                        })
-                      }
-                      placeholder="john@example.com"
-                      className="h-12"
-                    />
-                  </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t("form.email")} *
+                        </label>
+                        <Input
+                          type="email"
+                          required
+                          value={enquiryData.email}
+                          onChange={(e: any) =>
+                            setEnquiryData({
+                              ...enquiryData,
+                              email: e.target.value,
+                            })
+                          }
+                          placeholder="john@example.com"
+                          className="h-12"
+                        />
+                      </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t("form.phone")} *
-                    </label>
-                    <Input
-                      type="tel"
-                      required
-                      value={enquiryData.phone}
-                      onChange={(e: any) =>
-                        setEnquiryData({
-                          ...enquiryData,
-                          phone: e.target.value,
-                        })
-                      }
-                      placeholder="+91 98765 43210"
-                      className="h-12"
-                    />
-                  </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t("form.phone")} *
+                        </label>
+                        <Input
+                          type="tel"
+                          required
+                          value={enquiryData.phone}
+                          onChange={(e: any) =>
+                            setEnquiryData({
+                              ...enquiryData,
+                              phone: e.target.value,
+                            })
+                          }
+                          placeholder={tFooter("contact.phone")}
+                          className="h-12"
+                        />
+                      </div>
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t("form.travelDate")}
-                    </label>
-                    <Input
-                      type="date"
-                      value={enquiryData.travelDate}
-                      onChange={(e: any) =>
-                        setEnquiryData({
-                          ...enquiryData,
-                          travelDate: e.target.value,
-                        })
-                      }
-                      className="h-12"
-                    />
-                  </div>
+                    <div>
+                      <DatePicker
+                        label={t("form.travelDate")}
+                        value={enquiryData.travelDate}
+                        onChange={(date) => setEnquiryData({ ...enquiryData, travelDate: date })}
+                        minDate={new Date()}
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t("form.message")}
-                    </label>
-                    <textarea
-                      value={enquiryData.message}
-                      onChange={(e) =>
-                        setEnquiryData({
-                          ...enquiryData,
-                          message: e.target.value,
-                        })
-                      }
-                      placeholder="..."
-                      rows={4}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t("form.message")}
+                      </label>
+                      <textarea
+                        value={enquiryData.message}
+                        onChange={(e) =>
+                          setEnquiryData({
+                            ...enquiryData,
+                            message: e.target.value,
+                          })
+                        }
+                        placeholder="..."
+                        rows={4}
+                        className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all resize-none"
+                      />
+                    </div>
 
-                  <div className="flex gap-3 pt-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setShowEnquiryForm(false)}
-                      className="flex-1 h-12"
-                    >
-                      {t("form.cancel")}
-                    </Button>
-                    <Button type="submit" className="flex-1 h-12">
-                      {t("form.submit")}
-                    </Button>
-                  </div>
-                </form>
+                    <div className="flex gap-3 pt-4">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setShowEnquiryForm(false)}
+                        className="flex-1 h-12 rounded-2xl"
+                      >
+                        {t("form.cancel")}
+                      </Button>
+                      <Button type="submit" className="flex-1 h-12 rounded-2xl">
+                        {t("form.submit")}
+                      </Button>
+                    </div>
+                  </form>
+                )}
               </div>
             </motion.div>
           </div>

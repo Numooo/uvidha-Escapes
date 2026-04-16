@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay, isBefore } from "date-fns";
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface DatePickerProps {
   label: string;
@@ -15,6 +16,7 @@ interface DatePickerProps {
 }
 
 export function DatePicker({ label, value, onChange, minDate, placeholder, position = "bottom" }: DatePickerProps) {
+  const t = useTranslations("Common.datePicker");
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(value ? new Date(value) : new Date());
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,6 +45,10 @@ export function DatePicker({ label, value, onChange, minDate, placeholder, posit
     return eachDayOfInterval({ start: startDate, end: endDate });
   };
 
+  const months = t.raw("months") as string[];
+  const monthLabel = `${months[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
+  const daysOfWeek = t.raw("days") as string[];
+
   return (
     <div className="relative" ref={containerRef}>
       <label className="mb-1.5 block text-xs font-semibold text-gray-500 capitalize px-1">
@@ -54,7 +60,7 @@ export function DatePicker({ label, value, onChange, minDate, placeholder, posit
       >
         <CalendarIcon className="h-4 w-4 text-brand-primary opacity-70" />
         <span className={selectedDate ? "text-gray-900" : "text-gray-400"}>
-          {selectedDate ? format(selectedDate, "dd.MM.yyyy") : (placeholder || "Select date")}
+          {selectedDate ? format(selectedDate, "dd.MM.yyyy") : (placeholder || t("placeholder"))}
         </span>
       </button>
 
@@ -74,7 +80,7 @@ export function DatePicker({ label, value, onChange, minDate, placeholder, posit
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <span className="font-black text-gray-900 text-sm capitalize tracking-wider">
-                {format(currentMonth, "MMMM yyyy")}
+                {monthLabel}
               </span>
               <button 
                 onClick={(e) => { e.stopPropagation(); nextMonth(); }} 
@@ -85,7 +91,7 @@ export function DatePicker({ label, value, onChange, minDate, placeholder, posit
             </div>
 
             <div className="grid grid-cols-7 gap-1 text-center mb-3">
-              {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((day) => (
+              {daysOfWeek.map((day) => (
                 <span key={day} className="text-[10px] font-black text-gray-400 capitalize tracking-tighter">
                   {day}
                 </span>
@@ -128,13 +134,13 @@ export function DatePicker({ label, value, onChange, minDate, placeholder, posit
                  }}
                  className="text-[10px] font-black capitalize text-brand-primary hover:text-brand-secondary transition-colors"
                >
-                 Today
+                 {t("today")}
                </button>
                <button 
                  onClick={() => setIsOpen(false)}
                  className="text-[10px] font-black capitalize text-gray-400 hover:text-gray-600 transition-colors"
                >
-                 Close
+                 {t("close")}
                </button>
             </div>
           </motion.div>

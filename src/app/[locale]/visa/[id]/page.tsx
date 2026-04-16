@@ -17,12 +17,12 @@ export default function VisaDetailRoute({ params }: { params: Promise<{ id: stri
   if (!visa) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-         <h1 className="text-2xl font-bold text-gray-900 mb-4">Visa Requirement Not Found</h1>
+         <h1 className="text-2xl font-bold text-gray-900 mb-4">{t("notFound")}</h1>
          <button 
            onClick={() => router.push("/visa")}
            className="px-6 py-2 bg-brand-primary text-white rounded-lg"
          >
-           Back to Visa Services
+           {t("backToServices")}
          </button>
       </div>
     );
