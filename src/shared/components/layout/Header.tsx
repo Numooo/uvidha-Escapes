@@ -128,7 +128,7 @@ export function Header({
     return (
         <>
             <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-brand-primary/95 backdrop-blur-md">
-                <nav className="px-4 sm:px-6 lg:px-8">
+                <nav className="px-4 sm:px-6 lg:px-6">
                     <div className="flex h-16 items-center justify-between">
                         {/* Left Side: Toggle & Logo */}
                         <div className="flex items-center gap-4">

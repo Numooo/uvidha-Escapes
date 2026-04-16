@@ -50,20 +50,18 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
     <motion.div
       initial={false}
       animate={{
-        width: isExpanded ? 260 : 80,
+        width: isExpanded ? 240 : 80,
       }}
       transition={{
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-        mass: 1
+        duration: 0.3,
+        ease: [0.4, 0, 0.2, 1]
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="sticky top-16 left-0 h-[calc(100vh-64px)] bg-white/95 backdrop-blur-xl border-r border-gray-100 z-40 hidden lg:flex flex-col flex-shrink-0 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)]"
+      className="sticky top-16 left-0 h-[calc(100vh-64px)] bg-white border-r border-gray-100 z-40 hidden lg:flex flex-col flex-shrink-0 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.01)] overflow-hidden"
     >
       <div className="flex-1 py-8 overflow-y-auto no-scrollbar overflow-x-hidden">
-        <div className="px-4 space-y-2">
+        <div className="space-y-2">
           {menuItems.map((item) => {
             const path = item.id === "home" ? "/" : `/${item.id}`;
             const isActive = pathname === path || (path !== "/" && pathname.startsWith(path));
@@ -71,9 +69,7 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
               <Link
                 href={path}
                 key={item.id}
-                className={`w-full flex items-center transition-all group relative rounded-2xl ${
-                  isExpanded ? "px-4 justify-start" : "px-0 justify-center"
-                } py-3.5 ${isActive
+                className={`flex items-center transition-all group relative rounded-2xl py-3.5 px-8 w-[240px] ${isActive
                     ? "bg-brand-primary text-white shadow-[0_8px_16px_-4px_rgba(10,87,161,0.25)]"
                     : "text-gray-500 hover:bg-brand-primary/5 hover:text-brand-primary"
                   }`}
@@ -92,35 +88,22 @@ export function Sidebar({ isPinned = true }: SidebarProps) {
                   )}
                 </div>
 
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, width: 0, x: -10 }}
-                      animate={{ opacity: 1, width: "auto", x: 0 }}
-                      exit={{ opacity: 0, width: 0, x: -10 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <span className="font-semibold whitespace-nowrap text-sm tracking-tight block ml-4">
-                        {item.label}
-                      </span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div className={`transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0"}`}>
+                  <span className="font-semibold whitespace-nowrap text-sm tracking-tight block ml-4">
+                    {item.label}
+                  </span>
+                </div>
 
                 {!isExpanded && (
-                  <div className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-[11px] font-bold rounded-xl opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all pointer-events-none whitespace-nowrap z-50 shadow-xl border border-white/10 uppercase tracking-widest">
+                  <div className="absolute left-[80px] ml-4 px-3 py-2 bg-gray-900 text-white text-[11px] font-bold rounded-xl opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all pointer-events-none whitespace-nowrap z-50 shadow-xl border border-white/10 uppercase tracking-widest">
                     {item.label}
                   </div>
                 )}
-
-
               </Link>
             );
           })}
         </div>
       </div>
-
     </motion.div>
   );
 }
