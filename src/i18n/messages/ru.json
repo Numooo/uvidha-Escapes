@@ -1628,6 +1628,11 @@
     "latitude": "Широта",
     "longitude": "Долгота",
     "trackFlight": "Отслеживать этот рейс",
+    "providers": {
+      "fr24": "FlightRadar24",
+      "radarbox": "RadarBox",
+      "adsb": "ADS-B Exchange"
+    },
     "updating": "Обновление...",
     "live": "В эфире",
     "visibleAircrafts": "{count} самолетов в зоне видимости",
@@ -1635,7 +1640,9 @@
     "searchPlaceholder": "Поиск рейса по позывному...",
     "clickInstruction": "Нажмите на самолет для просмотра данных",
     "meters": "м",
-    "kmh": "км/ч"
+    "kmh": "км/ч",
+    "source": "Источник данных",
+    "mapADSB": "ADS-B Exchange"
   },
   "Faq": {
     "title": "Вопросы и ответы",

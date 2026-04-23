@@ -1632,6 +1632,11 @@
     "latitude": "Latitude",
     "longitude": "Longitude",
     "trackFlight": "Track this flight",
+    "providers": {
+      "fr24": "FlightRadar24",
+      "radarbox": "RadarBox",
+      "adsb": "ADS-B Exchange"
+    },
     "updating": "Updating...",
     "live": "Live",
     "visibleAircrafts": "{count} aircrafts visible",
@@ -1639,7 +1644,9 @@
     "searchPlaceholder": "Search by callsign...",
     "clickInstruction": "Click on an aircraft to see full flight data",
     "meters": "m",
-    "kmh": "km/h"
+    "kmh": "km/h",
+    "source": "Data Source",
+    "mapADSB": "ADS-B Exchange"
   },
   "Faq": {
     "title": "Questions and Answers",

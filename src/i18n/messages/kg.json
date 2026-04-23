@@ -1596,7 +1596,12 @@
     "coordinates": "Координаттар",
     "latitude": "Широта",
     "longitude": "Долгота",
-    "trackFlight": "Бул рейсти көзөмөлдөө",
+    "trackFlight": "Бул каттамды көзөмөлдөө",
+    "providers": {
+      "fr24": "FlightRadar24",
+      "radarbox": "RadarBox",
+      "adsb": "ADS-B Exchange"
+    },
     "updating": "Жаңыланууда...",
     "live": "Түз эфир",
     "visibleAircrafts": "Көрүнүү зонасында {count} учак",
@@ -1604,7 +1609,9 @@
     "searchPlaceholder": "Рейсти чакыруу белгиси боюнча издөө...",
     "clickInstruction": "Маалыматты көрүү үчүн учакты басыңыз",
     "meters": "м",
-    "kmh": "км/саат"
+    "kmh": "км/саат",
+    "source": "Маалымат булагы",
+    "mapADSB": "ADS-B Exchange"
   },
   "Faq": {
     "title": "Суроо-жооп",
